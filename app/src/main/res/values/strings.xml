@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Travel Gallery</string>
+
+    <!--Names for 4 sections in the app-->
+    <string name="photos_fragment_title">Photos</string>
+    <string name="albums_fragment_title">Albums</string>
+    <string name="stories_fragment_title">Stories</string>
+    <string name="map_fragment_title">Map</string>
 </resources>
