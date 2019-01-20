@@ -54,4 +54,6 @@ public class CategoryStatePageAdapter extends FragmentPagerAdapter {
                 return null;
         }
     }
+
+
 }

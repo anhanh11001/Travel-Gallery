@@ -8,19 +8,22 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".Activities.MainActivity">
 
-    <android.support.design.widget.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMode="fixed"
-    />
-
     <android.support.v4.view.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_weight="10"
+            android:layout_height="0dp"/>
 
-
+    <android.support.design.widget.TabLayout
+            android:layout_weight="1"
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:tabMode="fixed"
+            android:elevation="4dp"
+            android:background="@drawable/shadow"
+            app:tabIndicatorHeight="0dp"
+    />
 
 
 </LinearLayout>
