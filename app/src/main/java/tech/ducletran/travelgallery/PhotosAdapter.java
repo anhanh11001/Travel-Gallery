@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 
 public class PhotosAdapter extends BaseAdapter {
-    private int[] test_image_id = {R.drawable.testphoto0, R.drawable.testphoto1, R.drawable.testphoto2, R.drawable.testphoto3,
+    public static int[] test_image_id = {R.drawable.testphoto0, R.drawable.testphoto1, R.drawable.testphoto2, R.drawable.testphoto3,
             R.drawable.testphoto4, R.drawable.testphoto5, R.drawable.testphoto6, R.drawable.testphoto7, R.drawable.testphoto8,
             R.drawable.testphoto9};
     private Context context;
