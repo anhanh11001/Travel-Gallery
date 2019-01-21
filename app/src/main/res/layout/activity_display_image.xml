@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-        android:background="@color/colorBlackPrimary"
+        android:orientation="vertical"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto">
+        android:layout_height="match_parent" >
 
-    <com.jsibbold.zoomage.ZoomageView
-            android:layout_gravity="center"
-            android:id="@+id/display_photo_image_view"
+    <android.support.v4.view.ViewPager
+            android:id="@+id/display_image_view_pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:zoomage_restrictBounds="false"/>
+            android:layout_height="match_parent"/>
 </LinearLayout>

@@ -5,14 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import tech.ducletran.travelgallery.Activities.DisplayImageActivity;
-import tech.ducletran.travelgallery.PhotosAdapter;
+import tech.ducletran.travelgallery.Adapter.PhotosAdapter;
 import tech.ducletran.travelgallery.R;
 
 public class PhotosFragment extends Fragment {
@@ -29,7 +28,7 @@ public class PhotosFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent (getActivity(),DisplayImageActivity.class);
-                intent.putExtra("id",PhotosAdapter.test_image_id[position]);
+                intent.putExtra("position",position);
                 startActivity(intent);
             }
         });

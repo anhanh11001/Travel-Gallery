@@ -1,24 +1,27 @@
 package tech.ducletran.travelgallery.Activities;
 
-import android.graphics.Color;
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import tech.ducletran.travelgallery.CategoryStatePageAdapter;
+import tech.ducletran.travelgallery.Adapter.CategoryStatePageAdapter;
 import tech.ducletran.travelgallery.R;
 
 public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
+    static final int REQUEST_PERMISSION_KEY = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ViewPager viewPager = findViewById(R.id.view_pager);
+        ViewPager viewPager = findViewById(R.id.main_view_pager);
         CategoryStatePageAdapter adapter = new CategoryStatePageAdapter(getSupportFragmentManager(),this);
 
         viewPager.setAdapter(adapter);
@@ -27,6 +30,13 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
         setUpTabLayoutIcon();
+
+        String[] PERMISSIONS = {Manifest.permission.READ_EXTERNAL_STORAGE};
+        if (!(ActivityCompat.checkSelfPermission(this,PERMISSIONS[0]) == PackageManager.PERMISSION_GRANTED)) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_PERMISSION_KEY);
+        }
+
+
 
 
     }

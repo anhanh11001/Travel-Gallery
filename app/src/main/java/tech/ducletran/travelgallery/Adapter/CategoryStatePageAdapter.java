@@ -1,4 +1,4 @@
-package tech.ducletran.travelgallery;
+package tech.ducletran.travelgallery.Adapter;
 
 import android.content.Context;
 import android.provider.Settings;
@@ -10,6 +10,7 @@ import tech.ducletran.travelgallery.Fragment.AlbumsFragment;
 import tech.ducletran.travelgallery.Fragment.MapFragment;
 import tech.ducletran.travelgallery.Fragment.PhotosFragment;
 import tech.ducletran.travelgallery.Fragment.StoriesFracment;
+import tech.ducletran.travelgallery.R;
 
 public class CategoryStatePageAdapter extends FragmentPagerAdapter {
     private Context context;

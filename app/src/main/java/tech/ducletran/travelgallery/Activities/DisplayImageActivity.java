@@ -1,11 +1,11 @@
 package tech.ducletran.travelgallery.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ImageView;
-import com.bumptech.glide.Glide;
-import com.jsibbold.zoomage.ZoomageView;
+import tech.ducletran.travelgallery.Adapter.DisplayPhotosAdapter;
 import tech.ducletran.travelgallery.R;
 
 public class DisplayImageActivity extends AppCompatActivity {
@@ -14,8 +14,13 @@ public class DisplayImageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_image);
 
-        ZoomageView imageDisplayed = findViewById(R.id.display_photo_image_view);
+        Intent intent = getIntent();
+        int position = intent.getIntExtra("position",0);
 
-        Glide.with(this).load(getIntent().getIntExtra("id",0)).into(imageDisplayed);
+        ViewPager viewPager = findViewById(R.id.display_image_view_pager);
+        DisplayPhotosAdapter adapter = new DisplayPhotosAdapter(this);
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(position);
+
     }
 }
