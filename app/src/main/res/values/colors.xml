@@ -1,8 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#02a7ee</color>
-    <color name="colorPrimaryDark">#0076b8</color>
-    <color name="colorAccent">#ff9400</color>
+    <!--Crystal Blue-->
+    <color name="blueColorPrimary">#02a7ee</color>
+    <color name="blueColorPrimaryDark">#0076b8</color>
+    <color name="blueColorAccent">#ff9400</color>
+
+    <!--Sunshine Orange-->
+    <color name="orangeColorPrimary">#f59733</color>
+    <color name="orangeColorPrimaryDark">#dc6428</color>
+    <color name="orangeColorAccent">#2c99e7</color>
+
+    <!--Bloody Red-->
+    <color name="redColorPrimary">#f1403d</color>
+    <color name="redColorPrimaryDark">#c3262e</color>
+    <color name="redColorAccent">#3deef1</color>
+
+    <!--Silver Gray-->
+    <color name="grayColorPrimary">#648383</color>
+    <color name="grayColorPrimaryDark">#3b4c4c</color>
+    <color name="grayColorAccent">#836473</color>
+
+    <!--Coral Green-->
+    <color name="greenColorPrimary">#6fc698</color>
+    <color name="greenColorPrimaryDark">#037c4a</color>
+    <color name="greenColorAccent">#c66f9e</color>
 
     <color name="colorBlackPrimary">#000</color>
 </resources>

@@ -6,6 +6,7 @@ import android.database.MergeCursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,9 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import tech.ducletran.travelgallery.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -63,37 +67,39 @@ public class PhotosAdapter extends BaseAdapter {
         @Override
         protected  Void doInBackground(Void... voids) {
             Uri uriExternal = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-            String[] projection = {MediaStore.MediaColumns.DATA, MediaStore.MediaColumns.DATE_MODIFIED};
+            String[] projection = {MediaStore.MediaColumns.DATA,
+                                MediaStore.Images.Media.BUCKET_DISPLAY_NAME,MediaStore.Images.Media.DATE_TAKEN};
 
             Cursor cursor = context.getContentResolver().query(uriExternal,projection,
                     null, null,null);
 
             while (cursor.moveToNext() ) {
                 String path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA));
-                String timestamp = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATE_MODIFIED));
-                String[] photoData = {path,timestamp};
-                photos_link.add(photoData);
+                String timestamp = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_TAKEN));
+                String albumName = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME));
+                if (albumName.equals("Facebook") || albumName.equals("Camera")) {
+                    String[] photoData = {path,timestamp,albumName};
+                    photos_link.add(photoData);
+                }
+
             }
             cursor.close();
 
-            Collections.sort(photos_link, new TimeComparator());
+            Comparator<String[]> comparator = new Comparator<String[]>() {
+                @Override
+                public int compare(String[] o1, String[] o2) {
+                    if (Long.parseLong(o1[1]) > Long.parseLong(o2[1])) {
+                        return -1;
+                    } else if (Long.parseLong(o1[1]) < Long.parseLong(o2[1])) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+            };
+
+            Collections.sort(photos_link, comparator);
             return null;
-        }
-
-        private class TimeComparator implements Comparator<String[]> {
-
-            public TimeComparator() {}
-
-            @Override
-            public int compare(String[] o1, String[] o2) {
-                long date1 = Long.parseLong(o1[1]);
-                long date2 = Long.parseLong(o2[1]);
-
-                Date dateOne = new Date(date1);
-                Date dateTwo = new Date(date2);
-
-                return dateTwo.compareTo(dateOne);
-            }
         }
 
     }

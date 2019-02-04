@@ -12,6 +12,10 @@ import com.bumptech.glide.Glide;
 import com.jsibbold.zoomage.ZoomageView;
 import tech.ducletran.travelgallery.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class DisplayPhotosAdapter extends PagerAdapter {
 
     private Activity activity;
@@ -20,7 +24,6 @@ public class DisplayPhotosAdapter extends PagerAdapter {
     public DisplayPhotosAdapter(Activity activity) {
         this.activity = activity;
         layoutInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        Log.d("HELLO","HELLO " + PhotosAdapter.photos_link.size());
 
     }
 
@@ -41,8 +44,6 @@ public class DisplayPhotosAdapter extends PagerAdapter {
 
         ZoomageView imageView = itemView.findViewById(R.id.display_photo_image_view);
         Glide.with(activity).load(PhotosAdapter.photos_link.get(position)[0]).into(imageView);
-        Log.d("HELLO","HELLO " + PhotosAdapter.photos_link.get(position)[0]);
-
         container.addView(itemView);
         return itemView;
     }

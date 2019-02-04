@@ -10,7 +10,7 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme">
+            android:theme="@style/CrystalBlueAppTheme">
         <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -19,7 +19,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Activities.DisplayImageActivity" />
+        <activity android:name=".Activities.DisplayImageActivity"
+                    android:parentActivityName=".Activities.MainActivity"/>
+        <activity android:name=".Activities.SettingsActivity"
+                    android:parentActivityName=".Activities.MainActivity"
+                    android:label="@string/action_settings"/>
     </application>
 
 </manifest>

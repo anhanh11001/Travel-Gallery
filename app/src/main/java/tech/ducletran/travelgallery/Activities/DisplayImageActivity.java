@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import tech.ducletran.travelgallery.Adapter.DisplayPhotosAdapter;
 import tech.ducletran.travelgallery.R;
 
-public class DisplayImageActivity extends AppCompatActivity {
+public class DisplayImageActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
