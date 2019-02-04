@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
+import tech.ducletran.travelgallery.ImageData;
+import tech.ducletran.travelgallery.ImageHolder;
 import tech.ducletran.travelgallery.R;
 
 import java.text.DateFormat;
@@ -24,21 +26,18 @@ import java.util.Comparator;
 import java.util.Date;
 
 public class PhotosAdapter extends BaseAdapter {
-
-    public static ArrayList<String[]> photos_link = new ArrayList<>();
-
     private Context context;
 
     public PhotosAdapter(Context context) {
         this.context = context;
-        if (photos_link.size() == 0) {
+        if(ImageHolder.getImageDataList().size() == 0) {
             new LoadPhotos().execute();
         }
     }
 
     @Override
     public int getCount() {
-        return photos_link.size();
+        return ImageHolder.getImageDataList().size();
     }
 
     @Override
@@ -56,8 +55,7 @@ public class PhotosAdapter extends BaseAdapter {
         convertView = LayoutInflater.from(context).inflate(R.layout.photo_item_view,parent,false);
 
         ImageView imageView = convertView.findViewById(R.id.photo_item_image_view);
-        Glide.with(context).load(photos_link.get(position)[0]).into(imageView);
-
+        Glide.with(context).load(ImageHolder.getImageDataList().get(position).getPath()).into(imageView);
         return convertView;
     }
 
@@ -78,27 +76,12 @@ public class PhotosAdapter extends BaseAdapter {
                 String timestamp = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_TAKEN));
                 String albumName = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME));
                 if (albumName.equals("Facebook") || albumName.equals("Camera")) {
-                    String[] photoData = {path,timestamp,albumName};
-                    photos_link.add(photoData);
+                    ImageHolder.addImage(new ImageData(path,timestamp,albumName));
                 }
 
             }
             cursor.close();
-
-            Comparator<String[]> comparator = new Comparator<String[]>() {
-                @Override
-                public int compare(String[] o1, String[] o2) {
-                    if (Long.parseLong(o1[1]) > Long.parseLong(o2[1])) {
-                        return -1;
-                    } else if (Long.parseLong(o1[1]) < Long.parseLong(o2[1])) {
-                        return 1;
-                    } else {
-                        return 0;
-                    }
-                }
-            };
-
-            Collections.sort(photos_link, comparator);
+            ImageHolder.sortByDate();
             return null;
         }
 

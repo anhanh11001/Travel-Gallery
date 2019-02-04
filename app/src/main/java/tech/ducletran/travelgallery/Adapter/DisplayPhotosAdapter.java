@@ -4,17 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.jsibbold.zoomage.ZoomageView;
+import tech.ducletran.travelgallery.ImageHolder;
 import tech.ducletran.travelgallery.R;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class DisplayPhotosAdapter extends PagerAdapter {
 
@@ -29,7 +26,7 @@ public class DisplayPhotosAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return PhotosAdapter.photos_link.size();
+        return ImageHolder.getImageDataList().size();
     }
 
     @Override
@@ -43,7 +40,7 @@ public class DisplayPhotosAdapter extends PagerAdapter {
         View itemView = layoutInflater.inflate(R.layout.display_image_view,container,false);
 
         ZoomageView imageView = itemView.findViewById(R.id.display_photo_image_view);
-        Glide.with(activity).load(PhotosAdapter.photos_link.get(position)[0]).into(imageView);
+        Glide.with(activity).load(ImageHolder.getImageDataList().get(position).getPath()).into(imageView);
         container.addView(itemView);
         return itemView;
     }

@@ -2,9 +2,19 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <ListPreference
             android:key="@string/action_settings_color_theme_key"
-            android:title="Theme Color"
+            android:title="@string/action_settings_color_theme_title"
             android:entries="@array/Color"
             android:entryValues="@array/themeColorValues"
             android:defaultValue="1"
+            android:icon="@drawable/ic_theme_icon"
+    />
+
+    <SwitchPreference
+            android:key="@string/action_settings_sort_key"
+            android:title="@string/action_settings_sort_title"
+            android:defaultValue="true"
+            android:switchTextOn="@string/action_settings_sort_on"
+            android:switchTextOff="@string/action_settings_sort_off"
+            android:icon="@drawable/ic_sort_by_date_icon"
     />
 </PreferenceScreen>
