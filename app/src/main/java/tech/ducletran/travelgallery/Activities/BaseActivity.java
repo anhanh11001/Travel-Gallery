@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import tech.ducletran.travelgallery.ImageHolder;
 import tech.ducletran.travelgallery.R;
 
 public abstract class BaseActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {

@@ -9,6 +9,15 @@
             android:icon="@drawable/ic_theme_icon"
     />
 
+    <ListPreference
+            android:key="@string/action_settings_columns_key"
+            android:title="@string/action_settings_columns_title"
+            android:entries="@array/columns"
+            android:entryValues="@array/columns"
+            android:defaultValue="4"
+            android:icon="@drawable/ic_columns_icon" />
+    />
+
     <SwitchPreference
             android:key="@string/action_settings_sort_key"
             android:title="@string/action_settings_sort_title"

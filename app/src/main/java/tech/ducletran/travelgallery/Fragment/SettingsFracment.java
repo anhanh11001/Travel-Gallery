@@ -39,20 +39,22 @@ public class SettingsFracment extends PreferenceFragmentCompat  implements Share
 
     }
 
-
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(getString(R.string.action_settings_sort_key))) {
             boolean sorted = sharedPreferences.getBoolean(key,true);
             if (sorted) {
-                ImageHolder.sortByDate();
                 findPreference(getString(R.string.action_settings_sort_key))
                         .setSummary(getString(R.string.action_settings_sort_on));
             } else {
-                ImageHolder.shuffle();
                 findPreference(getString(R.string.action_settings_sort_key))
                         .setSummary(getString(R.string.action_settings_sort_off));
             }
+        }
+
+        if (key.equals(getString(R.string.action_settings_columns_key))) {
+            int numColumns = Integer.parseInt(sharedPreferences.getString(key,"4"));
+            findPreference(key).setSummary(String.valueOf(numColumns));
         }
     }
 
