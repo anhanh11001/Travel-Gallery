@@ -19,10 +19,14 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Activities.DisplayImageActivity"/>
+        <activity android:name=".Activities.DisplayImageActivity"
+                android:parentActivityName=".Activities.MainActivity"/>
         <activity android:name=".Activities.SettingsActivity"
                     android:parentActivityName=".Activities.MainActivity"
                     android:label="@string/action_settings"/>
+
+        <activity android:name=".Activities.DisplayImageInfoActivity"
+                  android:parentActivityName=".Activities.DisplayImageActivity"/>
     </application>
 
 </manifest>

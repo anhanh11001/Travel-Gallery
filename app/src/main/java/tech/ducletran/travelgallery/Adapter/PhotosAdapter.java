@@ -47,7 +47,7 @@ public class PhotosAdapter extends BaseAdapter {
         convertView = LayoutInflater.from(context).inflate(R.layout.photo_item_view,parent,false);
 
         ImageView imageView = convertView.findViewById(R.id.photo_item_image_view);
-        Glide.with(context).load(ImageHolder.getImageDataList().get(position).getPath()).into(imageView);
+        Glide.with(context).load(ImageHolder.getImageDataList().get(position).getThumbnail()).into(imageView);
         return convertView;
     }
 
@@ -57,8 +57,14 @@ public class PhotosAdapter extends BaseAdapter {
         @Override
         protected  Void doInBackground(Void... voids) {
             Uri uriExternal = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-            String[] projection = {MediaStore.MediaColumns.DATA,
-                                MediaStore.Images.Media.BUCKET_DISPLAY_NAME,MediaStore.Images.Media.DATE_TAKEN};
+            String[] projection = { MediaStore.MediaColumns.DATA, // File path
+                                    MediaStore.Images.Media.BUCKET_DISPLAY_NAME, // Album name
+                                    MediaStore.Images.Media.DATE_TAKEN,          // Date taken
+                                    MediaStore.Images.Thumbnails.DATA,          // Thumbnail link
+                                    MediaStore.Images.Media.LATITUDE,           // Latitude
+                                    MediaStore.Images.Media.LONGITUDE,          // Longtitude
+                                    MediaStore.Images.Media.SIZE                // Size
+            };
 
             Cursor cursor = context.getContentResolver().query(uriExternal,projection,
                     null, null,null);
@@ -67,8 +73,12 @@ public class PhotosAdapter extends BaseAdapter {
                 String path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA));
                 String timestamp = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_TAKEN));
                 String albumName = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME));
+                String thumbnail = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Thumbnails.DATA));
+                String latitude = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.LATITUDE));
+                String longtitude = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.LONGITUDE));
+                String size = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE));
                 if (albumName.equals("Facebook") || albumName.equals("Camera")) {
-                    ImageHolder.addImage(new ImageData(path,timestamp));
+                    ImageHolder.addImage(new ImageData(path,timestamp,thumbnail,latitude,longtitude,size));
                 }
 
             }

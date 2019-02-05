@@ -2,12 +2,12 @@
 <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.jsibbold.zoomage.ZoomageView
+        android:layout_height="match_parent">
+    <tech.ducletran.travelgallery.CustomizedClass.CustomizedImageView
             android:background="@color/colorBlackPrimary"
             android:layout_gravity="center"
             android:id="@+id/display_photo_image_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:zoomage_restrictBounds="false"/>
+            android:layout_height="match_parent"/>
+
 </android.support.constraint.ConstraintLayout>

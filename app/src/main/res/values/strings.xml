@@ -34,5 +34,6 @@
     <string name="action_button_food">Food</string>
 
     <string name="action_settings_columns_title">Columns</string>
+    <string name="action_bar_button_delete_icon">Delete Icon</string>
 
 </resources>

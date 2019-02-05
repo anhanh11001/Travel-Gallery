@@ -1,11 +1,12 @@
 package tech.ducletran.travelgallery.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.util.Log;
+import android.support.v7.view.menu.MenuBuilder;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -49,32 +50,46 @@ public class DisplayImageActivity extends BaseActivity {
         View decorView = getWindow().getDecorView();
         if (actionBar.isShowing()) {
             int visibility = View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(visibility);
             actionBar.hide();
+            decorView.setSystemUiVisibility(visibility);
         } else {
             int visibility = View.SYSTEM_UI_FLAG_VISIBLE;
-            decorView.setSystemUiVisibility(visibility);
             actionBar.show();
+            decorView.setSystemUiVisibility(visibility);
         }
     }
 
+
+    @SuppressLint("RestrictedApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.display__image_activity_menu,menu);
+        if(menu instanceof MenuBuilder){
+            MenuBuilder m = (MenuBuilder) menu;
+            m.setOptionalIconsVisible(true);
+        }
         this.menu = menu;
         setActionBarItemView();
         return true;
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int currentPosition = viewPager.getCurrentItem();
         ImageData current = ImageHolder.getImageDataList().get(currentPosition);
         switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                break;
             case R.id.action_bar_button_info:
+                Intent intent = new Intent(this,DisplayImageInfoActivity.class);
+                intent.putExtra("image_info_date",current.getDateFormatted());
+                intent.putExtra("image_info_size",current.getSize());
+                intent.putExtra("image_info_longtitude",current.getLongtitude());
+                intent.putExtra("image_info_latitude",current.getLatitude());
+                intent.putExtra("image_info_display_image",current.getPath());
+                startActivity(intent);
                 break;
             case R.id.action_bar_button_delete:
                 break;
