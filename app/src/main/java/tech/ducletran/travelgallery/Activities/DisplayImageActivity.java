@@ -114,6 +114,5 @@ public class DisplayImageActivity extends BaseActivity {
                     (current.getIsPeople()) ? R.drawable.ic_people_filled_icon:R.drawable.ic_people_icon
             ));
         }
-
     }
 }

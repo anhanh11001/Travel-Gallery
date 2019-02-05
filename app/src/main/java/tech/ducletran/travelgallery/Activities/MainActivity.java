@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import tech.ducletran.travelgallery.Adapter.CategoryStatePageAdapter;
+import tech.ducletran.travelgallery.CustomizedClass.CustomViewPager;
 import tech.ducletran.travelgallery.R;
 
 public class MainActivity extends BaseActivity {
@@ -31,7 +32,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
 
-        ViewPager viewPager = findViewById(R.id.main_view_pager);
+        CustomViewPager viewPager = findViewById(R.id.main_view_pager);
         CategoryStatePageAdapter adapter = new CategoryStatePageAdapter(getSupportFragmentManager(),this);
 
         viewPager.setAdapter(adapter);

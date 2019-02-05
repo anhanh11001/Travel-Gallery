@@ -5,10 +5,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <View
-                android:layout_weight="3"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"/>
+
+
+        <android.support.v17.leanback.widget.HorizontalGridView
+                android:id="@+id/base_album_grid_view"
+                style="@style/AlbumHorizontalTheme"
+                android:layout_weight="4"
+        />
+
 
         <TextView
                 android:layout_weight="1"
@@ -17,10 +21,12 @@
                 android:layout_height="0dp"
                 android:text="PHOTOS BY PLACES"
         />
-        <View
+
+        <android.support.v17.leanback.widget.HorizontalGridView
+                android:id="@+id/location_album_grid_view"
+                style="@style/AlbumHorizontalTheme"
                 android:layout_weight="4"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"/>
+        />
 
         <TextView
                 android:layout_weight="1"
@@ -29,9 +35,12 @@
                 android:layout_height="0dp"
                 android:text="OTHER ALBUMS"
         />
-        <View
+
+        <android.support.v17.leanback.widget.HorizontalGridView
+                android:id="@+id/others_album_grid_view"
+                style="@style/AlbumHorizontalTheme"
                 android:layout_weight="4"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"/>
+
+        />
 
 </LinearLayout>
