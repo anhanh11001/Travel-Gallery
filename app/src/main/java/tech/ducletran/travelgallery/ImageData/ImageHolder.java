@@ -1,4 +1,4 @@
-package tech.ducletran.travelgallery;
+package tech.ducletran.travelgallery.ImageData;
 
 import java.util.*;
 
@@ -26,7 +26,6 @@ public class ImageHolder {
                 return o2.getDate().compareTo(o1.getDate());
             }
         });
-
     }
 
     public static void shuffle() {

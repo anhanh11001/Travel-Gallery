@@ -12,7 +12,7 @@ import tech.ducletran.travelgallery.Fragment.PhotosFragment;
 import tech.ducletran.travelgallery.Fragment.StoriesFracment;
 import tech.ducletran.travelgallery.R;
 
-public class CategoryStatePageAdapter extends FragmentPagerAdapter {
+public class CategoryStatePageAdapter extends FragmentPagerAdapter{
     private Context context;
     public CategoryStatePageAdapter(FragmentManager fm, Context context) {
         super(fm);

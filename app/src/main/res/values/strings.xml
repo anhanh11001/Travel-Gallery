@@ -25,5 +25,14 @@
     <string name="green_theme_name">Coral Green</string>
     <string name="gray_theme_name">Silver Gray</string>
     <string name="red_theme_name">Bloody Red</string>
+
+    <!--Name for action button-->
+    <string name="action_button_info">Info</string>
+    <string name="action_button_delete">Delete</string>
+    <string name="action_button_favorite">Favorite</string>
+    <string name="action_button_people">People</string>
+    <string name="action_button_food">Food</string>
+
     <string name="action_settings_columns_title">Columns</string>
+
 </resources>

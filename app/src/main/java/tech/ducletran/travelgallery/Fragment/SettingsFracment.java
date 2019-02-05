@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v14.preference.SwitchPreference;
 import android.support.v7.preference.*;
-import tech.ducletran.travelgallery.ImageHolder;
 import tech.ducletran.travelgallery.R;
 
 

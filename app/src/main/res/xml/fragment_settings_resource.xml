@@ -21,7 +21,6 @@
     <SwitchPreference
             android:key="@string/action_settings_sort_key"
             android:title="@string/action_settings_sort_title"
-            android:defaultValue="true"
             android:switchTextOn="@string/action_settings_sort_on"
             android:switchTextOff="@string/action_settings_sort_off"
             android:icon="@drawable/ic_sort_by_date_icon"

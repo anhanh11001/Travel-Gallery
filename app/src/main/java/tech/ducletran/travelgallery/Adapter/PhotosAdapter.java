@@ -1,29 +1,21 @@
 package tech.ducletran.travelgallery.Adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.MergeCursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
-import tech.ducletran.travelgallery.ImageData;
-import tech.ducletran.travelgallery.ImageHolder;
+import tech.ducletran.travelgallery.ImageData.ImageData;
+import tech.ducletran.travelgallery.ImageData.ImageHolder;
 import tech.ducletran.travelgallery.R;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 
 public class PhotosAdapter extends BaseAdapter {
     private Context context;
@@ -76,14 +68,23 @@ public class PhotosAdapter extends BaseAdapter {
                 String timestamp = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_TAKEN));
                 String albumName = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME));
                 if (albumName.equals("Facebook") || albumName.equals("Camera")) {
-                    ImageHolder.addImage(new ImageData(path,timestamp,albumName));
+                    ImageHolder.addImage(new ImageData(path,timestamp));
                 }
 
             }
             cursor.close();
-            ImageHolder.sortByDate();
+            setUpDateSorting();
             return null;
         }
 
+        private void setUpDateSorting() {
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+            Boolean isSorted = sharedPreferences.getBoolean(context.getString(R.string.action_settings_sort_key),true);
+            if (isSorted) {
+                ImageHolder.sortByDate();
+            } else {
+                ImageHolder.shuffle();
+            }
+        }
     }
 }

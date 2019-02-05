@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+            android:id="@+id/action_bar_button_info"
+            android:title="@string/action_button_info"
+            android:icon="@drawable/ic_info_icon"/>
+
+    <item
+            android:id="@+id/action_bar_button_delete"
+            android:title="@string/action_button_delete"
+            android:icon="@drawable/ic_delete_icon"/>
+
+    <item
+            app:showAsAction="always"
+            android:id="@+id/action_bar_button_favorite"
+            android:title="@string/action_button_favorite"
+            android:icon="@drawable/ic_favorite_icon"/>
+
+    <item
+            app:showAsAction="always"
+            android:id="@+id/action_bar_button_people"
+            android:title="@string/action_button_people"
+            android:icon="@drawable/ic_people_icon"/>
+
+    <item
+            app:showAsAction="always"
+            android:id="@+id/action_bar_button_food"
+            android:title="@string/action_button_food"
+            android:icon="@drawable/ic_food_icon"
+    />
+</menu>
