@@ -5,7 +5,9 @@ import java.util.*;
 public class ImageHolder {
 
     private static List<ImageData> imageDataList = new ArrayList<ImageData>();
+    private static Album[] baseAlbum = {new Album("Favorite"),new Album("Food"),new Album("People")};
 
+    public static Album[] getBaseAlbum() {return baseAlbum;}
     public static List<ImageData> getImageDataList() {
         return imageDataList;
     }

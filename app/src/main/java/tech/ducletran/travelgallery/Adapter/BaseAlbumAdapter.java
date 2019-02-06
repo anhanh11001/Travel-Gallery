@@ -7,13 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import tech.ducletran.travelgallery.R;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class BaseAlbumAdapter extends RecyclerView.Adapter<BaseAlbumAdapter.SimpleViewHolder> {
-
+    private static ClickListener clickListener;
     private Context context;
     private List<String> albumName = Arrays.asList("Favorite","Food","Friends/People");
 
@@ -39,15 +40,30 @@ public class BaseAlbumAdapter extends RecyclerView.Adapter<BaseAlbumAdapter.Simp
         return 3;
     }
 
-    public static class SimpleViewHolder extends RecyclerView.ViewHolder {
+    public void setOnItemClickListener(ClickListener clickListener) {
+        BaseAlbumAdapter.clickListener = clickListener;
+    }
+
+    public interface ClickListener {
+        void onItemClick(int position, View v);
+    }
+
+    public static class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView textView;
 
         public SimpleViewHolder(View view) {
             super(view);
+            view.setOnClickListener(this);
             this.textView = view.findViewById(R.id.album_item_title_text_view);
         }
         public TextView getTitleTextView() {
             return this.textView;
+        }
+
+
+        @Override
+        public void onClick(View v) {
+            clickListener.onItemClick(getAdapterPosition(),v);
         }
     }
 }

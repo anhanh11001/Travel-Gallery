@@ -15,8 +15,11 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import tech.ducletran.travelgallery.Activities.DisplayImageActivity;
 import tech.ducletran.travelgallery.Adapter.PhotosAdapter;
+import tech.ducletran.travelgallery.ImageData.ImageData;
 import tech.ducletran.travelgallery.ImageData.ImageHolder;
 import tech.ducletran.travelgallery.R;
+
+import java.util.List;
 
 public class PhotosFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener {
     private GridView gridView;
@@ -29,7 +32,9 @@ public class PhotosFragment extends Fragment implements SharedPreferences.OnShar
             return this.view;
         }
         view = inflater.inflate(R.layout.fragment_photos_view,container,false);
-        PhotosAdapter adapter = new PhotosAdapter(getActivity());
+        PhotosAdapter adapter = new PhotosAdapter(getActivity(),ImageHolder.getImageDataList());
+        DisplayImageActivity.setImageDataList(ImageHolder.getImageDataList());
+
         gridView = view.findViewById(R.id.photos_grid_view);
         gridView.setAdapter(adapter);
         setUpNumCols();
@@ -84,5 +89,11 @@ public class PhotosFragment extends Fragment implements SharedPreferences.OnShar
     public void onDestroyView() {
         super.onDestroyView();
         PreferenceManager.getDefaultSharedPreferences(getActivity()).unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        DisplayImageActivity.setImageDataList(ImageHolder.getImageDataList());
     }
 }

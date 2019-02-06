@@ -16,10 +16,20 @@ import tech.ducletran.travelgallery.ImageData.ImageData;
 import tech.ducletran.travelgallery.ImageData.ImageHolder;
 import tech.ducletran.travelgallery.R;
 
+import java.util.List;
+
 public class DisplayImageActivity extends BaseActivity {
 
     private Menu menu;
     private ViewPager viewPager;
+    private DisplayPhotosAdapter adapter;
+    private static boolean dataChanged = false;
+    private static List<ImageData> imageDataList;
+
+    public static void setImageDataList(List<ImageData> imageList) {
+        imageDataList = imageList;
+    }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,7 +50,8 @@ public class DisplayImageActivity extends BaseActivity {
             @Override
             public void onPageScrollStateChanged(int i) {}
         });
-        DisplayPhotosAdapter adapter = new DisplayPhotosAdapter(this);
+//        adapter = new DisplayPhotosAdapter(this,ImageHolder.getImageDataList());
+        adapter = new DisplayPhotosAdapter(this,imageDataList);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(position);
     }
@@ -79,8 +90,13 @@ public class DisplayImageActivity extends BaseActivity {
         int currentPosition = viewPager.getCurrentItem();
         ImageData current = ImageHolder.getImageDataList().get(currentPosition);
         switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
+            case android.R.id.home :
+                if (!dataChanged) {
+                    this.finish();
+                } else {
+                    dataChanged = false;
+                    return super.onOptionsItemSelected(item);
+                }
                 break;
             case R.id.action_bar_button_info:
                 Intent intent = new Intent(this,DisplayImageInfoActivity.class);
@@ -92,21 +108,40 @@ public class DisplayImageActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.action_bar_button_delete:
+                ImageHolder.removeImage(currentPosition);
+                adapter.notifyDataSetChanged();
+                dataChanged = true;
+                recreate();
                 break;
             case R.id.action_bar_button_food:
                 current.setFood();
-                item.setIcon(getDrawable((current.getIsFood()) ?
-                        R.drawable.ic_food_filled_icon:R.drawable.ic_food_icon));
+                if (current.getIsFood()) {
+                    item.setIcon(getDrawable(R.drawable.ic_food_filled_icon));
+                    ImageHolder.getBaseAlbum()[1].addToAlbum(current);
+                } else {
+                    item.setIcon(getDrawable(R.drawable.ic_food_icon));
+                    ImageHolder.getBaseAlbum()[1].removeFromAlbum(current);
+                }
                 break;
             case R.id.action_bar_button_favorite:
                 current.setFavorite();
-                item.setIcon(getDrawable((current.getIsFavorite()) ?
-                        R.drawable.ic_favorite_filled_icon:R.drawable.ic_favorite_icon));
+                if (current.getIsFavorite()) {
+                    item.setIcon(getDrawable(R.drawable.ic_favorite_filled_icon));
+                    ImageHolder.getBaseAlbum()[0].addToAlbum(current);
+                } else {
+                    item.setIcon(getDrawable(R.drawable.ic_favorite_icon));
+                    ImageHolder.getBaseAlbum()[0].removeFromAlbum(current);
+                }
                 break;
             case R.id.action_bar_button_people:
                 current.setPeople();
-                item.setIcon(getDrawable((current.getIsPeople()) ?
-                        R.drawable.ic_people_filled_icon:R.drawable.ic_people_icon));
+                if (current.getIsPeople()) {
+                    item.setIcon(getDrawable(R.drawable.ic_people_filled_icon));
+                    ImageHolder.getBaseAlbum()[2].addToAlbum(current);
+                } else {
+                    item.setIcon(getDrawable(R.drawable.ic_people_icon));
+                    ImageHolder.getBaseAlbum()[2].removeFromAlbum(current);
+                }
                 break;
             default:
                 return super.onOptionsItemSelected(item);

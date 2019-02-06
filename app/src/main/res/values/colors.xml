@@ -16,9 +16,9 @@
     <color name="redColorAccent">#3deef1</color>
 
     <!--Silver Gray-->
-    <color name="grayColorPrimary">#648383</color>
-    <color name="grayColorPrimaryDark">#3b4c4c</color>
-    <color name="grayColorAccent">#836473</color>
+    <color name="grayColorPrimary">#6a7b92</color>
+    <color name="grayColorPrimaryDark">#3c4654</color>
+    <color name="grayColorAccent">#92816a</color>
 
     <!--Coral Green-->
     <color name="greenColorPrimary">#6fc698</color>

@@ -13,21 +13,25 @@ import tech.ducletran.travelgallery.ImageData.ImageData;
 import tech.ducletran.travelgallery.ImageData.ImageHolder;
 import tech.ducletran.travelgallery.R;
 
+import java.util.List;
+
 
 public class DisplayPhotosAdapter extends PagerAdapter {
 
     private DisplayImageActivity activity;
     private LayoutInflater layoutInflater;
+    private List<ImageData> imageDataList;
 
-    public DisplayPhotosAdapter(DisplayImageActivity activity) {
+    public DisplayPhotosAdapter(DisplayImageActivity activity, List<ImageData> imageDataList) {
         this.activity = activity;
+        this.imageDataList = imageDataList;
         layoutInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
 
     @Override
     public int getCount() {
-        return ImageHolder.getImageDataList().size();
+        return imageDataList.size();
     }
 
     @Override
@@ -41,7 +45,7 @@ public class DisplayPhotosAdapter extends PagerAdapter {
         View itemView = layoutInflater.inflate(R.layout.display_image_view,container,false);
         CustomizedImageView imageView = itemView.findViewById(R.id.display_photo_image_view);
         imageView.setActivity(activity);
-        ImageData currentImage = ImageHolder.getImageDataList().get(position);
+        ImageData currentImage = imageDataList.get(position);
         Glide.with(activity).load(currentImage.getPath()).into(imageView);
         container.addView(itemView);
         return itemView;

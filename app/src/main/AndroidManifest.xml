@@ -27,6 +27,8 @@
 
         <activity android:name=".Activities.DisplayImageInfoActivity"
                   android:parentActivityName=".Activities.DisplayImageActivity"/>
+        <activity android:name=".Activities.DisplayAlbumImagesActivity"
+                  android:parentActivityName=".Activities.MainActivity"/>
     </application>
 
 </manifest>

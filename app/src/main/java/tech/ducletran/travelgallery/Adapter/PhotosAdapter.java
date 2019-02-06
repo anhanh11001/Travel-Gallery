@@ -17,19 +17,23 @@ import tech.ducletran.travelgallery.ImageData.ImageData;
 import tech.ducletran.travelgallery.ImageData.ImageHolder;
 import tech.ducletran.travelgallery.R;
 
+import java.util.List;
+
 public class PhotosAdapter extends BaseAdapter {
     private Context context;
+    private List<ImageData> imageDataList;
 
-    public PhotosAdapter(Context context) {
+    public PhotosAdapter(Context context, List<ImageData> imageDataList) {
         this.context = context;
-        if(ImageHolder.getImageDataList().size() == 0) {
+        this.imageDataList = imageDataList;
+        if(imageDataList.size() == 0 && imageDataList == ImageHolder.getImageDataList()) {
             new LoadPhotos().execute();
         }
     }
 
     @Override
     public int getCount() {
-        return ImageHolder.getImageDataList().size();
+        return imageDataList.size();
     }
 
     @Override
@@ -47,7 +51,7 @@ public class PhotosAdapter extends BaseAdapter {
         convertView = LayoutInflater.from(context).inflate(R.layout.photo_item_view,parent,false);
 
         ImageView imageView = convertView.findViewById(R.id.photo_item_image_view);
-        Glide.with(context).load(ImageHolder.getImageDataList().get(position).getThumbnail()).into(imageView);
+        Glide.with(context).load(imageDataList.get(position).getThumbnail()).into(imageView);
         return convertView;
     }
 
