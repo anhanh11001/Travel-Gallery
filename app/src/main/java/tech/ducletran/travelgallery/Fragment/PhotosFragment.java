@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,7 @@ import java.util.ArrayList;
 
 public class PhotosFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener,
         LoaderManager.LoaderCallbacks<ArrayList<ImageData>> {
-    private static boolean arePhotoChanged = false;
+    private static boolean isPhotoFragmentChanged = false;
 
     private GridView gridView;
     private LinearLayout loadingLayout;
@@ -47,7 +46,7 @@ public class PhotosFragment extends Fragment implements SharedPreferences.OnShar
         loadingLayout = view.findViewById(R.id.photos_loading_layout);
         emptyView = view.findViewById(R.id.photos_empty_view);
         emptyView.setVisibility(View.INVISIBLE);
-
+        
         gridView.setAdapter(adapter);
         setUpNumCols();
 
@@ -108,16 +107,16 @@ public class PhotosFragment extends Fragment implements SharedPreferences.OnShar
         PreferenceManager.getDefaultSharedPreferences(getActivity()).unregisterOnSharedPreferenceChangeListener(this);
     }
 
-    public static void setArePhotoChanged() {
-        arePhotoChanged = true;
+    public static void setPhotoFragmentChanged() {
+        isPhotoFragmentChanged = true;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (arePhotoChanged) {
+        if (isPhotoFragmentChanged) {
             getActivity().recreate();
-            arePhotoChanged = false;
+            isPhotoFragmentChanged = false;
             adapter.notifyDataSetChanged();
         }
         DisplayImageActivity.setImageDataList(ImageManager.getImageDataList());

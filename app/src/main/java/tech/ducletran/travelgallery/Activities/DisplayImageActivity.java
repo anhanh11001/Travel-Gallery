@@ -115,7 +115,7 @@ public class DisplayImageActivity extends BaseActivity {
             case R.id.action_bar_button_delete: // this might need some changes
                 viewPager.setCurrentItem((currentPosition == 0) ?
                         1 : currentPosition - 1);
-                PhotosFragment.setArePhotoChanged();
+                PhotosFragment.setPhotoFragmentChanged();
                 DisplayAlbumImagesActivity.setAdapterChanged();
                 ImageManager.removeImage(current);
                 imageDataList.remove(currentPosition);

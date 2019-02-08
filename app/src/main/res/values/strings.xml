@@ -40,5 +40,6 @@
     <string name="action_rename_album">Rename</string>
     <string name="action_adding_image_to_album">Add Image</string>
     <string name="action_return_new_image_to_album">DONE</string>
+    <string name="action_setting_album_cover">Set Cover</string>
 
 </resources>

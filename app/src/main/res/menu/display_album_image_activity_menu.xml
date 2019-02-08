@@ -8,4 +8,8 @@
             android:title="@string/action_adding_image_to_album"
             android:icon="@drawable/ic_add_new_picture_icon"
             app:showAsAction="always"/>
+    <item
+            android:id="@+id/action_setting_album_cover"
+            android:title="@string/action_setting_album_cover"
+    />
 </menu>

@@ -14,7 +14,6 @@ import tech.ducletran.travelgallery.ImageData.AlbumManager;
 import tech.ducletran.travelgallery.R;
 
 public class DisplayAlbumImagesActivity extends BaseActivity {
-    private static final int REQUEST_CODE_FOR_NEW_IMAGE = 10;
     private Album currentAlbum;
     private PhotosAdapter adapter;
     private static boolean adapterChanged = false;
@@ -68,20 +67,11 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
             case R.id.action_album_rename:
                 renameAlbum();
                 return true;
+            case R.id.action_setting_album_cover:
+                setAlbumCover();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_FOR_NEW_IMAGE) {
-            if (resultCode == RESULT_OK) {
-                // Do something here
-            } else if (resultCode == RESULT_CANCELED) {
-
-            }
         }
     }
 
@@ -143,8 +133,12 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
                 albumPosition == AlbumManager.ALBUM_PEOPLE_CODE) {
             intent.putExtra("special_album",albumPosition);
         }
-//        if (currentAlbum.get)
-        startActivityForResult(intent,
-                REQUEST_CODE_FOR_NEW_IMAGE);
+        startActivity(intent);
+    }
+
+    private void setAlbumCover() {
+        Intent intent = new Intent(this,SetAlbumCoverActivity.class);
+        intent.putExtra("current_album_id",currentAlbum.getAlbumId());
+        startActivity(intent);
     }
 }

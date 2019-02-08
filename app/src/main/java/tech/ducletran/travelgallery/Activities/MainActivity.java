@@ -45,7 +45,6 @@ public class MainActivity extends BaseActivity {
 
         tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
-        setUpTabLayoutIcon();
 
         String[] PERMISSIONS = {Manifest.permission.READ_EXTERNAL_STORAGE};
         if (!(ActivityCompat.checkSelfPermission(this,PERMISSIONS[0]) == PackageManager.PERMISSION_GRANTED)) {
@@ -60,6 +59,7 @@ public class MainActivity extends BaseActivity {
         addAlbum = menu.findItem(R.id.menu_item_adding_albums);
         addImage = menu.findItem(R.id.menu_item_adding_images);
         addAlbum.setVisible(false);
+        setUpTabLayout();
 
         return true;
     }
@@ -112,13 +112,14 @@ public class MainActivity extends BaseActivity {
                     String size = returnCursor.getString(returnCursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE));
                     ImageManager.addImage(new ImageData(path,timestamp,thumbnail,latitude,longtitude,size));
                 }
-                PhotosFragment.setArePhotoChanged();
+                PhotosFragment.setPhotoFragmentChanged();
                 returnCursor.close();
             }
         }
     }
 
-    private void setUpTabLayoutIcon() {
+    private void setUpTabLayout() {
+        //Set up layout icon
         TypedValue typedValuePrimary = new TypedValue();
         TypedValue typedValuePrimaryDark = new TypedValue();
         Resources.Theme theme = this.getTheme();
@@ -133,14 +134,32 @@ public class MainActivity extends BaseActivity {
         tabLayout.getTabAt(3).setIcon(R.drawable.ic_map_tab_icon);
         tabLayout.setTabTextColors(getColor(R.color.colorBlackPrimary),colorPrimary);
 
-        //initial setUp
-        tabLayout.getTabAt(0).getIcon().setColorFilter(colorPrimary, PorterDuff.Mode.SRC_IN);
+        //initial setup
+        int currentTab = tabLayout.getSelectedTabPosition();
+        tabLayout.getTabAt(currentTab).getIcon().setColorFilter(colorPrimary, PorterDuff.Mode.SRC_IN);
+        addAlbum.setVisible(false);
+        addImage.setVisible(false);
+        switch (currentTab) {
+            case 0:
+                addImage.setVisible(true);
+                break;
+            case 1:
+                addAlbum.setVisible(true);
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                break;
+        }
 
-
+        // Tab Layout Listener
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 tab.getIcon().setColorFilter(colorPrimaryDark, PorterDuff.Mode.SRC_IN);
+
                 addAlbum.setVisible(false);
                 addImage.setVisible(false);
 

@@ -6,20 +6,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import tech.ducletran.travelgallery.ImageData.Album;
 import tech.ducletran.travelgallery.R;
 
-import java.util.Arrays;
 import java.util.List;
 
-public class BaseAlbumAdapter extends RecyclerView.Adapter<BaseAlbumAdapter.SimpleViewHolder> {
+public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.SimpleViewHolder> {
     private static ClickListener clickListener;
     private Context context;
-    private List<String> albumName = Arrays.asList("Favorite","Food","Friends/People");
+    private List<Album> albumList;
 
-    public BaseAlbumAdapter(Context context) {
+    public AlbumAdapter(Context context, List<Album> albumList) {
         this.context = context;
+        this.albumList = albumList;
     }
 
     @NonNull
@@ -32,16 +35,21 @@ public class BaseAlbumAdapter extends RecyclerView.Adapter<BaseAlbumAdapter.Simp
 
     @Override
     public void onBindViewHolder(@NonNull SimpleViewHolder viewHolder, int position) {
-        viewHolder.getTitleTextView().setText(albumName.get(position));
+        Album currentAlbum = albumList.get(position);
+        viewHolder.getTitleTextView().setText(currentAlbum.getAlbumName());
+        String albumCover = currentAlbum.getAlbumCover();
+        if (albumCover != null) {
+            Glide.with(context).load(albumCover).into(viewHolder.getImageView());
+        }
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return albumList.size();
     }
 
     public void setOnItemClickListener(ClickListener clickListener) {
-        BaseAlbumAdapter.clickListener = clickListener;
+        AlbumAdapter.clickListener = clickListener;
     }
 
     public interface ClickListener {
@@ -50,14 +58,20 @@ public class BaseAlbumAdapter extends RecyclerView.Adapter<BaseAlbumAdapter.Simp
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView textView;
+        private ImageView imageView;
 
-        public SimpleViewHolder(View view) {
+        private SimpleViewHolder(View view) {
             super(view);
             view.setOnClickListener(this);
             this.textView = view.findViewById(R.id.album_item_title_text_view);
+            this.imageView = view.findViewById(R.id.album_item_cover_image);
         }
-        public TextView getTitleTextView() {
+        private TextView getTitleTextView() {
             return this.textView;
+        }
+
+        private ImageView getImageView() {
+            return this.imageView;
         }
 
 

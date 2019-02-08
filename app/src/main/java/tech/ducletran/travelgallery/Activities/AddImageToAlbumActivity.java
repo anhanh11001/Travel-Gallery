@@ -1,8 +1,6 @@
 package tech.ducletran.travelgallery.Activities;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
@@ -27,6 +25,7 @@ public class AddImageToAlbumActivity extends BaseActivity {
     private Album currentAlbum;
     private ArrayList<Integer> imageAddedPositions = new ArrayList<Integer>();
     private int specialAlbumPosition;
+    private GradientDrawable drawable;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,7 +48,7 @@ public class AddImageToAlbumActivity extends BaseActivity {
         getTheme().resolveAttribute(R.attr.colorAccent,typedValueColor,true);
         @ColorInt int color = typedValueColor.data;
 
-        final GradientDrawable drawable = (GradientDrawable) getDrawable(R.drawable.helper_drawable_border);
+        drawable = (GradientDrawable) getDrawable(R.drawable.helper_drawable_border);
         drawable.setStroke(6,color);
 
         allPhotos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -69,6 +68,7 @@ public class AddImageToAlbumActivity extends BaseActivity {
                 }
             }
         });
+
     }
 
     @Override
@@ -136,6 +136,10 @@ public class AddImageToAlbumActivity extends BaseActivity {
             Glide.with(context)
                     .load(ImageManager.getImageDataList().get(position).getThumbnail())
                     .into(imageView);
+
+            if (imageAddedPositions.contains(position)) {
+                convertView.setForeground(drawable);
+            }
 
             return convertView;
         }

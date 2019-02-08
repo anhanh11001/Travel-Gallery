@@ -10,16 +10,29 @@ public class Album {
     private String albumName;
     private HashMap<Integer,ImageData> imageHashMap;
     private int albumId;
-    private int type;
+    private String albumCover;
 
     public Album(String name, int type) {
         this.albumName = name;
         this.imageHashMap = new HashMap<Integer,ImageData>();
         this.albumId = AlbumManager.generateId();
-        this.type = type;
+        this.albumCover = null;
         AlbumManager.registerAlbum(this);
+        if (type == ALBUM_TYPE_SPECIAL) {
+            AlbumManager.registerSpecialAlbum(this);
+        } else if (type == ALBUM_TYPE_LOCATION) {
+            AlbumManager.registerLocationAlbum(this);
+        } else if (type == ALBUM_TYPE_OTHER) {
+            AlbumManager.registerSpecialAlbum(this);
+        }
+
     }
 
+    public void setAlbumCover(String albumCover) {
+        this.albumCover = albumCover;
+    }
+
+    public String getAlbumCover() { return albumCover; }
 
     public int getAlbumId() {return albumId;}
     public String getAlbumName() {return albumName;}
