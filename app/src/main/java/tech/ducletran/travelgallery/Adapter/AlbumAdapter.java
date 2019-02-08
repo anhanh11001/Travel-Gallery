@@ -16,7 +16,7 @@ import tech.ducletran.travelgallery.R;
 import java.util.List;
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.SimpleViewHolder> {
-    private static ClickListener clickListener;
+    private ClickListener clickListener;
     private Context context;
     private List<Album> albumList;
 
@@ -49,14 +49,14 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.SimpleViewHo
     }
 
     public void setOnItemClickListener(ClickListener clickListener) {
-        AlbumAdapter.clickListener = clickListener;
+        this.clickListener = clickListener;
     }
 
     public interface ClickListener {
         void onItemClick(int position, View v);
     }
 
-    public static class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class SimpleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView textView;
         private ImageView imageView;
 

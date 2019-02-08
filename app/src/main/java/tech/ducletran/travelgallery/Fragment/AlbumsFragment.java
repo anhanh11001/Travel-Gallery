@@ -37,18 +37,34 @@ public class AlbumsFragment extends Fragment {
         locationAlbumGridView.setAdapter(locationAlbumAdapter);
         othersAlbumGridView.setAdapter(othersAlbumAdapter);
 
-        AlbumAdapter.ClickListener clickListener = new AlbumAdapter.ClickListener() {
+        AlbumAdapter.ClickListener specialClickListener = new AlbumAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v) {
                 Intent intent = new Intent(getActivity(),DisplayAlbumImagesActivity.class);
-                intent.putExtra("album_position",position);
+                intent.putExtra("album_id",AlbumManager.getSpecialAlbum().get(position).getAlbumId());
+                startActivity(intent);
+            }
+        };
+        AlbumAdapter.ClickListener locationClickListener = new AlbumAdapter.ClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                Intent intent = new Intent(getActivity(),DisplayAlbumImagesActivity.class);
+                intent.putExtra("album_id",AlbumManager.getLocationAlbum().get(position).getAlbumId());
+                startActivity(intent);
+            }
+        };
+        AlbumAdapter.ClickListener othersClickListener = new AlbumAdapter.ClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                Intent intent = new Intent(getActivity(),DisplayAlbumImagesActivity.class);
+                intent.putExtra("album_id",AlbumManager.getOthersAlbum().get(position).getAlbumId());
                 startActivity(intent);
             }
         };
 
-        specialAlbumAdapter.setOnItemClickListener(clickListener);
-        locationAlbumAdapter.setOnItemClickListener(clickListener);
-        othersAlbumAdapter.setOnItemClickListener(clickListener);
+        specialAlbumAdapter.setOnItemClickListener(specialClickListener);
+        locationAlbumAdapter.setOnItemClickListener(locationClickListener);
+        othersAlbumAdapter.setOnItemClickListener(othersClickListener);
 
         return view;
     }

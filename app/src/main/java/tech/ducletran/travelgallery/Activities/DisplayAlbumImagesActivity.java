@@ -17,7 +17,7 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
     private Album currentAlbum;
     private PhotosAdapter adapter;
     private static boolean adapterChanged = false;
-    private int albumPosition;
+    private int albumId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,8 +25,8 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
         setContentView(R.layout.fragment_photos_view);
 
         Intent intent = getIntent();
-        albumPosition = intent.getIntExtra("album_position",0);
-        currentAlbum = AlbumManager.getAlbum(albumPosition);
+        albumId = intent.getIntExtra("album_id",0);
+        currentAlbum = AlbumManager.getAlbum(albumId);
         adapter = new PhotosAdapter(this,
                 currentAlbum.getAlbumImageList());;
         DisplayImageActivity.setImageDataList(currentAlbum.getAlbumImageList());
@@ -42,7 +42,7 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(DisplayAlbumImagesActivity.this, DisplayImageActivity.class);
                 intent.putExtra("position",position);
-                intent.putExtra("album_come_from",albumPosition);
+                intent.putExtra("album_come_from_id", albumId);
                 startActivityForResult(intent,1);
             }
         });
@@ -128,10 +128,10 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
     private void addNewImage() {
         Intent intent = new Intent(this,AddImageToAlbumActivity.class);
         intent.putExtra("current_album_id",currentAlbum.getAlbumId());
-        if (albumPosition == AlbumManager.ALBUM_FAVORITE_CODE ||
-                albumPosition == AlbumManager.ALBUM_FOOD_CODE ||
-                albumPosition == AlbumManager.ALBUM_PEOPLE_CODE) {
-            intent.putExtra("special_album",albumPosition);
+        if (albumId == AlbumManager.ALBUM_FAVORITE_CODE ||
+                albumId == AlbumManager.ALBUM_FOOD_CODE ||
+                albumId == AlbumManager.ALBUM_PEOPLE_CODE) {
+            intent.putExtra("special_album", albumId);
         }
         startActivity(intent);
     }

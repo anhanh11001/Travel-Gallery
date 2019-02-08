@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <EditText
+            android:id="@+id/create_album_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+    />
+    <RadioGroup
+            android:id="@+id/create_album_radio_group"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/create_album_edit_text"
+    >
+        <View android:layout_width="0dp" android:layout_height="0dp"
+              android:layout_weight="1"/>
+        <RadioButton
+                android:id="@+id/create_location_album_radio_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/create_album_location"
+                android:layout_weight="1"
+                android:checked="true"
+        />
+        <View android:layout_width="0dp" android:layout_height="0dp"
+              android:layout_weight="1"/>
+        <RadioButton
+                android:layout_weight="1"
+                android:id="@+id/create_others_album_radio_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/create_album_others"
+        />
+        <View android:layout_width="0dp" android:layout_height="0dp"
+              android:layout_weight="1"/>
+    </RadioGroup>
+
+
+</android.support.constraint.ConstraintLayout>

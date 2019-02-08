@@ -41,5 +41,7 @@
     <string name="action_adding_image_to_album">Add Image</string>
     <string name="action_return_new_image_to_album">DONE</string>
     <string name="action_setting_album_cover">Set Cover</string>
+    <string name="create_album_location">Location Album</string>
+    <string name="create_album_others">Other Album</string>
 
 </resources>

@@ -43,7 +43,7 @@ public class DisplayImageActivity extends BaseActivity {
 
         Intent intent = getIntent();
         int position = intent.getIntExtra("position",0);
-        albumComeFrom = intent.getIntExtra("album_come_from",-1);
+        albumComeFrom = intent.getIntExtra("album_come_from_id",-1);
 
         viewPager = findViewById(R.id.display_image_view_pager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

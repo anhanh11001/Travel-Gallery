@@ -23,7 +23,7 @@ public class Album {
         } else if (type == ALBUM_TYPE_LOCATION) {
             AlbumManager.registerLocationAlbum(this);
         } else if (type == ALBUM_TYPE_OTHER) {
-            AlbumManager.registerSpecialAlbum(this);
+            AlbumManager.registerOthersAlbum(this);
         }
 
     }

@@ -1,6 +1,9 @@
 package tech.ducletran.travelgallery.Activities;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -14,12 +17,15 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.util.TypedValue;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.*;
+import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 import tech.ducletran.travelgallery.Adapter.CategoryStatePageAdapter;
 import tech.ducletran.travelgallery.CustomizedClass.CustomViewPager;
+import tech.ducletran.travelgallery.Fragment.AlbumsFragment;
 import tech.ducletran.travelgallery.Fragment.PhotosFragment;
+import tech.ducletran.travelgallery.ImageData.Album;
 import tech.ducletran.travelgallery.ImageData.ImageData;
 import tech.ducletran.travelgallery.ImageData.ImageManager;
 import tech.ducletran.travelgallery.R;
@@ -77,6 +83,44 @@ public class MainActivity extends BaseActivity {
             startActivity(new Intent(this,SettingsActivity.class));
             return true;
         case R.id.menu_item_adding_albums:
+            AlertDialog.Builder addAlbumAlertDialog = new AlertDialog.Builder(this);
+            addAlbumAlertDialog.setTitle("Create Album");
+            addAlbumAlertDialog.setMessage("What's this album about?");
+
+            View view = LayoutInflater.from(this).inflate(R.layout.dialog_create_album_layout,null);
+            addAlbumAlertDialog.setView(view);
+
+            final EditText editText = view.findViewById(R.id.create_album_edit_text);
+            final RadioGroup radioGroup = view.findViewById(R.id.create_album_radio_group);
+
+            final Context context = MainActivity.this;
+            addAlbumAlertDialog.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String albumName = editText.getText().toString();
+                    if (albumName.length()==0 || albumName.length() > 20) {
+                        Toast.makeText(context,"That's not a good album name",Toast.LENGTH_SHORT).show();
+                    } else {
+                        int checkedRadioId = radioGroup.getCheckedRadioButtonId();
+                        if (checkedRadioId == R.id.create_location_album_radio_button) {
+                            new Album(albumName,Album.ALBUM_TYPE_LOCATION);
+                        } else if (checkedRadioId == R.id.create_others_album_radio_button) {
+                            new Album(albumName,Album.ALBUM_TYPE_OTHER);
+                        }
+                        AlbumsFragment.setAlbumFragmentChanged();
+                        dialog.cancel();
+                    }
+                }
+            });
+
+            addAlbumAlertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            addAlbumAlertDialog.show();
             return true;
         case R.id.menu_item_adding_images:
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
