@@ -81,6 +81,7 @@ public class MainActivity extends BaseActivity {
         case R.id.menu_item_adding_images:
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("image/jpeg");
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
             intent.putExtra(Intent.EXTRA_LOCAL_ONLY,true);
             startActivityForResult(Intent.createChooser(intent,"Complete action using"),
                     REQUEST_CODE_FOR_NEW_IMAGE);
@@ -95,6 +96,9 @@ public class MainActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_FOR_NEW_IMAGE) {
+            if (resultCode == RESULT_CANCELED) {
+                return;
+            }
             Uri imageUri = data.getData();
             if (imageUri != null) {
                 Cursor returnCursor = getContentResolver()

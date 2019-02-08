@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+            android:id="@+id/action_album_rename"
+            android:title="@string/action_rename_album"/>
+    <item
+            android:id="@+id/action_adding_image_to_album"
+            android:title="@string/action_adding_image_to_album"
+            android:icon="@drawable/ic_add_new_picture_icon"
+            app:showAsAction="always"/>
+</menu>

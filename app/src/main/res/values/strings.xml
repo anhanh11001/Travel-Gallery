@@ -37,5 +37,7 @@
     <string name="action_bar_button_delete_icon">Delete Icon</string>
     <string name="action_adding_images">Add Images</string>
     <string name="actionAdding_albums">Adding album</string>
+    <string name="action_rename_album">Rename</string>
+    <string name="action_adding_image_to_album">Add Image</string>
 
 </resources>

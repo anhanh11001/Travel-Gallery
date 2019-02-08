@@ -42,6 +42,15 @@ public class Album {
         imageHashMap.remove(image.getImageId());
     }
 
+    // To rename, a new name must be different and has the number of character from 1-20
+    public boolean rename(String newName) {
+        if (newName.length() == 0 || newName.length() > 20) {
+            return false;
+        }
+        albumName = newName;
+        return true;
+    }
+
 
 
 }
