@@ -20,6 +20,7 @@ public class Album {
         AlbumManager.registerAlbum(this);
     }
 
+
     public int getAlbumId() {return albumId;}
     public String getAlbumName() {return albumName;}
 

@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.view.*;
 import android.widget.*;
 import tech.ducletran.travelgallery.Adapter.PhotosAdapter;
@@ -15,9 +14,11 @@ import tech.ducletran.travelgallery.ImageData.AlbumManager;
 import tech.ducletran.travelgallery.R;
 
 public class DisplayAlbumImagesActivity extends BaseActivity {
+    private static final int REQUEST_CODE_FOR_NEW_IMAGE = 10;
     private Album currentAlbum;
     private PhotosAdapter adapter;
     private static boolean adapterChanged = false;
+    private int albumPosition;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,7 +26,7 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
         setContentView(R.layout.fragment_photos_view);
 
         Intent intent = getIntent();
-        final int albumPosition = intent.getIntExtra("album_position",0);
+        albumPosition = intent.getIntExtra("album_position",0);
         currentAlbum = AlbumManager.getAlbum(albumPosition);
         adapter = new PhotosAdapter(this,
                 currentAlbum.getAlbumImageList());;
@@ -62,47 +63,26 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
                 finish();
                 return true;
             case R.id.action_adding_image_to_album:
+                addNewImage();
                 return true;
             case R.id.action_album_rename:
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-                alertDialog.setTitle("Rename Album");
-                alertDialog.setMessage("Please enter a valid album name");
-
-                View view = LayoutInflater.from(this).inflate(R.layout.dialog_rename_album_layout,null);
-
-                final EditText albumNameEditText = view.findViewById(R.id.album_rename_edit_text);
-                albumNameEditText.setSingleLine();
-                albumNameEditText.setText(currentAlbum.getAlbumName());
-
-                alertDialog.setView(view);
-
-                final Context context = DisplayAlbumImagesActivity.this;
-                alertDialog.setPositiveButton("Rename", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (currentAlbum.rename(albumNameEditText.getText().toString())) {
-                            getSupportActionBar().setTitle(currentAlbum.getAlbumName());
-                            dialog.cancel();
-                        } else {
-                            Toast.makeText(context,"This is not a good name for album", Toast.LENGTH_SHORT)
-                                    .show();
-                        }
-                    }
-                });
-
-                alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                alertDialog.show();
+                renameAlbum();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_FOR_NEW_IMAGE) {
+            if (resultCode == RESULT_OK) {
+                // Do something here
+            } else if (resultCode == RESULT_CANCELED) {
+
+            }
+        }
     }
 
     @Override
@@ -118,5 +98,53 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
 
     public static void setAdapterChanged() {
         adapterChanged = true;
+    }
+
+    private void renameAlbum() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Rename Album");
+        alertDialog.setMessage("Please enter a valid album name");
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_rename_album_layout,null);
+        final EditText albumNameEditText = view.findViewById(R.id.album_rename_edit_text);
+        albumNameEditText.setSingleLine();
+        albumNameEditText.setText(currentAlbum.getAlbumName());
+
+        alertDialog.setView(view);
+
+        final Context context = DisplayAlbumImagesActivity.this;
+        alertDialog.setPositiveButton("Rename", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (currentAlbum.rename(albumNameEditText.getText().toString())) {
+                    getSupportActionBar().setTitle(currentAlbum.getAlbumName());
+                    dialog.cancel();
+                } else {
+                    Toast.makeText(context,"This is not a good name for album", Toast.LENGTH_SHORT)
+                            .show();
+                }
+            }
+        });
+
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        alertDialog.show();
+    }
+
+    private void addNewImage() {
+        Intent intent = new Intent(this,AddImageToAlbumActivity.class);
+        intent.putExtra("current_album_id",currentAlbum.getAlbumId());
+        if (albumPosition == AlbumManager.ALBUM_FAVORITE_CODE ||
+                albumPosition == AlbumManager.ALBUM_FOOD_CODE ||
+                albumPosition == AlbumManager.ALBUM_PEOPLE_CODE) {
+            intent.putExtra("special_album",albumPosition);
+        }
+//        if (currentAlbum.get)
+        startActivityForResult(intent,
+                REQUEST_CODE_FOR_NEW_IMAGE);
     }
 }

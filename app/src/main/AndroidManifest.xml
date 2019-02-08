@@ -28,6 +28,8 @@
                   android:parentActivityName=".Activities.DisplayImageActivity"/>
         <activity android:name=".Activities.DisplayAlbumImagesActivity"
                   android:parentActivityName=".Activities.MainActivity"/>
+        <activity android:name=".Activities.AddImageToAlbumActivity"
+                  android:parentActivityName=".Activities.DisplayAlbumImagesActivity"/>
     </application>
 
 </manifest>
