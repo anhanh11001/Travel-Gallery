@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_item_settings"
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+            android:id="@+id/menu_item_settings"
             android:title="@string/action_settings"/>
+    <item
+            android:id="@+id/menu_item_adding_albums"
+            android:title="@string/actionAdding_albums"
+            android:icon="@drawable/ic_add_to_album_icon"
+            app:showAsAction="always"
+    />
+
+    <item
+            android:id="@+id/menu_item_adding_images"
+            android:title="@string/action_adding_images"
+            android:icon="@drawable/ic_add_new_picture_icon"
+            app:showAsAction="always"
+    />
+
 </menu>

@@ -1,36 +1,47 @@
 package tech.ducletran.travelgallery.ImageData;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Album {
-    private String albumName;
-    private List<ImageData> imageList;
+    public static int ALBUM_TYPE_SPECIAL = 0;
+    public static int ALBUM_TYPE_LOCATION = 1;
+    public static int ALBUM_TYPE_OTHER = 2;
 
-    public Album(String name) {
+    private String albumName;
+    private HashMap<Integer,ImageData> imageHashMap;
+    private int albumId;
+    private int type;
+
+    public Album(String name, int type) {
         this.albumName = name;
-        imageList = new ArrayList<ImageData>();
+        this.imageHashMap = new HashMap<Integer,ImageData>();
+        this.albumId = AlbumManager.generateId();
+        this.type = type;
+        AlbumManager.registerAlbum(this);
     }
 
+    public int getAlbumId() {return albumId;}
     public String getAlbumName() {return albumName;}
 
-    public List<ImageData> getAlbumImageList() {return imageList;}
+    public ArrayList<ImageData> getAlbumImageList() {
+        ArrayList<ImageData> imageList = new ArrayList<ImageData>(imageHashMap.values());
+        Collections.sort(imageList, new Comparator<ImageData>() {
+            @Override
+            public int compare(ImageData o1, ImageData o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });
+        return imageList;
+    }
 
     public void addToAlbum(ImageData image) {
-        imageList.add(image);
+        imageHashMap.put(image.getImageId(),image);
     }
 
-    public void removeFromAlbum(int index) {
-        imageList.remove(index);
+    public void removeFromAlbum(ImageData image) {
+        imageHashMap.remove(image.getImageId());
     }
 
-    public void removeFromAlbum(ImageData imageData) {
-        for (ImageData image:imageList) {
-            if (image == imageData) {
-                imageList.remove(image);
-                break;
-            }
-        }
-    }
+
 
 }

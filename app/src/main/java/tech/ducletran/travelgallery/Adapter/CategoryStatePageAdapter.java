@@ -1,7 +1,6 @@
 package tech.ducletran.travelgallery.Adapter;
 
 import android.content.Context;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,10 +11,13 @@ import tech.ducletran.travelgallery.Fragment.PhotosFragment;
 import tech.ducletran.travelgallery.Fragment.StoriesFracment;
 import tech.ducletran.travelgallery.R;
 
+
 public class CategoryStatePageAdapter extends FragmentPagerAdapter{
     private Context context;
+    private FragmentManager fm;
     public CategoryStatePageAdapter(FragmentManager fm, Context context) {
         super(fm);
+        this.fm = fm;
         this.context = context;
     }
     @Override

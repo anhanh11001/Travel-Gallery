@@ -35,5 +35,7 @@
 
     <string name="action_settings_columns_title">Columns</string>
     <string name="action_bar_button_delete_icon">Delete Icon</string>
+    <string name="action_adding_images">Add Images</string>
+    <string name="actionAdding_albums">Adding album</string>
 
 </resources>

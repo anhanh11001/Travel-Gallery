@@ -10,7 +10,6 @@ import com.bumptech.glide.Glide;
 import tech.ducletran.travelgallery.Activities.DisplayImageActivity;
 import tech.ducletran.travelgallery.CustomizedClass.CustomizedImageView;
 import tech.ducletran.travelgallery.ImageData.ImageData;
-import tech.ducletran.travelgallery.ImageData.ImageHolder;
 import tech.ducletran.travelgallery.R;
 
 import java.util.List;
@@ -56,5 +55,12 @@ public class DisplayPhotosAdapter extends PagerAdapter {
         container.removeView((View) object);
     }
 
-
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        if (imageDataList.contains(object)) {
+            return imageDataList.indexOf(object);
+        } else {
+            return POSITION_NONE;
+        }
+    }
 }

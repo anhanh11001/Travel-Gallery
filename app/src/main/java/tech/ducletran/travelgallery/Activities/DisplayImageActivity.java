@@ -5,15 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.view.menu.MenuBuilder;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 import tech.ducletran.travelgallery.Adapter.DisplayPhotosAdapter;
+import tech.ducletran.travelgallery.Fragment.PhotosFragment;
+import tech.ducletran.travelgallery.ImageData.AlbumManager;
 import tech.ducletran.travelgallery.ImageData.ImageData;
-import tech.ducletran.travelgallery.ImageData.ImageHolder;
+import tech.ducletran.travelgallery.ImageData.ImageManager;
 import tech.ducletran.travelgallery.R;
 
 import java.util.List;
@@ -25,6 +27,7 @@ public class DisplayImageActivity extends BaseActivity {
     private DisplayPhotosAdapter adapter;
     private static boolean dataChanged = false;
     private static List<ImageData> imageDataList;
+    private int albumComeFrom;
 
     public static void setImageDataList(List<ImageData> imageList) {
         imageDataList = imageList;
@@ -36,8 +39,11 @@ public class DisplayImageActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_image);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Intent intent = getIntent();
         int position = intent.getIntExtra("position",0);
+        albumComeFrom = intent.getIntExtra("album_come_from",-1);
 
         viewPager = findViewById(R.id.display_image_view_pager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -50,14 +56,13 @@ public class DisplayImageActivity extends BaseActivity {
             @Override
             public void onPageScrollStateChanged(int i) {}
         });
-//        adapter = new DisplayPhotosAdapter(this,ImageHolder.getImageDataList());
         adapter = new DisplayPhotosAdapter(this,imageDataList);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(position);
     }
 
     public void toggleActionBar() {
-        ActionBar actionBar = getSupportActionBar();
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         View decorView = getWindow().getDecorView();
         if (actionBar.isShowing()) {
             int visibility = View.SYSTEM_UI_FLAG_FULLSCREEN;
@@ -87,17 +92,17 @@ public class DisplayImageActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            if (!(imageDataList == ImageManager.getImageDataList()) && dataChanged) {
+                DisplayAlbumImagesActivity.setAdapterChanged();
+                dataChanged = false;
+            }
+            return true;
+        }
         int currentPosition = viewPager.getCurrentItem();
-        ImageData current = ImageHolder.getImageDataList().get(currentPosition);
+        ImageData current = imageDataList.get(currentPosition);
         switch (item.getItemId()) {
-            case android.R.id.home :
-                if (!dataChanged) {
-                    this.finish();
-                } else {
-                    dataChanged = false;
-                    return super.onOptionsItemSelected(item);
-                }
-                break;
             case R.id.action_bar_button_info:
                 Intent intent = new Intent(this,DisplayImageInfoActivity.class);
                 intent.putExtra("image_info_date",current.getDateFormatted());
@@ -107,40 +112,99 @@ public class DisplayImageActivity extends BaseActivity {
                 intent.putExtra("image_info_display_image",current.getPath());
                 startActivity(intent);
                 break;
-            case R.id.action_bar_button_delete:
-                ImageHolder.removeImage(currentPosition);
+            case R.id.action_bar_button_delete: // this might need some changes
+                viewPager.setCurrentItem((currentPosition == 0) ?
+                        1 : currentPosition - 1);
+                PhotosFragment.setArePhotoChanged();
+                DisplayAlbumImagesActivity.setAdapterChanged();
+                ImageManager.removeImage(current);
+                imageDataList.remove(currentPosition);
                 adapter.notifyDataSetChanged();
                 dataChanged = true;
-                recreate();
+
+                if (currentPosition == 0) {
+                    viewPager.setCurrentItem(0);
+                }
+                if (imageDataList.size() == 0) {
+                    this.finish();
+
+                }
+
+                Toast.makeText(this,"Image deleted" ,Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_bar_button_food:
                 current.setFood();
                 if (current.getIsFood()) {
                     item.setIcon(getDrawable(R.drawable.ic_food_filled_icon));
-                    ImageHolder.getBaseAlbum()[1].addToAlbum(current);
+                    AlbumManager.getAlbum(AlbumManager.ALBUM_FOOD_CODE).addToAlbum(current);
                 } else {
                     item.setIcon(getDrawable(R.drawable.ic_food_icon));
-                    ImageHolder.getBaseAlbum()[1].removeFromAlbum(current);
+                    AlbumManager.getAlbum(AlbumManager.ALBUM_FOOD_CODE).removeFromAlbum(current);
+                    if (albumComeFrom == AlbumManager.ALBUM_FOOD_CODE) {
+                        dataChanged = true;
+                        imageDataList.remove(currentPosition);
+                        adapter.notifyDataSetChanged();
+                        if (imageDataList.size() > 0) {
+                            if (currentPosition == 0) {
+                                item.setIcon(getDrawable(R.drawable.ic_food_filled_icon));
+                            } else {
+                                viewPager.setCurrentItem(currentPosition-1);
+                            }
+                        } else {
+                            finish();
+                            DisplayAlbumImagesActivity.setAdapterChanged();
+                        }
+                    }
                 }
                 break;
             case R.id.action_bar_button_favorite:
                 current.setFavorite();
                 if (current.getIsFavorite()) {
                     item.setIcon(getDrawable(R.drawable.ic_favorite_filled_icon));
-                    ImageHolder.getBaseAlbum()[0].addToAlbum(current);
+                    AlbumManager.getAlbum(AlbumManager.ALBUM_FAVORITE_CODE).addToAlbum(current);
                 } else {
                     item.setIcon(getDrawable(R.drawable.ic_favorite_icon));
-                    ImageHolder.getBaseAlbum()[0].removeFromAlbum(current);
+                    AlbumManager.getAlbum(AlbumManager.ALBUM_FAVORITE_CODE).removeFromAlbum(current);
+                    if (albumComeFrom == AlbumManager.ALBUM_FAVORITE_CODE) {
+                        dataChanged = true;
+                        imageDataList.remove(currentPosition);
+                        adapter.notifyDataSetChanged();
+                        if (imageDataList.size() > 0) {
+                            if (currentPosition == 0) {
+                                item.setIcon(getDrawable(R.drawable.ic_favorite_filled_icon));
+                            } else {
+                                viewPager.setCurrentItem(currentPosition-1);
+                            }
+                        } else {
+                            finish();
+                            DisplayAlbumImagesActivity.setAdapterChanged();
+                        }
+                    }
                 }
                 break;
             case R.id.action_bar_button_people:
                 current.setPeople();
                 if (current.getIsPeople()) {
                     item.setIcon(getDrawable(R.drawable.ic_people_filled_icon));
-                    ImageHolder.getBaseAlbum()[2].addToAlbum(current);
+                    AlbumManager.getAlbum(AlbumManager.ALBUM_PEOPLE_CODE).addToAlbum(current);
                 } else {
                     item.setIcon(getDrawable(R.drawable.ic_people_icon));
-                    ImageHolder.getBaseAlbum()[2].removeFromAlbum(current);
+                    AlbumManager.getAlbum(AlbumManager.ALBUM_PEOPLE_CODE).removeFromAlbum(current);
+                    if (albumComeFrom == AlbumManager.ALBUM_PEOPLE_CODE) {
+                        dataChanged = true;
+                        imageDataList.remove(currentPosition);
+                        adapter.notifyDataSetChanged();
+                        if (imageDataList.size() > 0) {
+                            if (currentPosition == 0) {
+                                item.setIcon(getDrawable(R.drawable.ic_people_filled_icon));
+                            } else {
+                                viewPager.setCurrentItem(currentPosition-1);
+                            }
+                        } else {
+                            finish();
+                            DisplayAlbumImagesActivity.setAdapterChanged();
+                        }
+                    }
                 }
                 break;
             default:
@@ -152,7 +216,7 @@ public class DisplayImageActivity extends BaseActivity {
     private void setActionBarItemView() {
         if (menu != null) {
             int currentPosition = viewPager.getCurrentItem();
-            ImageData current = ImageHolder.getImageDataList().get(currentPosition);
+            ImageData current = imageDataList.get(currentPosition);
             menu.findItem(R.id.action_bar_button_favorite).setIcon(getDrawable(
                     (current.getIsFavorite()) ? R.drawable.ic_favorite_filled_icon:R.drawable.ic_favorite_icon
             ));

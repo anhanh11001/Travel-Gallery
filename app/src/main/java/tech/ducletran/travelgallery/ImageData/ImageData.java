@@ -16,6 +16,7 @@ public class ImageData {
     private boolean isPeople;
     private boolean isFood;
     private boolean isFavorite;
+    private int imageId;
 
     public ImageData(String path, String timeStamp, String thumbnail, String latitude, String longtitude, String size) {
         this.path = path;
@@ -27,6 +28,11 @@ public class ImageData {
         isFavorite = false;
         isFood = false;
         isPeople = false;
+        imageId = ImageManager.generateImageId();
+    }
+
+    public int getImageId() {
+        return imageId;
     }
 
     public Date getDate() {
@@ -43,18 +49,18 @@ public class ImageData {
         return path;
     }
 
-    public void setFood() {
-        isFood = !isFood;
-    }
-    public void setFavorite() {
-        isFavorite = !isFavorite;
-    }
+    public void setFood() { isFood = !isFood; }
+    public void setFavorite() { isFavorite = !isFavorite; }
     public void setPeople() {
         isPeople = !isPeople;
     }
     public String getLatitude() { return latitude; }
     public String getLongtitude() { return longtitude; }
     public String getThumbnail() { return thumbnail; }
+    public boolean isPeople() { return isPeople; }
+    public boolean isFood() { return isFood; }
+    public boolean isFavorite() { return isFavorite; }
+
 
     public String getSize() {
         String sizeFormatted =
