@@ -2,6 +2,7 @@ package tech.ducletran.travelgallery.Activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.*;
 import android.widget.EditText;
@@ -47,7 +49,7 @@ public class MainActivity extends BaseActivity {
         CategoryStatePageAdapter adapter = new CategoryStatePageAdapter(getSupportFragmentManager(),this);
 
         viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(1);
+        viewPager.setOffscreenPageLimit(3);
 
         tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
@@ -69,13 +71,7 @@ public class MainActivity extends BaseActivity {
 
         return true;
     }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-
-        return super.onPrepareOptionsMenu(menu);
-    }
-
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -124,10 +120,10 @@ public class MainActivity extends BaseActivity {
             return true;
         case R.id.menu_item_adding_images:
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("image/jpeg");
+            intent.setType("image/*");
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
             intent.putExtra(Intent.EXTRA_LOCAL_ONLY,true);
-            startActivityForResult(Intent.createChooser(intent,"Complete action using"),
+            startActivityForResult(Intent.createChooser(intent,"Select photos"),
                     REQUEST_CODE_FOR_NEW_IMAGE);
             return true;
         default:
@@ -143,21 +139,23 @@ public class MainActivity extends BaseActivity {
             if (resultCode == RESULT_CANCELED) {
                 return;
             }
-            Uri imageUri = data.getData();
-            if (imageUri != null) {
-                Cursor returnCursor = getContentResolver()
-                        .query(imageUri, ImageManager.projection, null, null, null);
-                while (returnCursor.moveToNext() ) {
+
+            ClipData clipData = data.getClipData();
+            if (clipData != null) {
+                for (int i = 0;i < clipData.getItemCount();i++) {
+                    Cursor returnCursor = getContentResolver().query(clipData.getItemAt(i).getUri(),
+                            ImageManager.projection,null,null,null);
+                    returnCursor.moveToFirst();
                     String path = returnCursor.getString(returnCursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA));
                     String timestamp = returnCursor.getString(returnCursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_TAKEN));
                     String thumbnail = returnCursor.getString(returnCursor.getColumnIndexOrThrow(MediaStore.Images.Thumbnails.DATA));
                     String latitude = returnCursor.getString(returnCursor.getColumnIndexOrThrow(MediaStore.Images.Media.LATITUDE));
                     String longtitude = returnCursor.getString(returnCursor.getColumnIndexOrThrow(MediaStore.Images.Media.LONGITUDE));
                     String size = returnCursor.getString(returnCursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE));
-                    ImageManager.addImage(new ImageData(path,timestamp,thumbnail,latitude,longtitude,size));
+                    ImageManager.addImage(new ImageData(this,path,timestamp,thumbnail,latitude,longtitude,size));
+                    returnCursor.close();
                 }
                 PhotosFragment.setPhotoFragmentChanged();
-                returnCursor.close();
             }
         }
     }

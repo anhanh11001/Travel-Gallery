@@ -2,7 +2,10 @@ package tech.ducletran.travelgallery.ImageData;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.media.Image;
 import android.net.Uri;
+import android.provider.BaseColumns;
 import android.provider.MediaStore;
 
 import java.util.*;
@@ -29,30 +32,41 @@ public class ImageManager {
         imageDataList = new ArrayList<ImageData>(imageDataHashMap.values());
     }
 
-    public static void removeImage(ImageData data) {
+    public static void removeImage(ImageData data,Context context) {
         imageDataHashMap.remove(data.getImageId());
         imageDataList = new ArrayList<ImageData>(imageDataHashMap.values());
         AlbumManager.removeImage(data);
+
+        String selection = AllImageFeederContract.FeedEntry._ID + " LIKE ?";
+        String[] selectionArgs = {Integer.toString(data.getImageId())};
+
+        new AllImageReaderDbHelper(context).getReadableDatabase().delete(
+                AllImageFeederContract.FeedEntry.TABLE_NAME,selection,selectionArgs
+        );
     }
 
     public static void loadImage(Context context) {
-        Uri uriExternal = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        SQLiteDatabase db = new AllImageReaderDbHelper(context).getReadableDatabase();
+        String[] projetion = {
+                BaseColumns._ID,
+                AllImageFeederContract.FeedEntry.COLUMN_IMAGE_PATH,
+                AllImageFeederContract.FeedEntry.COLUMN_IMAGE_THUMBNAIL,
+                AllImageFeederContract.FeedEntry.COLUMN_IMAGE_TIMESTAMP,
+                AllImageFeederContract.FeedEntry.COLUMN_IMAGE_LATITUDE,
+                AllImageFeederContract.FeedEntry.COLUMN_IMAGE_LONGTITUDE,
+                AllImageFeederContract.FeedEntry.COLUMN_IMAGE_SIZE
+        };
 
-
-        Cursor cursor = context.getContentResolver().query(uriExternal,projection,
-                null, null,null);
-
-        while (cursor.moveToNext() ) {
-            String path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA));
-            String timestamp = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_TAKEN));
-            String albumName = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME));
-            String thumbnail = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Thumbnails.DATA));
-            String latitude = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.LATITUDE));
-            String longtitude = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.LONGITUDE));
-            String size = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE));
-            if (albumName.equals("Facebook") || albumName.equals("Camera")) {
-                ImageManager.addImage(new ImageData(path,timestamp,thumbnail,latitude,longtitude,size));
-            }
+        Cursor cursor = db.query(AllImageFeederContract.FeedEntry.TABLE_NAME,projetion,null,null,null,null,null);
+        while (cursor.moveToNext()) {
+            int imageId = (int) cursor.getLong(cursor.getColumnIndexOrThrow(AllImageFeederContract.FeedEntry._ID));
+            String path = cursor.getString(cursor.getColumnIndexOrThrow(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_PATH));
+            String thumbnail = cursor.getString(cursor.getColumnIndexOrThrow(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_THUMBNAIL));
+            String time = cursor.getString(cursor.getColumnIndexOrThrow(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_TIMESTAMP));
+            String latittude = cursor.getString(cursor.getColumnIndexOrThrow(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_LATITUDE));
+            String longtitude = cursor.getString(cursor.getColumnIndexOrThrow(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_LONGTITUDE));
+            String size = cursor.getString(cursor.getColumnIndexOrThrow(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_SIZE));
+            ImageManager.addImage(new ImageData(path,time,thumbnail,latittude,longtitude,size,imageId));
 
         }
         cursor.close();

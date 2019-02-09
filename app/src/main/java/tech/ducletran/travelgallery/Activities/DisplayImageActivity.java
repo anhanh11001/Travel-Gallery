@@ -117,7 +117,7 @@ public class DisplayImageActivity extends BaseActivity {
                         1 : currentPosition - 1);
                 PhotosFragment.setPhotoFragmentChanged();
                 DisplayAlbumImagesActivity.setAdapterChanged();
-                ImageManager.removeImage(current);
+                ImageManager.removeImage(current,this);
                 imageDataList.remove(currentPosition);
                 adapter.notifyDataSetChanged();
                 dataChanged = true;
