@@ -44,4 +44,6 @@
     <string name="create_album_location">Location Album</string>
     <string name="create_album_others">Other Album</string>
 
+    <!--Google Map API-->
+    <string name="google_map_api_key">AIzaSyD91HQ94bNcZkeSRYaqanVM4B7jBvCO8Ys</string>
 </resources>

@@ -3,8 +3,6 @@ package tech.ducletran.travelgallery.ImageData;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.media.Image;
-import android.net.Uri;
 import android.provider.BaseColumns;
 import android.provider.MediaStore;
 
@@ -83,13 +81,6 @@ public class ImageManager {
 
     public static void shuffle() {
         Collections.shuffle(imageDataList);
-    }
-    public static int generateImageId() {
-        if (imageDataHashMap.size() ==0) {
-            return 0;
-        } else {
-            return Collections.max(imageDataHashMap.keySet()) + 1;
-        }
     }
 
 }

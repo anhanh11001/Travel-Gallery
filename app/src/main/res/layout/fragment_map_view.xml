@@ -2,13 +2,47 @@
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <TextView
-            android:gravity="center"
-            android:layout_gravity="center"
+
+    <fragment
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/google_map_fragment"
+            tools:context=".MapsActivity"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_weight="1"
+    />
+
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="This is Map' Fragment"/>
+            android:padding="16dp"
+            android:background="@drawable/helper_drawable_shadow"
+            android:elevation="4dp"
+    >
+        <TextView
+                android:id="@+id/map_cities_number_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Number of cities: XX"
+                android:textSize="14sp"
+                android:gravity="center"
+        />
+
+        <TextView
+                android:id="@+id/map_countries_number_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Number of countries: XX"
+                android:textSize="14sp"
+                android:gravity="center"
+        />
+    </LinearLayout>
 
 </LinearLayout>

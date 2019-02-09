@@ -3,6 +3,7 @@ package tech.ducletran.travelgallery.ImageData;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -32,7 +33,6 @@ public class ImageData {
         isFavorite = false;
         isFood = false;
         isPeople = false;
-//        imageId = ImageManager.generateImageId();
         imageId = insertNewImage(context,path,timeStamp,thumbnail,latitude,longtitude,size);
     }
 
@@ -51,6 +51,14 @@ public class ImageData {
 
     public int getImageId() {
         return imageId;
+    }
+
+    public ImageMarker getImageMarker() {
+        if (longtitude == null || latitude == null) {
+            return null;
+        }
+        return new ImageMarker(new LatLng(Double.valueOf(latitude),Double.valueOf(longtitude))
+                        ,"Title","Snippet",this);
     }
 
     public Date getDate() {

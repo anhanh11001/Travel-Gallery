@@ -10,14 +10,12 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.*;
 import android.widget.EditText;
@@ -32,9 +30,10 @@ import tech.ducletran.travelgallery.ImageData.ImageData;
 import tech.ducletran.travelgallery.ImageData.ImageManager;
 import tech.ducletran.travelgallery.R;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity  {
     static final int REQUEST_PERMISSION_KEY = 1;
     private static final int REQUEST_CODE_FOR_NEW_IMAGE = 10;
+
 
     private TabLayout tabLayout;
     private MenuItem addAlbum;
@@ -71,7 +70,7 @@ public class MainActivity extends BaseActivity {
 
         return true;
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
