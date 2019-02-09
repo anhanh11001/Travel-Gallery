@@ -14,7 +14,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.clustering.ClusterManager;
 import tech.ducletran.travelgallery.CustomizedClass.CustomClusterRenderer;
 import tech.ducletran.travelgallery.ImageData.ImageData;
@@ -34,11 +33,17 @@ public class MapFragment extends Fragment{
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
-                setClusterManager(googleMap,getActivity());
+                setClusterManager(googleMap,getContext());
             }
         });
 
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     private void setClusterManager(GoogleMap map, Context context) {
@@ -57,6 +62,7 @@ public class MapFragment extends Fragment{
                 clusterManager.addItem(image.getImageMarker());
             }
         }
+        clusterManager.cluster();
 
     }
 

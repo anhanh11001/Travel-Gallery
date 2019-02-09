@@ -41,6 +41,10 @@
                   android:parentActivityName=".Activities.DisplayAlbumImagesActivity"/>
         <activity android:name=".Activities.SetAlbumCoverActivity"
                   android:parentActivityName=".Activities.DisplayAlbumImagesActivity"/>
+        <activity android:name=".Activities.DisplaySingleImageMapActivity"
+                  android:parentActivityName=".Activities.MainActivity"/>
+        <activity android:name=".Activities.DisplayMultipleImageMapActivity"
+                  android:parentActivityName=".Activities.MainActivity"/>
     </application>
 
 </manifest>

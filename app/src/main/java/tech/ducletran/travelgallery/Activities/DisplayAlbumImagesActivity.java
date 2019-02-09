@@ -43,7 +43,7 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
                 Intent intent = new Intent(DisplayAlbumImagesActivity.this, DisplayImageActivity.class);
                 intent.putExtra("position",position);
                 intent.putExtra("album_come_from_id", albumId);
-                startActivityForResult(intent,1);
+                startActivity(intent);
             }
         });
     }

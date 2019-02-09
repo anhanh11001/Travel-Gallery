@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/map_marker_padding_dimension"
+>
+
+    <ImageView
+            android:id="@+id/cluster_marker_image_view"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="centerCrop"
+    />
+    <TextView
+            android:paddingTop="@dimen/map_marker_padding_dimension"
+            android:id="@+id/cluster_marker_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="43 images"
+            android:textStyle="italic|bold"
+            android:textSize="11sp"
+    />
+</LinearLayout>
