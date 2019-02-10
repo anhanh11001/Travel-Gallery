@@ -6,13 +6,19 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
+import tech.ducletran.travelgallery.ImageData.ImageData;
+import tech.ducletran.travelgallery.ImageData.ImageManager;
+import tech.ducletran.travelgallery.ImageData.ImageMarker;
 import tech.ducletran.travelgallery.R;
 
 public class DisplayImageInfoActivity extends BaseActivity {
+    private static boolean isChanged = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -20,23 +26,44 @@ public class DisplayImageInfoActivity extends BaseActivity {
         setContentView(R.layout.activity_display_image_info);
 
         Intent intent = getIntent();
+        final int imageId = intent.getIntExtra("image_info_id",0);
+        ImageData currentImage = ImageManager.getImageById(imageId);
         ImageView imageView = findViewById(R.id.display_info_image_view);
         TextView dateTextView = findViewById(R.id.display_info_date_text_view);
-        TextView longtitudeTextView = findViewById(R.id.display_info_longtitude_text_view);
-        TextView latitudeTextView = findViewById(R.id.display_info_latitude_text_view);
+        TextView locationTextView = findViewById(R.id.display_info_location_text_view);
         TextView sizeTextView = findViewById(R.id.display_info_size_text_view);
+        TextView descriptionTextView = findViewById(R.id.display_info_description_text_view);
+        TextView titleTextView = findViewById(R.id.display_info_title_text_view);
 
-        Glide.with(this).load(intent.getStringExtra("image_info_display_image")).into(imageView);
-        dateTextView.setText("DATE: " + intent.getStringExtra("image_info_date"));
-        sizeTextView.setText("SIZE: " + intent.getStringExtra("image_info_size"));
-        String latitude = intent.getStringExtra("image_info_longtitude");
-        String longtitude = intent.getStringExtra("image_info_latitude");
-        if (!TextUtils.isEmpty(latitude)) {
-            latitudeTextView.setText("Latitude: " + latitude);
+        Glide.with(this).load(currentImage.getPath()).into(imageView);
+        dateTextView.setText("DATE: " + currentImage.getDateFormatted());
+        sizeTextView.setText("SIZE: " + currentImage.getSize());
+        String latitude = currentImage.getLatitude();
+        String longtitude = currentImage.getLongtitude();
+        String description = currentImage.getDescription();
+        String title = currentImage.getTitle();
+
+        if (!TextUtils.isEmpty(latitude) && !TextUtils.isEmpty(longtitude)) {
+            locationTextView.setText("Location: " + latitude + " | " + longtitude);
         }
-        if (!TextUtils.isEmpty(longtitude)) {
-            longtitudeTextView.setText("Longtitude: " + longtitude);
+        if (!TextUtils.isEmpty(description)) {
+            descriptionTextView.setText("Description: " + description);
         }
+        if (!TextUtils.isEmpty(title)) {
+            titleTextView.setText(title);
+        }
+
+        ImageButton imageButton = findViewById(R.id.display_info_image_button);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DisplayImageInfoActivity.this,EditInfoActivity.class);
+                intent.putExtra("edit_info_id",imageId);
+
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -46,5 +73,18 @@ public class DisplayImageInfoActivity extends BaseActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public static void setInfoChanged() {
+        isChanged = true;
+    }
+    @Override
+    protected void onResume() {
+        if (isChanged) {
+            recreate();
+            isChanged = false;
+        }
+
+        super.onResume();
     }
 }

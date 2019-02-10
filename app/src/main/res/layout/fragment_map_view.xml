@@ -20,7 +20,7 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="2dp"
             android:background="@drawable/helper_drawable_shadow"
             android:elevation="4dp"
     >
@@ -29,9 +29,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Number of cities: XX"
+                android:text="Cities: 0"
                 android:textSize="14sp"
-                android:gravity="center"
+                android:paddingLeft="16dp"
         />
 
         <TextView
@@ -39,10 +39,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Number of countries: XX"
+                android:text="Countries: 0"
                 android:textSize="14sp"
-                android:gravity="center"
         />
+        <Button
+                android:text="update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </LinearLayout>

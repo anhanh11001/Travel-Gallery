@@ -24,15 +24,18 @@ public class ImageManager {
     public static ArrayList<ImageData> getImageDataList() {
         return imageDataList;
     }
+    public static ImageData getImageById(int id) {
+        return imageDataHashMap.get(id);
+    }
 
     public static void addImage(ImageData data) {
         imageDataHashMap.put(data.getImageId(),data);
-        imageDataList = new ArrayList<ImageData>(imageDataHashMap.values());
+        imageDataList = new ArrayList<>(imageDataHashMap.values());
     }
 
     public static void removeImage(ImageData data,Context context) {
         imageDataHashMap.remove(data.getImageId());
-        imageDataList = new ArrayList<ImageData>(imageDataHashMap.values());
+        imageDataList = new ArrayList<>(imageDataHashMap.values());
         AlbumManager.removeImage(data);
 
         String selection = AllImageFeederContract.FeedEntry._ID + " LIKE ?";
@@ -52,7 +55,9 @@ public class ImageManager {
                 AllImageFeederContract.FeedEntry.COLUMN_IMAGE_TIMESTAMP,
                 AllImageFeederContract.FeedEntry.COLUMN_IMAGE_LATITUDE,
                 AllImageFeederContract.FeedEntry.COLUMN_IMAGE_LONGTITUDE,
-                AllImageFeederContract.FeedEntry.COLUMN_IMAGE_SIZE
+                AllImageFeederContract.FeedEntry.COLUMN_IMAGE_SIZE,
+                AllImageFeederContract.FeedEntry.COLUMN_IMAGE_TITLE,
+                AllImageFeederContract.FeedEntry.COLUMN_IMAGE_DESCRIPTION
         };
 
         Cursor cursor = db.query(AllImageFeederContract.FeedEntry.TABLE_NAME,projetion,null,null,null,null,null);
@@ -64,7 +69,9 @@ public class ImageManager {
             String latittude = cursor.getString(cursor.getColumnIndexOrThrow(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_LATITUDE));
             String longtitude = cursor.getString(cursor.getColumnIndexOrThrow(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_LONGTITUDE));
             String size = cursor.getString(cursor.getColumnIndexOrThrow(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_SIZE));
-            ImageManager.addImage(new ImageData(path,time,thumbnail,latittude,longtitude,size,imageId));
+            String title = cursor.getString(cursor.getColumnIndexOrThrow(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_TITLE));
+            String description = cursor.getString(cursor.getColumnIndexOrThrow(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_DESCRIPTION));
+            ImageManager.addImage(new ImageData(context,path,time,thumbnail,latittude,longtitude,size,title,description,imageId));
 
         }
         cursor.close();

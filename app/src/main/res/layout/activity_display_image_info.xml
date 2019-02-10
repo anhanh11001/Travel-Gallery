@@ -16,14 +16,35 @@
             android:elevation="4dp"
     />
 
-    <TextView
-            android:paddingLeft="16dp"
-            android:paddingTop="8dp"
-            android:textSize="18sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="IMAGE INFOMATION"
-            android:textStyle="bold"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+                android:id="@+id/display_info_title_text_view"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:textSize="18sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Image Infomation"
+                android:textAllCaps="true"
+                android:layout_weight="1"
+                android:textStyle="bold"/>
+        <ImageButton
+                android:id="@+id/display_info_image_button"
+               android:paddingLeft="8dp"
+               android:paddingTop="8dp"
+               android:paddingBottom="8dp"
+               android:paddingRight="16dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_edit_button_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+        />
+    </LinearLayout>
+
     <LinearLayout
             android:orientation="vertical"
             android:paddingTop="2dp"
@@ -37,25 +58,22 @@
         <TextView
                 android:id="@+id/display_info_date_text_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="DATE: Unknown"/>
+                android:layout_height="wrap_content"/>
 
         <TextView
                 android:id="@+id/display_info_size_text_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="SIZE: Unknown"/>
+                android:layout_height="wrap_content"/>
 
         <TextView
-                android:id="@+id/display_info_latitude_text_view"
+                android:id="@+id/display_info_location_text_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="LATITUDE: Unknown"/>
-
+                android:layout_height="wrap_content"/>
         <TextView
-                android:id="@+id/display_info_longtitude_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="LONGTITUDE: Unknown"/>
+                android:id="@+id/display_info_description_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+
+
     </LinearLayout>
 </LinearLayout>

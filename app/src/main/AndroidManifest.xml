@@ -45,6 +45,8 @@
                   android:parentActivityName=".Activities.MainActivity"/>
         <activity android:name=".Activities.DisplayMultipleImageMapActivity"
                   android:parentActivityName=".Activities.MainActivity"/>
+        <activity android:name=".Activities.EditInfoActivity"
+                  android:parentActivityName=".Activities.DisplayImageInfoActivity"/>
     </application>
 
 </manifest>

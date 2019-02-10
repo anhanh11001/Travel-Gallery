@@ -46,4 +46,5 @@
 
     <!--Google Map API-->
     <string name="google_map_api_key">AIzaSyD91HQ94bNcZkeSRYaqanVM4B7jBvCO8Ys</string>
+    <string name="action_save">Save</string>
 </resources>

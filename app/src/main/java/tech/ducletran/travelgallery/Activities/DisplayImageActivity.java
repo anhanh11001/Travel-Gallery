@@ -105,11 +105,7 @@ public class DisplayImageActivity extends BaseActivity {
         switch (item.getItemId()) {
             case R.id.action_bar_button_info:
                 Intent intent = new Intent(this,DisplayImageInfoActivity.class);
-                intent.putExtra("image_info_date",current.getDateFormatted());
-                intent.putExtra("image_info_size",current.getSize());
-                intent.putExtra("image_info_longtitude",current.getLongtitude());
-                intent.putExtra("image_info_latitude",current.getLatitude());
-                intent.putExtra("image_info_display_image",current.getPath());
+                intent.putExtra("image_info_id",current.getImageId());
                 startActivity(intent);
                 break;
             case R.id.action_bar_button_delete: // this might need some changes
