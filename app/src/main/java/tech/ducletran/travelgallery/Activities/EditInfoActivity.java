@@ -24,6 +24,11 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import tech.ducletran.travelgallery.Fragment.MapFragment;
 import tech.ducletran.travelgallery.Fragment.PhotosFragment;
 import tech.ducletran.travelgallery.ImageData.ImageData;
@@ -37,9 +42,6 @@ import java.util.*;
 
 public class EditInfoActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener {
     private static final float DEFAULT_ZOOM = 15f;
-    private static final LatLngBounds LAT_LNG_BOUNDS = new LatLngBounds(
-            new LatLng(-40,-168), new LatLng(71,136)
-    );
 
     private String currentDescription;
     private String currentTitle;
@@ -57,6 +59,10 @@ public class EditInfoActivity extends BaseActivity implements GoogleApiClient.On
 
     private boolean locationChanged = false;
 
+    // Google Places is commented because for now I haven't managed to get the API key
+//    private List<Place.Field> fields = Arrays.asList(Place.Field.LAT_LNG,Place.Field.NAME);
+//    private static final int AUTOCOMPLETE_REQUEST_CODE = 1919;
+//    private Place placeFound;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -130,7 +136,11 @@ public class EditInfoActivity extends BaseActivity implements GoogleApiClient.On
         });
 
 
-        // Set up location
+//        // Set up location
+//        Places.initialize(getApplicationContext(), getResources().getString(R.string.google_map_api_key));
+//
+//        // Create a new Places client instance.
+//        PlacesClient placesClient = Places.createClient(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.edit_info_map_fragment);
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
@@ -144,19 +154,28 @@ public class EditInfoActivity extends BaseActivity implements GoogleApiClient.On
             }
         });
 
-//        locationSearchTextView.setAdapter(placeAutoCompleteAdapter);
         locationSearchTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     searchLocation();
-
                     return true;
                 }
 
+//                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN,fields)
+//                        .build(EditInfoActivity.this);
+//                startActivityForResult(intent,AUTOCOMPLETE_REQUEST_CODE);
                 return false;
             }
         });
+//        locationSearchTextView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN,fields)
+//                        .build(EditInfoActivity.this);
+//                startActivityForResult(intent,AUTOCOMPLETE_REQUEST_CODE);
+//            }
+//        });
 
         chooseNewLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +183,9 @@ public class EditInfoActivity extends BaseActivity implements GoogleApiClient.On
                 CameraPosition cameraLocation = map.getCameraPosition();
                 setLocation(new LatLng(cameraLocation.target.latitude,cameraLocation.target.longitude),
                         titleEditText.getText().toString());
+//                if (placeFound.getName() != null && titleEditText.getText() == null) {
+//                    titleEditText.setText(placeFound.getName());
+//                }
                 locationChanged = true;
             }
         });
@@ -233,6 +255,15 @@ public class EditInfoActivity extends BaseActivity implements GoogleApiClient.On
         map.clear();
         map.addMarker(options);
     }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        if (requestCode == AUTOCOMPLETE_REQUEST_CODE
+//                && resultCode == RESULT_OK) {
+//            placeFound = Autocomplete.getPlaceFromIntent(data);
+//            moveCamera(placeFound.getLatLng());
+//        }
+//    }
 
     private void searchLocation() {
         String searchString = locationSearchTextView.getText().toString();

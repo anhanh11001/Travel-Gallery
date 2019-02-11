@@ -3,15 +3,12 @@ package tech.ducletran.travelgallery.Adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import tech.ducletran.travelgallery.Activities.DisplayImageActivity;
-import tech.ducletran.travelgallery.CustomizedClass.CustomizedImageView;
+import tech.ducletran.travelgallery.CustomizedClass.CustomImageView;
 import tech.ducletran.travelgallery.ImageData.ImageData;
 import tech.ducletran.travelgallery.R;
 
@@ -45,7 +42,8 @@ public class DisplayPhotosAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View itemView = layoutInflater.inflate(R.layout.display_image_view,container,false);
-        CustomizedImageView imageView = itemView.findViewById(R.id.display_photo_image_view);
+        CustomImageView imageView = itemView.findViewById(R.id.display_photo_image_view);
+
         imageView.setActivity(activity);
         ImageData currentImage = imageDataList.get(position);
         Glide.with(activity).load(currentImage.getPath()).into(imageView);

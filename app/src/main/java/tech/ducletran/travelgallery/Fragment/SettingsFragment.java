@@ -11,7 +11,6 @@ import tech.ducletran.travelgallery.R;
 
 
 public class SettingsFragment extends PreferenceFragmentCompat  implements SharedPreferences.OnSharedPreferenceChangeListener {
-    private boolean isChanged = false;
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
         addPreferencesFromResource(R.xml.fragment_settings_resource);
@@ -52,13 +51,11 @@ public class SettingsFragment extends PreferenceFragmentCompat  implements Share
                 findPreference(getString(R.string.action_settings_sort_key))
                         .setSummary(getString(R.string.action_settings_sort_off));
             }
-            isChanged = true;
         }
 
         if (key.equals(getString(R.string.action_settings_columns_key))) {
             int numColumns = Integer.parseInt(sharedPreferences.getString(key,"4"));
             findPreference(key).setSummary(String.valueOf(numColumns));
-            isChanged = true;
         }
     }
 

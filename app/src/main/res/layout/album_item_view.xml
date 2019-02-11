@@ -11,7 +11,7 @@
             android:id="@+id/album_item_cover_image"
             android:elevation="2dp"
             android:background="@drawable/helper_drawable_shadow"
-            android:src="@drawable/ic_launcher_background"
+            android:src="@drawable/ic_launcher_foreground"
             android:layout_height="0dp"
             android:layout_width="0dp"
             android:scaleType="centerCrop"

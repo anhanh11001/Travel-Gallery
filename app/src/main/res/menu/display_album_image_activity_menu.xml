@@ -12,4 +12,7 @@
             android:id="@+id/action_setting_album_cover"
             android:title="@string/action_setting_album_cover"
     />
+    <item
+        android:id="@+id/action_deleting_album"
+        android:title="@string/action_setting_delete_album"/>
 </menu>

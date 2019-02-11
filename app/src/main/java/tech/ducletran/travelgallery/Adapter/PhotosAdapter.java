@@ -23,16 +23,19 @@ public class PhotosAdapter extends ArrayAdapter<ImageData> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-        View view = convertView;
 
-        if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.photo_item_view,parent,false);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.photo_item_view,parent,false);
             holder = new ViewHolder();
-            holder.photoImageView = view.findViewById(R.id.photo_item_image_view);
-            Glide.with(context).load(getItem(position).getThumbnail()).into(holder.photoImageView);
-            view.setTag(holder);
+            holder.photoImageView = convertView.findViewById(R.id.photo_item_image_view);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
-        return view;
+
+        Glide.with(context).load(getItem(position).getThumbnail()).into(holder.photoImageView);
+
+        return convertView;
     }
 
     static class ViewHolder {

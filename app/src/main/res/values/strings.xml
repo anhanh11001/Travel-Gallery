@@ -49,4 +49,5 @@
     <string name="google_map_api_key">AIzaSyDjzkB0YfR4bCh9Lz-byUFkcIo1y1n8jXQ</string>
     <string name="action_save">Save</string>
     <string name="action_adding_story">Add Story</string>
+    <string name="action_setting_delete_album">Delete Album</string>
 </resources>

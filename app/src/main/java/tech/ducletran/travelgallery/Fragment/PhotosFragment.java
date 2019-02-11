@@ -25,13 +25,12 @@ import java.util.ArrayList;
 
 public class PhotosFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener,
         LoaderManager.LoaderCallbacks<ArrayList<ImageData>> {
-    private static boolean isPhotoFragmentChanged = false;
-
-    private GridView gridView;
+    private static boolean isAdapterChanged = false;
+    private static GridView gridView;
     private LinearLayout loadingLayout;
     private View view;
     private LinearLayout emptyView;
-    private PhotosAdapter adapter;
+    private static PhotosAdapter adapter;
 
     public PhotosFragment() {
         super();
@@ -49,6 +48,7 @@ public class PhotosFragment extends Fragment implements SharedPreferences.OnShar
         
         gridView.setAdapter(adapter);
         setUpNumCols();
+        DisplayImageActivity.setImageDataList(ImageManager.getImageDataList());
 
         PreferenceManager.getDefaultSharedPreferences(getActivity()).registerOnSharedPreferenceChangeListener(this);
 
@@ -108,19 +108,17 @@ public class PhotosFragment extends Fragment implements SharedPreferences.OnShar
     }
 
     public static void setPhotoFragmentChanged() {
-        isPhotoFragmentChanged = true;
+        isAdapterChanged = true;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (isPhotoFragmentChanged) {
+        if (isAdapterChanged) {
+            isAdapterChanged = false;
+//            adapter.notifyDataSetChanged();
             getActivity().recreate();
-            isPhotoFragmentChanged = false;
-            adapter.notifyDataSetChanged();
         }
-        DisplayImageActivity.setImageDataList(ImageManager.getImageDataList());
-
     }
 
     // Loader Manager

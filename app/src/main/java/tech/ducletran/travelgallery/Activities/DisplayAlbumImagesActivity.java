@@ -1,6 +1,8 @@
 package tech.ducletran.travelgallery.Activities;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -74,6 +76,9 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
             case R.id.action_setting_album_cover:
                 setAlbumCover();
                 return true;
+            case R.id.action_deleting_album:
+                deleteAlbum();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -134,6 +139,31 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
         Intent intent = new Intent(this,AddImageToAlbumActivity.class);
         intent.putExtra("current_album_id",albumId);
         startActivity(intent);
+    }
+
+    private void deleteAlbum() {
+        AlertDialog.Builder deleteDialog = new AlertDialog.Builder(this);
+        deleteDialog.setTitle("Deleting album");
+        deleteDialog.setMessage("Are you sure to delete this album");
+        final Activity activty = this;
+        deleteDialog.setPositiveButton("delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                AlbumManager.removeAlbum(DisplayAlbumImagesActivity.this,currentAlbum);
+                AlbumsFragment.setAlbumFragmentChanged(currentAlbum.getAlbumType());
+                activty.finish();
+                dialog.cancel();
+            }
+        });
+
+        deleteDialog.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        deleteDialog.show();
     }
 
     private void setAlbumCover() {
