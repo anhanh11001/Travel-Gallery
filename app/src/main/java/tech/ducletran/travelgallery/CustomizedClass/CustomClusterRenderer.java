@@ -155,6 +155,6 @@ public class CustomClusterRenderer extends DefaultClusterRenderer<ImageMarker> {
 
     @Override
     protected boolean shouldRenderAsCluster(Cluster<ImageMarker> cluster) {
-        return cluster.getSize() > 2;
+        return cluster.getSize() > 1;
     }
 }

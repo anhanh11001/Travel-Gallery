@@ -1,9 +1,11 @@
 package tech.ducletran.travelgallery.Activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -11,52 +13,63 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
-import tech.ducletran.travelgallery.Fragment.AlbumsFragment;
-import tech.ducletran.travelgallery.ImageData.Album;
 import tech.ducletran.travelgallery.ImageData.AlbumManager;
 import tech.ducletran.travelgallery.ImageData.ImageData;
+import tech.ducletran.travelgallery.ImageData.ImageManager;
 import tech.ducletran.travelgallery.R;
 
-public class SetAlbumCoverActivity extends BaseActivity {
+import java.util.List;
+
+public class ImagePickerActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_photos_view);
-        int currentAlbumId = getIntent().getIntExtra("current_album_id",0);
-        final Album currentAlbum = AlbumManager.getAlbum(currentAlbumId);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        int currentAlbumId = getIntent().getIntExtra("current_album_id",-1);
+        final List<ImageData> imageDataList;
+        if (currentAlbumId == -1) {
+            imageDataList = ImageManager.getImageDataList();
+        } else {
+            imageDataList = AlbumManager.getAlbum(currentAlbumId).getAlbumImageList();
+        }
+
 
         findViewById(R.id.photos_loading_layout).setVisibility(View.GONE);
         findViewById(R.id.photos_empty_view).setVisibility(View.GONE);
 
-        GridView albumPhotos = findViewById(R.id.photos_grid_view);
-        albumPhotos.setNumColumns(3);
-        AlbumPhotosAdapter adapter = new AlbumPhotosAdapter(this,currentAlbum);
-        albumPhotos.setAdapter(adapter);
+        GridView imageGridView = findViewById(R.id.photos_grid_view);
+        imageGridView.setNumColumns(3);
+        ImagePickerAdapter adapter = new ImagePickerAdapter(this,imageDataList);
+        imageGridView.setAdapter(adapter);
 
-        albumPhotos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        imageGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ImageData imageClicked = currentAlbum.getAlbumImageList().get(position);
-                currentAlbum.setAlbumCover(imageClicked.getThumbnail());
-                AlbumsFragment.setAlbumFragmentChanged();
+                ImageData imageClicked = imageDataList.get(position);
+                Intent returnIntent = getIntent();
+                returnIntent.putExtra("result_image_id",imageClicked.getImageId());
+                setResult(RESULT_OK,returnIntent);
                 finish();
             }
         });
     }
 
 
-    private class AlbumPhotosAdapter extends BaseAdapter {
+    private class ImagePickerAdapter extends BaseAdapter {
         private Context context;
-        private Album currentAlbum;
+        private List<ImageData> imageList;
 
-        private AlbumPhotosAdapter(Context context, Album currentAlbum) {
+        private ImagePickerAdapter(Context context, List<ImageData> imageList) {
             this.context = context;
-            this.currentAlbum = currentAlbum;
+            this.imageList = imageList;
         }
         @Override
         public int getCount() {
-            return currentAlbum.getAlbumImageList().size();
+            return imageList.size();
         }
 
         @Override
@@ -75,9 +88,18 @@ public class SetAlbumCoverActivity extends BaseActivity {
 
             ImageView imageView = convertView.findViewById(R.id.photo_item_image_view);
             Glide.with(context)
-                    .load(currentAlbum.getAlbumImageList().get(position).getThumbnail())
+                    .load(imageList.get(position).getThumbnail())
                     .into(imageView);
             return convertView;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            setResult(RESULT_CANCELED,getIntent());
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

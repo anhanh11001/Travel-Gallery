@@ -16,5 +16,9 @@
             android:icon="@drawable/ic_add_new_picture_icon"
             app:showAsAction="always"
     />
+    <item android:id="@+id/menu_item_adding_story"
+          android:title="@string/action_adding_story"
+          android:icon="@drawable/ic_add_new_story"
+          app:showAsAction="always"/>
 
 </menu>

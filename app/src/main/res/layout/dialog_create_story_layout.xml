@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <EditText
+            android:singleLine="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:id="@+id/create_story_title_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    />
+    <TextView
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DESCRIPTION"/>
+    <EditText
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:id="@+id/create_story_description_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    />
+
+    <TextView
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CHOOSE IMAGE COVER"/>
+
+    <ImageButton
+            android:id="@+id/create_story_image_button"
+            android:padding="16dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_launcher_foreground"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+</LinearLayout>

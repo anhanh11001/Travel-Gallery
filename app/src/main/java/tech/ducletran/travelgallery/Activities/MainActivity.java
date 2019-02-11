@@ -19,25 +19,32 @@ import android.support.v4.app.ActivityCompat;
 import android.util.TypedValue;
 import android.view.*;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import com.bumptech.glide.Glide;
 import tech.ducletran.travelgallery.Adapter.CategoryStatePageAdapter;
 import tech.ducletran.travelgallery.CustomizedClass.CustomViewPager;
 import tech.ducletran.travelgallery.Fragment.AlbumsFragment;
 import tech.ducletran.travelgallery.Fragment.PhotosFragment;
-import tech.ducletran.travelgallery.ImageData.Album;
-import tech.ducletran.travelgallery.ImageData.ImageData;
-import tech.ducletran.travelgallery.ImageData.ImageManager;
+import tech.ducletran.travelgallery.Fragment.StoriesFracment;
+import tech.ducletran.travelgallery.ImageData.*;
 import tech.ducletran.travelgallery.R;
 
 public class MainActivity extends BaseActivity  {
     static final int REQUEST_PERMISSION_KEY = 1;
     private static final int REQUEST_CODE_FOR_NEW_IMAGE = 10;
+    private static final int REQUEST_CODE_FOR_STORY_COVER = 11;
 
 
     private TabLayout tabLayout;
     private MenuItem addAlbum;
     private MenuItem addImage;
+    private MenuItem addStory;
+
+    // For story dialog creator
+    private String imageCover = null;
+    private ImageButton coverImageButton = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,6 +72,8 @@ public class MainActivity extends BaseActivity  {
         inflater.inflate(R.menu.main_activity_menu,menu);
         addAlbum = menu.findItem(R.id.menu_item_adding_albums);
         addImage = menu.findItem(R.id.menu_item_adding_images);
+        addStory = menu.findItem(R.id.menu_item_adding_story);
+        addStory.setVisible(false);
         addAlbum.setVisible(false);
         setUpTabLayout();
 
@@ -82,19 +91,18 @@ public class MainActivity extends BaseActivity  {
             addAlbumAlertDialog.setTitle("Create Album");
             addAlbumAlertDialog.setMessage("What's this album about?");
 
-            View view = LayoutInflater.from(this).inflate(R.layout.dialog_create_album_layout,null);
-            addAlbumAlertDialog.setView(view);
+            View albumView = LayoutInflater.from(this).inflate(R.layout.dialog_create_album_layout,null);
+            addAlbumAlertDialog.setView(albumView);
 
-            final EditText editText = view.findViewById(R.id.create_album_edit_text);
-            final RadioGroup radioGroup = view.findViewById(R.id.create_album_radio_group);
+            final EditText editText = albumView.findViewById(R.id.create_album_edit_text);
+            final RadioGroup radioGroup = albumView.findViewById(R.id.create_album_radio_group);
 
-            final Context context = MainActivity.this;
             addAlbumAlertDialog.setPositiveButton("Create", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     String albumName = editText.getText().toString();
                     if (albumName.length()==0 || albumName.length() > 20) {
-                        Toast.makeText(context,"That's not a good album name",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this,"That's not a good album name",Toast.LENGTH_SHORT).show();
                     } else {
                         int checkedRadioId = radioGroup.getCheckedRadioButtonId();
                         if (checkedRadioId == R.id.create_location_album_radio_button) {
@@ -117,6 +125,52 @@ public class MainActivity extends BaseActivity  {
 
             addAlbumAlertDialog.show();
             return true;
+        case R.id.menu_item_adding_story:
+            AlertDialog.Builder addStoryAlertDialog = new AlertDialog.Builder(this);
+            addStoryAlertDialog.setTitle("Create Album");
+            addStoryAlertDialog.setMessage("What's this album about?");
+
+            View storyView = LayoutInflater.from(this).inflate(R.layout.dialog_create_story_layout,null);
+            addStoryAlertDialog.setView(storyView);
+
+            final EditText storyTitleEditText = storyView.findViewById(R.id.create_story_title_edit_text);
+            final EditText storyDescriptionEditText = storyView.findViewById(R.id.create_story_description_edit_text);
+            coverImageButton = storyView.findViewById(R.id.create_story_image_button);
+
+
+            coverImageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Do some thing to change imageCover
+                    Intent intent = new Intent (MainActivity.this,ImagePickerActivity.class);
+                    startActivityForResult(intent,REQUEST_CODE_FOR_STORY_COVER);
+                }
+            });
+
+            addStoryAlertDialog.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String storyTitle = storyTitleEditText.getText().toString();
+                    if (storyTitle.length() == 0 || storyTitle.length() > 30) {
+                        Toast.makeText(MainActivity.this,"The story title length is not good",Toast.LENGTH_SHORT).show();
+                        dialog.cancel();
+                    } else {
+                        Story newStory = new Story(storyTitle,storyDescriptionEditText.getText().toString(),imageCover);
+                        StoriesFracment.setStoryFracmentChanged();
+                        dialog.cancel();
+                    }
+                }
+            });
+
+            addStoryAlertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            addStoryAlertDialog.show();
+            return true;
         case R.id.menu_item_adding_images:
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("image/*");
@@ -134,11 +188,7 @@ public class MainActivity extends BaseActivity  {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_FOR_NEW_IMAGE) {
-            if (resultCode == RESULT_CANCELED) {
-                return;
-            }
-
+        if (resultCode != RESULT_CANCELED  && requestCode == REQUEST_CODE_FOR_NEW_IMAGE) {
             ClipData clipData = data.getClipData();
             if (clipData != null) {
                 for (int i = 0;i < clipData.getItemCount();i++) {
@@ -155,6 +205,14 @@ public class MainActivity extends BaseActivity  {
                     returnCursor.close();
                 }
                 PhotosFragment.setPhotoFragmentChanged();
+            }
+        }
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_FOR_STORY_COVER) {
+            // Do some thing here
+            int imageId = data.getIntExtra("result_image_id",-1);
+            if (imageId != -1) {
+                imageCover = ImageManager.getImageById(imageId).getThumbnail();
+                Glide.with(MainActivity.this).load(imageCover).into(coverImageButton);
             }
         }
     }
@@ -180,6 +238,7 @@ public class MainActivity extends BaseActivity  {
         tabLayout.getTabAt(currentTab).getIcon().setColorFilter(colorPrimary, PorterDuff.Mode.SRC_IN);
         addAlbum.setVisible(false);
         addImage.setVisible(false);
+        addStory.setVisible(false);
         switch (currentTab) {
             case 0:
                 addImage.setVisible(true);
@@ -188,6 +247,7 @@ public class MainActivity extends BaseActivity  {
                 addAlbum.setVisible(true);
                 break;
             case 2:
+                addStory.setVisible(true);
                 break;
             case 3:
                 break;
@@ -203,11 +263,14 @@ public class MainActivity extends BaseActivity  {
 
                 addAlbum.setVisible(false);
                 addImage.setVisible(false);
+                addStory.setVisible(false);
 
                 if (tab.getPosition() == 0) {
                     addImage.setVisible(true);
                 } else if (tab.getPosition() == 1) {
                     addAlbum.setVisible(true);
+                } else if (tab.getPosition() == 2) {
+                    addStory.setVisible(true);
                 }
             }
 

@@ -79,7 +79,7 @@ public class ImageData {
         return new Date(dateLong);
     }
     public String getDateFormatted() {
-        DateFormat formatter = new SimpleDateFormat("hh:mm:ss | dd MMMM yyyy");
+        DateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");
         return formatter.format(getDate());
     }
     public String getTitle() {return this.title;}

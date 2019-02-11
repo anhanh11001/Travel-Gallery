@@ -2,7 +2,6 @@ package tech.ducletran.travelgallery.Fragment;
 
 import android.app.Activity;
 import android.content.Context;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -23,7 +21,7 @@ import tech.ducletran.travelgallery.R;
 
 public class MapFragment extends Fragment{
 
-    private ClusterManager<ImageMarker> clusterManager;
+    private static ClusterManager<ImageMarker> clusterManager;
 
     @Nullable
     @Override
@@ -66,5 +64,8 @@ public class MapFragment extends Fragment{
 
     }
 
-
+    public static void addNewImageMarker(ImageMarker imageMarker) {
+        clusterManager.addItem(imageMarker);
+        clusterManager.cluster();
+    }
 }

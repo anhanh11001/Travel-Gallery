@@ -9,8 +9,10 @@ import android.support.annotation.Nullable;
 import android.view.*;
 import android.widget.*;
 import tech.ducletran.travelgallery.Adapter.PhotosAdapter;
+import tech.ducletran.travelgallery.Fragment.AlbumsFragment;
 import tech.ducletran.travelgallery.ImageData.Album;
 import tech.ducletran.travelgallery.ImageData.AlbumManager;
+import tech.ducletran.travelgallery.ImageData.ImageManager;
 import tech.ducletran.travelgallery.R;
 
 public class DisplayAlbumImagesActivity extends BaseActivity {
@@ -18,6 +20,8 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
     private PhotosAdapter adapter;
     private static boolean adapterChanged = false;
     private int albumId;
+
+    private static int GET_ALBUM_COVER_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -137,8 +141,20 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
     }
 
     private void setAlbumCover() {
-        Intent intent = new Intent(this,SetAlbumCoverActivity.class);
+        Intent intent = new Intent(this,ImagePickerActivity.class);
         intent.putExtra("current_album_id",currentAlbum.getAlbumId());
-        startActivity(intent);
+        startActivityForResult(intent,GET_ALBUM_COVER_REQUEST_CODE);
+//        startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == GET_ALBUM_COVER_REQUEST_CODE && resultCode == RESULT_OK) {
+            int imageCoverId = data.getIntExtra("result_image_id",-1);
+            if (imageCoverId != -1) {
+                currentAlbum.setAlbumCover(ImageManager.getImageById(imageCoverId).getThumbnail());
+                AlbumsFragment.setAlbumFragmentChanged();
+            }
+        }
     }
 }

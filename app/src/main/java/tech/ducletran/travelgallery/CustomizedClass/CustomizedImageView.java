@@ -103,13 +103,15 @@ public class CustomizedImageView extends AppCompatImageView implements ScaleGest
 
         TypedArray values = context.obtainStyledAttributes(attrs, styleable.CustomizedImageView);
 
+
         zoomable = values.getBoolean(styleable.zoomable, true);
         translatable = values.getBoolean(styleable.translatable, true);
         animateOnReset = values.getBoolean(styleable.animateOnReset, true);
         autoCenter = values.getBoolean(styleable.autoCenter, true);
         restrictBounds = values.getBoolean(styleable.restrictBounds, false);
         doubleTapToZoom = values.getBoolean(styleable.doubleTapToZoom, true);
-        minScale = values.getFloat(styleable.minScale, MIN_SCALE);
+//        minScale = values.getFloat(styleable.minScale, MIN_SCALE);
+        minScale = MIN_SCALE;
         maxScale = values.getFloat(styleable.maxScale, MAX_SCALE);
         doubleTapToZoomScaleFactor = values.getFloat(styleable.doubleTapToZoomScaleFactor, 3);
         autoResetMode = AutoResetMode.Parser.fromInt(values.getInt(styleable.autoResetMode, AutoResetMode.UNDER));

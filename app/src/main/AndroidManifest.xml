@@ -39,14 +39,13 @@
                   android:parentActivityName=".Activities.MainActivity"/>
         <activity android:name=".Activities.AddImageToAlbumActivity"
                   android:parentActivityName=".Activities.DisplayAlbumImagesActivity"/>
-        <activity android:name=".Activities.SetAlbumCoverActivity"
-                  android:parentActivityName=".Activities.DisplayAlbumImagesActivity"/>
         <activity android:name=".Activities.DisplaySingleImageMapActivity"
                   android:parentActivityName=".Activities.MainActivity"/>
         <activity android:name=".Activities.DisplayMultipleImageMapActivity"
                   android:parentActivityName=".Activities.MainActivity"/>
         <activity android:name=".Activities.EditInfoActivity"
                   android:parentActivityName=".Activities.DisplayImageInfoActivity"/>
+        <activity android:name=".Activities.ImagePickerActivity"/>
     </application>
 
 </manifest>

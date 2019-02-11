@@ -4,11 +4,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <TextView
-            android:gravity="center"
-            android:layout_gravity="center"
+    <ListView
+            android:padding="16dp"
+            android:id="@+id/stories_fragment_list_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="This is Stories' Fragment"/>
+            android:layout_height="match_parent"
+            android:dividerHeight="16dp"
+            android:divider="@android:color/transparent"
+    >
+
+    </ListView>
 
 </LinearLayout>

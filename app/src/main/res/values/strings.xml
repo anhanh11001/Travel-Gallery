@@ -45,6 +45,8 @@
     <string name="create_album_others">Other Album</string>
 
     <!--Google Map API-->
-    <string name="google_map_api_key">AIzaSyD91HQ94bNcZkeSRYaqanVM4B7jBvCO8Ys</string>
+
+    <string name="google_map_api_key">AIzaSyDjzkB0YfR4bCh9Lz-byUFkcIo1y1n8jXQ</string>
     <string name="action_save">Save</string>
+    <string name="action_adding_story">Add Story</string>
 </resources>
