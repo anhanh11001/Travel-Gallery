@@ -12,7 +12,6 @@ import tech.ducletran.travelgallery.ImageData.StoriesManager;
 import tech.ducletran.travelgallery.ImageData.Story;
 import tech.ducletran.travelgallery.R;
 
-import java.util.List;
 
 public class StoriesAdapter extends BaseAdapter {
 
