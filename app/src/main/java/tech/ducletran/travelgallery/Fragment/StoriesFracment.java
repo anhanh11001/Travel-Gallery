@@ -37,7 +37,6 @@ public class StoriesFracment extends Fragment {
     public static void setStoryFracmentChanged() {
         adapter.notifyDataSetChanged();
         listView.invalidate();
-        listView.invalidateViews();
     }
 
 }

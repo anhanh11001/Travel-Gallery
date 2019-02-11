@@ -1,4 +1,4 @@
-package tech.ducletran.travelgallery.ImageData;
+package tech.ducletran.travelgallery.Database;
 
 import android.provider.BaseColumns;
 
@@ -16,7 +16,10 @@ public final class AllImageFeederContract {
                     FeedEntry.COLUMN_IMAGE_LONGTITUDE + " TEXT," +
                     FeedEntry.COLUMN_IMAGE_SIZE + " TEXT," +
                     FeedEntry.COLUMN_IMAGE_TITLE + " TEXT," +
-                    FeedEntry.COLUMN_IMAGE_DESCRIPTION + " TEXT)";
+                    FeedEntry.COLUMN_IMAGE_DESCRIPTION + " TEXT," +
+                    FeedEntry.COLUMN_IMAGE_IS_FAVORITE + " INTEGER," +
+                    FeedEntry.COLUMN_IMAGE_IS_FOOD + " INTEGER," +
+                    FeedEntry.COLUMN_IMAGE_IS_PEOPLE + " INTEGER)";
 
     public static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + FeedEntry.TABLE_NAME;
@@ -31,7 +34,8 @@ public final class AllImageFeederContract {
         public static final String COLUMN_IMAGE_SIZE = "size";
         public static final String COLUMN_IMAGE_TITLE = "title";
         public static final String COLUMN_IMAGE_DESCRIPTION = "description";
-
-
+        public static final String COLUMN_IMAGE_IS_FAVORITE = "favorite";
+        public static final String COLUMN_IMAGE_IS_PEOPLE = "people";
+        public static final String COLUMN_IMAGE_IS_FOOD = "food";
     }
 }

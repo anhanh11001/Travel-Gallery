@@ -111,6 +111,7 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
             public void onClick(DialogInterface dialog, int which) {
                 if (currentAlbum.rename(albumNameEditText.getText().toString())) {
                     getSupportActionBar().setTitle(currentAlbum.getAlbumName());
+                    AlbumsFragment.setAlbumFragmentChanged(currentAlbum.getAlbumType());
                     dialog.cancel();
                 } else {
                     Toast.makeText(context,"This is not a good name for album", Toast.LENGTH_SHORT)
@@ -131,12 +132,7 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
 
     private void addNewImage() {
         Intent intent = new Intent(this,AddImageToAlbumActivity.class);
-        intent.putExtra("current_album_id",currentAlbum.getAlbumId());
-        if (albumId == AlbumManager.ALBUM_FAVORITE_CODE ||
-                albumId == AlbumManager.ALBUM_FOOD_CODE ||
-                albumId == AlbumManager.ALBUM_PEOPLE_CODE) {
-            intent.putExtra("special_album", albumId);
-        }
+        intent.putExtra("current_album_id",albumId);
         startActivity(intent);
     }
 
@@ -144,7 +140,6 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
         Intent intent = new Intent(this,ImagePickerActivity.class);
         intent.putExtra("current_album_id",currentAlbum.getAlbumId());
         startActivityForResult(intent,GET_ALBUM_COVER_REQUEST_CODE);
-//        startActivity(intent);
     }
 
     @Override
@@ -153,7 +148,7 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
             int imageCoverId = data.getIntExtra("result_image_id",-1);
             if (imageCoverId != -1) {
                 currentAlbum.setAlbumCover(ImageManager.getImageById(imageCoverId).getThumbnail());
-                AlbumsFragment.setAlbumFragmentChanged();
+                AlbumsFragment.setAlbumFragmentChanged(currentAlbum.getAlbumType());
             }
         }
     }

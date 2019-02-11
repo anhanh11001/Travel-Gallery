@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Toast;
 import tech.ducletran.travelgallery.Adapter.DisplayPhotosAdapter;
 import tech.ducletran.travelgallery.Fragment.PhotosFragment;
+import tech.ducletran.travelgallery.ImageData.Album;
 import tech.ducletran.travelgallery.ImageData.AlbumManager;
 import tech.ducletran.travelgallery.ImageData.ImageData;
 import tech.ducletran.travelgallery.ImageData.ImageManager;
@@ -132,11 +133,11 @@ public class DisplayImageActivity extends BaseActivity {
                 current.setFood();
                 if (current.getIsFood()) {
                     item.setIcon(getDrawable(R.drawable.ic_food_filled_icon));
-                    AlbumManager.getAlbum(AlbumManager.ALBUM_FOOD_CODE).addToAlbum(current);
+                    AlbumManager.getAlbum(Album.DEFAULT_FOOD_ID).addToAlbum(current);
                 } else {
                     item.setIcon(getDrawable(R.drawable.ic_food_icon));
-                    AlbumManager.getAlbum(AlbumManager.ALBUM_FOOD_CODE).removeFromAlbum(current);
-                    if (albumComeFrom == AlbumManager.ALBUM_FOOD_CODE) {
+                    AlbumManager.getAlbum(Album.DEFAULT_FOOD_ID).removeFromAlbum(current);
+                    if (albumComeFrom == Album.DEFAULT_FOOD_ID) {
                         dataChanged = true;
                         imageDataList.remove(currentPosition);
                         adapter.notifyDataSetChanged();
@@ -157,11 +158,11 @@ public class DisplayImageActivity extends BaseActivity {
                 current.setFavorite();
                 if (current.getIsFavorite()) {
                     item.setIcon(getDrawable(R.drawable.ic_favorite_filled_icon));
-                    AlbumManager.getAlbum(AlbumManager.ALBUM_FAVORITE_CODE).addToAlbum(current);
+                    AlbumManager.getAlbum(Album.DEFAULT_FAVORITE_ID).addToAlbum(current);
                 } else {
                     item.setIcon(getDrawable(R.drawable.ic_favorite_icon));
-                    AlbumManager.getAlbum(AlbumManager.ALBUM_FAVORITE_CODE).removeFromAlbum(current);
-                    if (albumComeFrom == AlbumManager.ALBUM_FAVORITE_CODE) {
+                    AlbumManager.getAlbum(Album.DEFAULT_FAVORITE_ID).removeFromAlbum(current);
+                    if (albumComeFrom == Album.DEFAULT_FAVORITE_ID) {
                         dataChanged = true;
                         imageDataList.remove(currentPosition);
                         adapter.notifyDataSetChanged();
@@ -182,11 +183,11 @@ public class DisplayImageActivity extends BaseActivity {
                 current.setPeople();
                 if (current.getIsPeople()) {
                     item.setIcon(getDrawable(R.drawable.ic_people_filled_icon));
-                    AlbumManager.getAlbum(AlbumManager.ALBUM_PEOPLE_CODE).addToAlbum(current);
+                    AlbumManager.getAlbum(Album.DEFAULT_PEOPLE_ID).addToAlbum(current);
                 } else {
                     item.setIcon(getDrawable(R.drawable.ic_people_icon));
-                    AlbumManager.getAlbum(AlbumManager.ALBUM_PEOPLE_CODE).removeFromAlbum(current);
-                    if (albumComeFrom == AlbumManager.ALBUM_PEOPLE_CODE) {
+                    AlbumManager.getAlbum(Album.DEFAULT_PEOPLE_ID).removeFromAlbum(current);
+                    if (albumComeFrom == Album.DEFAULT_PEOPLE_ID) {
                         dataChanged = true;
                         imageDataList.remove(currentPosition);
                         adapter.notifyDataSetChanged();

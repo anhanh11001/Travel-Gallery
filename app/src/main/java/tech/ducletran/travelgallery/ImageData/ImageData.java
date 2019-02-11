@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import com.google.android.gms.maps.model.LatLng;
+import tech.ducletran.travelgallery.Database.AllImageFeederContract;
+import tech.ducletran.travelgallery.Database.AllImageReaderDbHelper;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -41,11 +43,12 @@ public class ImageData {
         isFavorite = false;
         isFood = false;
         isPeople = false;
-        imageId = insertNewImage(path,timeStamp,thumbnail,latitude,longtitude,size,"","");
+        imageId = insertNewImage(path,timeStamp,thumbnail,latitude,longtitude,size,
+                "","",false,false,false);
     }
 
     public ImageData(Context context,String path,String timeStamp, String thumbnail, String latitude, String longtitude,
-                     String size, String title, String description, int imageId) {
+                     String size, String title, String description, int imageId, boolean isFavorite, boolean isFood, boolean isPeople) {
         database = new AllImageReaderDbHelper(context).getWritableDatabase();
 
         this.path = path;
@@ -56,10 +59,14 @@ public class ImageData {
         this.size = size;
         this.title = title;
         this.description = description;
-        isFavorite = false;
-        isFood = false;
-        isPeople = false;
+        this.isFavorite = isFavorite;
+        this.isFood = isFood;
+        this.isPeople = isPeople;
         this.imageId = imageId;
+
+        if (isFood) {AlbumManager.getAlbum(Album.DEFAULT_FOOD_ID).addToAlbum(this); }
+        if (isFavorite) {AlbumManager.getAlbum(Album.DEFAULT_FAVORITE_ID).addToAlbum(this);}
+        if (isPeople) {AlbumManager.getAlbum(Album.DEFAULT_PEOPLE_ID).addToAlbum(this);}
     }
 
     public int getImageId() {
@@ -100,10 +107,38 @@ public class ImageData {
         return path;
     }
 
-    public void setFood() { isFood = !isFood; }
-    public void setFavorite() { isFavorite = !isFavorite; }
+    public void setFood() {
+        isFood = !isFood;
+        ContentValues value = new ContentValues();
+        value.put(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_FOOD,(isFood) ? 1:0);
+
+        String selection = AllImageFeederContract.FeedEntry._ID + " LIKE ?";
+        String[] selectionArgs = {Integer.toString(imageId)};
+
+        database.update(AllImageFeederContract.FeedEntry.TABLE_NAME,
+                value,selection,selectionArgs);
+    }
+    public void setFavorite() {
+        isFavorite = !isFavorite;
+        ContentValues value = new ContentValues();
+        value.put(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_FAVORITE,(isFavorite) ? 1:0);
+
+        String selection = AllImageFeederContract.FeedEntry._ID + " LIKE ?";
+        String[] selectionArgs = {Integer.toString(imageId)};
+
+        database.update(AllImageFeederContract.FeedEntry.TABLE_NAME,
+                value,selection,selectionArgs);
+    }
     public void setPeople() {
         isPeople = !isPeople;
+        ContentValues value = new ContentValues();
+        value.put(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_PEOPLE,(isPeople) ? 1:0);
+
+        String selection = AllImageFeederContract.FeedEntry._ID + " LIKE ?";
+        String[] selectionArgs = {Integer.toString(imageId)};
+
+        database.update(AllImageFeederContract.FeedEntry.TABLE_NAME,
+                value,selection,selectionArgs);
     }
     public void setNewTitle(String newTitle) {
         this.title = newTitle;
@@ -164,7 +199,8 @@ public class ImageData {
     }
 
     private int insertNewImage(String path, String timeStamp, String thumbnail, String latitude,
-                               String longtitude, String size,String title,String description) {
+                               String longtitude, String size,String title,String description,
+                               boolean isFavorite, boolean isPeople, boolean isFood) {
         ContentValues values = new ContentValues();
 
         values.put(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_PATH,path);
@@ -175,6 +211,9 @@ public class ImageData {
         values.put(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_SIZE,size);
         values.put(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_TITLE,title);
         values.put(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_DESCRIPTION,description);
+        values.put(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_FAVORITE, (isFavorite) ? 1:0);
+        values.put(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_PEOPLE, (isPeople) ? 1:0);
+        values.put(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_FOOD, (isFood) ? 1:0);
 
         return (int) database.insert(AllImageFeederContract.FeedEntry.TABLE_NAME,null,values);
     }

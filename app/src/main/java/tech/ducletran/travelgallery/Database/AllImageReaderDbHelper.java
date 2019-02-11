@@ -1,4 +1,4 @@
-package tech.ducletran.travelgallery.ImageData;
+package tech.ducletran.travelgallery.Database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

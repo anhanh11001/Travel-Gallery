@@ -106,11 +106,12 @@ public class MainActivity extends BaseActivity  {
                     } else {
                         int checkedRadioId = radioGroup.getCheckedRadioButtonId();
                         if (checkedRadioId == R.id.create_location_album_radio_button) {
-                            new Album(albumName,Album.ALBUM_TYPE_LOCATION);
+                            AlbumManager.registerAlbum(new Album(MainActivity.this,albumName,Album.ALBUM_TYPE_LOCATION));
+                            AlbumsFragment.setAlbumFragmentChanged(Album.ALBUM_TYPE_LOCATION);
                         } else if (checkedRadioId == R.id.create_others_album_radio_button) {
-                            new Album(albumName,Album.ALBUM_TYPE_OTHER);
+                            AlbumManager.registerAlbum(new Album(MainActivity.this,albumName,Album.ALBUM_TYPE_OTHER));
+                            AlbumsFragment.setAlbumFragmentChanged(Album.ALBUM_TYPE_OTHER);
                         }
-                        AlbumsFragment.setAlbumFragmentChanged();
                         dialog.cancel();
                     }
                 }

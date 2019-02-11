@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 import android.provider.MediaStore;
+import tech.ducletran.travelgallery.Database.*;
 
 import java.util.*;
 
@@ -15,7 +16,7 @@ public class ImageManager {
             MediaStore.Images.Thumbnails.DATA,          // Thumbnail link
             MediaStore.Images.Media.LATITUDE,           // Latitude
             MediaStore.Images.Media.LONGITUDE,          // Longtitude
-            MediaStore.Images.Media.SIZE                // Size
+            MediaStore.Images.Media.SIZE,                // Size
     };
 
     private static Map<Integer,ImageData> imageDataHashMap = new HashMap<Integer,ImageData>();
@@ -47,6 +48,10 @@ public class ImageManager {
     }
 
     public static void loadImage(Context context) {
+        AlbumManager.registerAlbum(new Album(context,Album.DEFAULT_FAVORITE_ID,"Favorite",null,Album.ALBUM_TYPE_SPECIAL));
+        AlbumManager.registerAlbum(new Album(context,Album.DEFAULT_FOOD_ID,"Food",null,Album.ALBUM_TYPE_SPECIAL));
+        AlbumManager.registerAlbum(new Album(context,Album.DEFAULT_PEOPLE_ID,"People",null,Album.ALBUM_TYPE_SPECIAL));
+
         SQLiteDatabase db = new AllImageReaderDbHelper(context).getReadableDatabase();
         String[] projetion = {
                 BaseColumns._ID,
@@ -57,7 +62,10 @@ public class ImageManager {
                 AllImageFeederContract.FeedEntry.COLUMN_IMAGE_LONGTITUDE,
                 AllImageFeederContract.FeedEntry.COLUMN_IMAGE_SIZE,
                 AllImageFeederContract.FeedEntry.COLUMN_IMAGE_TITLE,
-                AllImageFeederContract.FeedEntry.COLUMN_IMAGE_DESCRIPTION
+                AllImageFeederContract.FeedEntry.COLUMN_IMAGE_DESCRIPTION,
+                AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_PEOPLE,
+                AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_FOOD,
+                AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_FAVORITE
         };
 
         Cursor cursor = db.query(AllImageFeederContract.FeedEntry.TABLE_NAME,projetion,null,null,null,null,null);
@@ -71,10 +79,19 @@ public class ImageManager {
             String size = cursor.getString(cursor.getColumnIndexOrThrow(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_SIZE));
             String title = cursor.getString(cursor.getColumnIndexOrThrow(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_TITLE));
             String description = cursor.getString(cursor.getColumnIndexOrThrow(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_DESCRIPTION));
-            ImageManager.addImage(new ImageData(context,path,time,thumbnail,latittude,longtitude,size,title,description,imageId));
+            boolean isFood =
+                    (cursor.getInt(cursor.getColumnIndexOrThrow(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_FOOD)) == 1);
+            boolean isPeople =
+                    (cursor.getInt(cursor.getColumnIndexOrThrow(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_PEOPLE)) == 1);
+            boolean isFavorite =
+                    (cursor.getInt(cursor.getColumnIndexOrThrow(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_FAVORITE)) == 1);
+
+            ImageManager.addImage(
+                    new ImageData(context,path,time,thumbnail,latittude,longtitude,size,title,description,imageId,isFavorite,isFood,isPeople));
 
         }
         cursor.close();
+        loadAlbum(context);
     }
 
     public static void sortByDate() {
@@ -88,6 +105,38 @@ public class ImageManager {
 
     public static void shuffle() {
         Collections.shuffle(imageDataList);
+    }
+
+    private static void loadAlbum(Context context) {
+        SQLiteDatabase albumDatabase = new AllAlbumReaderDbHelper(context).getReadableDatabase();
+        String[] projetion = {
+                BaseColumns._ID,
+                AllAlbumFeederContract.AllAlbumFeedEntry.COLUMN_ALBUM_NAME,
+                AllAlbumFeederContract.AllAlbumFeedEntry.COLUMN_ALBUM_COVER,
+                AllAlbumFeederContract.AllAlbumFeedEntry.COLUMN_ALBUM_TYPE,
+        };
+
+        Cursor cursor = albumDatabase.query(AllAlbumFeederContract.AllAlbumFeedEntry.TABLE_NAME,projetion,null,null,null,null,null);
+        while (cursor.moveToNext()) {
+            int albumId = (int) cursor.getLong(cursor.getColumnIndexOrThrow(AllAlbumFeederContract.AllAlbumFeedEntry._ID));
+            String name = cursor.getString(cursor.getColumnIndexOrThrow(AllAlbumFeederContract.AllAlbumFeedEntry.COLUMN_ALBUM_NAME));
+            String cover = cursor.getString(cursor.getColumnIndexOrThrow(AllAlbumFeederContract.AllAlbumFeedEntry.COLUMN_ALBUM_COVER));
+            int type = cursor.getInt(cursor.getColumnIndexOrThrow(AllAlbumFeederContract.AllAlbumFeedEntry.COLUMN_ALBUM_TYPE));
+
+            Album album = new Album(context,albumId,name,cover,type);
+            AlbumManager.registerAlbum(album);
+            SQLiteDatabase singleAlbumDatabase = new SingleAlbumReaderDbHelper(context,albumId).getReadableDatabase();
+            String[] singleAlbumProjection = {
+                   SingleAlbumReaderDbHelper.ID,
+            };
+            Cursor singleAlbumCursor = singleAlbumDatabase.query(SingleAlbumReaderDbHelper.getTableName(albumId),singleAlbumProjection
+                    ,null,null,null,null,null);
+            while (singleAlbumCursor.moveToNext()) {
+                int imageId = singleAlbumCursor.getInt(singleAlbumCursor.getColumnIndexOrThrow(SingleAlbumReaderDbHelper.ID));
+                album.addToAlbum(ImageManager.getImageById(imageId));
+            }
+        }
+
     }
 
 }

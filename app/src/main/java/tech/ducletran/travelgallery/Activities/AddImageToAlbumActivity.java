@@ -24,8 +24,8 @@ public class AddImageToAlbumActivity extends BaseActivity {
     private MenuItem doneItem;
     private Album currentAlbum;
     private ArrayList<Integer> imageAddedPositions = new ArrayList<Integer>();
-    private int specialAlbumPosition;
     private GradientDrawable drawable;
+    private int currentAlbumId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,8 +40,7 @@ public class AddImageToAlbumActivity extends BaseActivity {
         AllPhotosAdapter adapter = new AllPhotosAdapter(this);
         allPhotos.setAdapter(adapter);
 
-        specialAlbumPosition = getIntent().getIntExtra("special_album",-1);
-        final int currentAlbumId = getIntent().getIntExtra("current_album_id",0);
+        currentAlbumId = getIntent().getIntExtra("current_album_id",0);
         currentAlbum = AlbumManager.getAlbum(currentAlbumId);
 
         TypedValue typedValueColor = new TypedValue();
@@ -87,11 +86,11 @@ public class AddImageToAlbumActivity extends BaseActivity {
                 for (Integer i:imageAddedPositions) {
                     ImageData imageToAdd = ImageManager.getImageDataList().get(i);
                     currentAlbum.addToAlbum(imageToAdd);
-                    if (specialAlbumPosition == AlbumManager.ALBUM_FAVORITE_CODE) {
+                    if (currentAlbumId == Album.DEFAULT_FAVORITE_ID) {
                         imageToAdd.setFavorite();
-                    } else if (specialAlbumPosition == AlbumManager.ALBUM_PEOPLE_CODE) {
+                    } else if (currentAlbumId == Album.DEFAULT_PEOPLE_ID) {
                         imageToAdd.setPeople();
-                    } else if (specialAlbumPosition == AlbumManager.ALBUM_FOOD_CODE) {
+                    } else if (currentAlbumId == Album.DEFAULT_FOOD_ID) {
                         imageToAdd.setFood();
                     }
 
