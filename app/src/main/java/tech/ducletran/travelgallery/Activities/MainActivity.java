@@ -14,17 +14,16 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.*;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.RadioGroup;
-import android.widget.Toast;
+import android.widget.*;
 import com.bumptech.glide.Glide;
 import tech.ducletran.travelgallery.Adapter.CategoryStatePageAdapter;
 import tech.ducletran.travelgallery.CustomizedClass.CustomViewPager;
 import tech.ducletran.travelgallery.Fragment.AlbumsFragment;
+import tech.ducletran.travelgallery.Fragment.MapFragment;
 import tech.ducletran.travelgallery.Fragment.PhotosFragment;
 import tech.ducletran.travelgallery.Fragment.StoriesFracment;
 import tech.ducletran.travelgallery.ImageData.*;
@@ -313,9 +312,12 @@ public class MainActivity extends BaseActivity  {
             super.onPostExecute(newData);
             for (ImageData data : newData) {
                 ImageManager.addImage(data);
+                if (!TextUtils.isEmpty(data.getLatitude()) && !TextUtils.isEmpty(data.getLongtitude())) {
+                    MapFragment.addNewImageMarker(data.getImageMarker());
+                }
             }
             PhotosFragment.setPhotoFragmentChanged(context);
-
+            Toast.makeText(context,"Loaded " + newData.size() + " images",Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -106,8 +108,15 @@ public class MapFragment extends Fragment{
         countButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isUpdating) {
+                // Setting internet connection
+                NetworkInfo activeNetwork = ((ConnectivityManager) getActivity().
+                        getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+                if (activeNetwork == null || !activeNetwork.isConnectedOrConnecting()) {
+                    Toast.makeText(getActivity(),"There is no internet connection",Toast.LENGTH_SHORT).show();
+                } else if (isUpdating) {
                     Toast.makeText(getActivity(),"Updating...",Toast.LENGTH_SHORT).show();
+                } else if (imageList.size() == 0) {
+                    Toast.makeText(getActivity(),"Already updated",Toast.LENGTH_SHORT).show();
                 } else {
                     countCitiesCountries(getActivity());
                 }
@@ -261,15 +270,18 @@ public class MapFragment extends Fragment{
                 Double longitude = Double.valueOf(image.getLongtitude());
                 try {
                     addresses = geocoder.getFromLocation(latitude,longitude, 1);
-                    String cityName = addresses.get(0).getLocality();
-                    String countryName = addresses.get(0).getCountryName();
-                    if (!currentCitySet.contains(cityName) && !TextUtils.isEmpty(cityName)) {
-                        currentCitySet.add(cityName);
+                    if (addresses.size() == 1) {
+                        String cityName = addresses.get(0).getLocality();
+                        String countryName = addresses.get(0).getCountryName();
+                        if (!currentCitySet.contains(cityName) && !TextUtils.isEmpty(cityName)) {
+                            currentCitySet.add(cityName);
 
-                        if (!currentCountrySet.contains(countryName) && !TextUtils.isEmpty(countryName)) {
-                            currentCountrySet.add(countryName);
+                            if (!currentCountrySet.contains(countryName) && !TextUtils.isEmpty(countryName)) {
+                                currentCountrySet.add(countryName);
+                            }
                         }
                     }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
