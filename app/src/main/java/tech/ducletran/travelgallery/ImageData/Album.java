@@ -3,6 +3,7 @@ package tech.ducletran.travelgallery.ImageData;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import tech.ducletran.travelgallery.Database.AllAlbumFeederContract;
 import tech.ducletran.travelgallery.Database.AllAlbumReaderDbHelper;
 import tech.ducletran.travelgallery.Database.SingleAlbumReaderDbHelper;
@@ -43,6 +44,7 @@ public class Album {
             AlbumManager.registerOthersAlbum(this);
         }
         singleAlbumDatabase = new SingleAlbumReaderDbHelper(context, albumId).getWritableDatabase();
+        Log.d("DATABASE", "New album added with id: " + albumId);
     }
 
     public Album(Context context, int albumId,String name, String albumCover, int type) {
@@ -84,10 +86,11 @@ public class Album {
         singleAlbumDatabase.insert(SingleAlbumReaderDbHelper.getTableName(albumId),null,value);
     }
     public void removeFromAlbum(ImageData image) {
-        imageHashMap.remove(image.getImageId());
+        int imageId = image.getImageId();
+        imageHashMap.remove(imageId);
 
         String selection = SingleAlbumReaderDbHelper.ID + " LIKE ?";
-        String[] selectionArgs = {Integer.toString(image.getImageId())};
+        String[] selectionArgs = {Integer.toString(imageId)};
 
         singleAlbumDatabase.delete(SingleAlbumReaderDbHelper.getTableName(albumId),selection,selectionArgs);
     }
@@ -132,4 +135,5 @@ public class Album {
 
         return (int) allAlbumDatabase.insert(AllAlbumFeederContract.AllAlbumFeedEntry.TABLE_NAME,null,values);
     }
+
 }

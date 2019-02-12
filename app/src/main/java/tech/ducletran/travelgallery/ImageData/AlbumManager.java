@@ -49,12 +49,12 @@ public class AlbumManager {
         }
         SQLiteDatabase singleAlbumDatabase = new SingleAlbumReaderDbHelper(context,album.getAlbumId()).getWritableDatabase();
         singleAlbumDatabase.execSQL(SingleAlbumReaderDbHelper.getSQLDeleteEntries(album.getAlbumId()));
-
+        context.deleteDatabase(SingleAlbumReaderDbHelper.getDatabaseName(album.getAlbumId()));
 
         String selection = AllAlbumFeederContract.AllAlbumFeedEntry._ID + " LIKE ?";
         String[] selectionArgs = {Integer.toString(album.getAlbumId())};
 
-        new AllAlbumReaderDbHelper(context).getReadableDatabase()
+        new AllAlbumReaderDbHelper(context).getWritableDatabase()
                 .delete(AllAlbumFeederContract.AllAlbumFeedEntry.TABLE_NAME,selection,selectionArgs);
 
     }

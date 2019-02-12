@@ -47,7 +47,7 @@ public class ImageManager {
         String selection = AllImageFeederContract.FeedEntry._ID + " LIKE ?";
         String[] selectionArgs = {Integer.toString(data.getImageId())};
 
-        new AllImageReaderDbHelper(context).getReadableDatabase().delete(
+        new AllImageReaderDbHelper(context).getWritableDatabase().delete(
                 AllImageFeederContract.FeedEntry.TABLE_NAME,selection,selectionArgs
         );
     }

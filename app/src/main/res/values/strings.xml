@@ -51,4 +51,5 @@
     <string name="action_adding_story">Add Story</string>
     <string name="action_setting_delete_album">Delete Album</string>
     <string name="action_adding_new_city_country">New Item</string>
+    <string name="action_setting_remove_image_from_album">Remove Image</string>
 </resources>

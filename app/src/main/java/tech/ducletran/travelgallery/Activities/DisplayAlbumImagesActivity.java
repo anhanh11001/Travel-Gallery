@@ -50,12 +50,19 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.display_album_image_activity_menu,menu);
+
+        if (albumId == Album.DEFAULT_PEOPLE_ID || albumId == Album.DEFAULT_FAVORITE_ID
+                || albumId == Album.DEFAULT_FOOD_ID) {
+            menu.findItem(R.id.action_deleting_album).setVisible(false);
+            menu.findItem(R.id.action_album_rename).setVisible(false);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -76,6 +83,9 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
                 return true;
             case R.id.action_deleting_album:
                 deleteAlbum();
+                return true;
+            case R.id.action_removing_image_from_album:
+                removeImage();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -135,6 +145,12 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
 
     private void addNewImage() {
         Intent intent = new Intent(this,AddImageToAlbumActivity.class);
+        intent.putExtra("current_album_id",albumId);
+        startActivity(intent);
+    }
+
+    private void removeImage() {
+        Intent intent = new Intent(this,RemoveImageFromAlbumActivity.class);
         intent.putExtra("current_album_id",albumId);
         startActivity(intent);
     }
