@@ -156,7 +156,7 @@ public class MainActivity extends BaseActivity  {
                         Toast.makeText(MainActivity.this,"The story title length is not good",Toast.LENGTH_SHORT).show();
                         dialog.cancel();
                     } else {
-                        Story newStory = new Story(storyTitle,storyDescriptionEditText.getText().toString(),imageCover);
+                        Story newStory = new Story(MainActivity.this,storyTitle,storyDescriptionEditText.getText().toString(),imageCover);
                         StoriesFracment.setStoryFracmentChanged();
                         dialog.cancel();
                     }

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 import tech.ducletran.travelgallery.Adapter.StoriesAdapter;
@@ -27,7 +28,9 @@ public class StoriesFracment extends Fragment {
 
         listView = view.findViewById(R.id.stories_fragment_list_view);
         adapter = new StoriesAdapter(getActivity());
+        LinearLayout emptyView = view.findViewById(R.id.stories_empty_view);
 
+        listView.setEmptyView(emptyView);
         listView.setAdapter(adapter);
 
         return view;

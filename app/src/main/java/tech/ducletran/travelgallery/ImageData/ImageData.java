@@ -26,6 +26,7 @@ public class ImageData {
     private boolean isFood;
     private boolean isFavorite;
     private int imageId;
+    private boolean isLocationCounted;
 
     private SQLiteDatabase database;
 
@@ -40,17 +41,20 @@ public class ImageData {
         this.size = size;
         this.title = "";
         this.description = "";
-        isFavorite = false;
-        isFood = false;
-        isPeople = false;
-        imageId = insertNewImage(path,timeStamp,thumbnail,latitude,longtitude,size,
-                "","",false,false,false);
+        this.isFavorite = false;
+        this.isFood = false;
+        this.isPeople = false;
+        this.isLocationCounted = false;
+        this.imageId = insertNewImage(path,timeStamp,thumbnail,latitude,longtitude,size,
+                "","",false,false,false,false);
     }
 
     public ImageData(Context context,String path,String timeStamp, String thumbnail, String latitude, String longtitude,
-                     String size, String title, String description, int imageId, boolean isFavorite, boolean isFood, boolean isPeople) {
+                     String size, String title, String description, int imageId, boolean isFavorite, boolean isFood,
+                     boolean isPeople, boolean isLocationCounted) {
         database = new AllImageReaderDbHelper(context).getWritableDatabase();
 
+        this.isLocationCounted = isLocationCounted;
         this.path = path;
         this.timeStamp = timeStamp;
         this.thumbnail = thumbnail;
@@ -69,9 +73,7 @@ public class ImageData {
         if (isPeople) {AlbumManager.getAlbum(Album.DEFAULT_PEOPLE_ID).addToAlbum(this);}
     }
 
-    public int getImageId() {
-        return imageId;
-    }
+
 
     public ImageMarker getImageMarker() {
         if (longtitude == null || latitude == null) {
@@ -88,6 +90,10 @@ public class ImageData {
     public String getDateFormatted() {
         DateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");
         return formatter.format(getDate());
+    }
+    public boolean getIsLocationCounted() {return isLocationCounted;}
+    public int getImageId() {
+        return imageId;
     }
     public String getTitle() {return this.title;}
     public String getDescription() {return this.description;}
@@ -107,6 +113,18 @@ public class ImageData {
         return path;
     }
 
+    // Setters
+    public void setIsLocationCounted() {
+        isLocationCounted = !isLocationCounted;
+        ContentValues value = new ContentValues();
+        value.put(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_LOCATION_COUNTED,(isLocationCounted) ? 1:0);
+
+        String selection = AllImageFeederContract.FeedEntry._ID + " LIKE ?";
+        String[] selectionArgs = {Integer.toString(imageId)};
+
+        database.update(AllImageFeederContract.FeedEntry.TABLE_NAME,
+                value,selection,selectionArgs);
+    }
     public void setFood() {
         isFood = !isFood;
         ContentValues value = new ContentValues();
@@ -200,7 +218,7 @@ public class ImageData {
 
     private int insertNewImage(String path, String timeStamp, String thumbnail, String latitude,
                                String longtitude, String size,String title,String description,
-                               boolean isFavorite, boolean isPeople, boolean isFood) {
+                               boolean isFavorite, boolean isPeople, boolean isFood, boolean isLocationCounted) {
         ContentValues values = new ContentValues();
 
         values.put(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_PATH,path);
@@ -214,6 +232,7 @@ public class ImageData {
         values.put(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_FAVORITE, (isFavorite) ? 1:0);
         values.put(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_PEOPLE, (isPeople) ? 1:0);
         values.put(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_FOOD, (isFood) ? 1:0);
+        values.put(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_LOCATION_COUNTED, (isLocationCounted) ? 1:0);
 
         return (int) database.insert(AllImageFeederContract.FeedEntry.TABLE_NAME,null,values);
     }

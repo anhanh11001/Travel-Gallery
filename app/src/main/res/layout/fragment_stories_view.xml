@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ListView
             android:padding="16dp"
@@ -11,8 +11,38 @@
             android:layout_height="match_parent"
             android:dividerHeight="16dp"
             android:divider="@android:color/transparent"
+    />
+
+    <LinearLayout
+            android:id="@+id/stories_empty_view"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent=".5"
+            app:layout_constraintHeight_percent=".4"
     >
+        <ImageView
+                android:layout_gravity="center"
+                android:src="@drawable/ic_empty_story"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+        />
+        <TextView
+                android:paddingTop="4dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="There are no stories."
+                android:textSize="18sp"
+                android:textStyle="italic"
+        />
+    </LinearLayout>
 
-    </ListView>
 
-</LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -1,5 +1,7 @@
 package tech.ducletran.travelgallery.ImageData;
 
+import android.content.Context;
+
 public class Story {
 
     private String title;
@@ -7,17 +9,22 @@ public class Story {
     private String cover;
     private int id;
 
-    public Story (String title, String description, String cover) {
+    public Story (Context context, String title, String description, String cover) {
         this.title = title;
         this.description = description;
         this.cover = cover;
-        this.id = StoriesManager.generateId();
-        StoriesManager.registerAlbum(this,id);
+        this.id = StoriesManager.generateId(context,this);
+        StoriesManager.registerStory(this,id);
     }
 
-    public Story(String title, String description) {
-        this(title,description,null);
+    public Story (int id, String title, String description, String cover) {
+        this.title = title;
+        this.id = id;
+        this.description = description;
+        this.cover = cover;
+        StoriesManager.registerStory(this,id);
     }
+
 
     // Getters
     public String getTitle() {return title;}

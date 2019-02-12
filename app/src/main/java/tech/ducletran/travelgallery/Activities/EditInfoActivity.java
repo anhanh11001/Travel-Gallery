@@ -280,6 +280,8 @@ public class EditInfoActivity extends BaseActivity implements GoogleApiClient.On
             turnDownKeyBoard();
             // Can toast this location
             moveCamera(new LatLng(address.getLatitude(),address.getLongitude()));
+        } else {
+            Toast.makeText(EditInfoActivity.this,"Cannot find that location",Toast.LENGTH_SHORT).show();
         }
     }
 

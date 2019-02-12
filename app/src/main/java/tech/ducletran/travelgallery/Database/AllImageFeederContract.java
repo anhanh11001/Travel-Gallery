@@ -19,7 +19,8 @@ public final class AllImageFeederContract {
                     FeedEntry.COLUMN_IMAGE_DESCRIPTION + " TEXT," +
                     FeedEntry.COLUMN_IMAGE_IS_FAVORITE + " INTEGER," +
                     FeedEntry.COLUMN_IMAGE_IS_FOOD + " INTEGER," +
-                    FeedEntry.COLUMN_IMAGE_IS_PEOPLE + " INTEGER)";
+                    FeedEntry.COLUMN_IMAGE_IS_PEOPLE + " INTEGER," +
+                    FeedEntry.COLUMN_IMAGE_IS_LOCATION_COUNTED + " INTEGER)";
 
     public static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + FeedEntry.TABLE_NAME;
@@ -37,5 +38,6 @@ public final class AllImageFeederContract {
         public static final String COLUMN_IMAGE_IS_FAVORITE = "favorite";
         public static final String COLUMN_IMAGE_IS_PEOPLE = "people";
         public static final String COLUMN_IMAGE_IS_FOOD = "food";
+        public static final String COLUMN_IMAGE_IS_LOCATION_COUNTED = "location_count";
     }
 }

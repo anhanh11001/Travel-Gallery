@@ -34,8 +34,10 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_add_new_story" />
-                            <entry key="sourceFile" value="D:\Coding Project\9. Personal Travel Photos Gallery\Resource\svg_files\add_new_story.svg" />
+                            <entry key="height" value="34" />
+                            <entry key="outputName" value="ic_empty_story" />
+                            <entry key="overrideSize" value="true" />
+                            <entry key="sourceFile" value="D:\Coding Project\9. Personal Travel Photos Gallery\Resource\svg_files\empty_story.svg" />
                           </map>
                         </option>
                       </PersistentState>

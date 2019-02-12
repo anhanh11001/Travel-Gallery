@@ -65,7 +65,8 @@ public class ImageManager {
                 AllImageFeederContract.FeedEntry.COLUMN_IMAGE_DESCRIPTION,
                 AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_PEOPLE,
                 AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_FOOD,
-                AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_FAVORITE
+                AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_FAVORITE,
+                AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_LOCATION_COUNTED
         };
 
         Cursor cursor = db.query(AllImageFeederContract.FeedEntry.TABLE_NAME,projetion,null,null,null,null,null);
@@ -85,13 +86,17 @@ public class ImageManager {
                     (cursor.getInt(cursor.getColumnIndexOrThrow(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_PEOPLE)) == 1);
             boolean isFavorite =
                     (cursor.getInt(cursor.getColumnIndexOrThrow(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_FAVORITE)) == 1);
+            boolean isLocationCounted =
+                    (cursor.getInt(cursor.getColumnIndexOrThrow(AllImageFeederContract.FeedEntry.COLUMN_IMAGE_IS_LOCATION_COUNTED)) == 1);
 
             ImageManager.addImage(
-                    new ImageData(context,path,time,thumbnail,latittude,longtitude,size,title,description,imageId,isFavorite,isFood,isPeople));
+                    new ImageData(context,path,time,thumbnail,latittude,longtitude,size,title,description,imageId,
+                            isFavorite,isFood,isPeople, isLocationCounted));
 
         }
         cursor.close();
         loadAlbum(context);
+        loadStory(context);
     }
 
     public static void sortByDate() {
@@ -136,7 +141,25 @@ public class ImageManager {
                 album.addToAlbum(ImageManager.getImageById(imageId));
             }
         }
+    }
 
+    private static void loadStory(Context context) {
+        SQLiteDatabase storyDatabase = new AllStoriesReaderDbHelper(context).getReadableDatabase();
+        String[] projection = {
+            AllStoriesFeederContract.AllStoryFeedEntry._ID,
+            AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_NAME,
+            AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_COVER,
+            AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_DESCRIPTION
+        };
+
+        Cursor cursor = storyDatabase.query(AllStoriesFeederContract.AllStoryFeedEntry.TABLE_NAME,projection,null,null,null,null,null);
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow(AllStoriesFeederContract.AllStoryFeedEntry._ID));
+            String title = cursor.getString(cursor.getColumnIndexOrThrow(AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_NAME));
+            String cover = cursor.getString(cursor.getColumnIndexOrThrow(AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_COVER));
+            String description = cursor.getString(cursor.getColumnIndexOrThrow(AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_DESCRIPTION));
+            new Story(id,title,description,cover);
+        }
     }
 
 }
