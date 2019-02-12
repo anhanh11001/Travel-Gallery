@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.view.menu.MenuBuilder;
 import android.view.*;
 import android.widget.Toast;
+import android.widget.Toolbar;
 import tech.ducletran.travelgallery.Adapter.DisplayPhotosAdapter;
 import tech.ducletran.travelgallery.Fragment.PhotosFragment;
 import tech.ducletran.travelgallery.ImageData.Album;
@@ -220,6 +221,12 @@ public class DisplayImageActivity extends BaseActivity {
             menu.findItem(R.id.action_bar_button_people).setIcon(getDrawable(
                     (current.getIsPeople()) ? R.drawable.ic_people_filled_icon:R.drawable.ic_people_icon
             ));
+
+            if (current.getLatitude() == null) {
+                getSupportActionBar().setTitle(getSupportActionBar().getTitle() + "...");
+            }
+
         }
     }
+
 }

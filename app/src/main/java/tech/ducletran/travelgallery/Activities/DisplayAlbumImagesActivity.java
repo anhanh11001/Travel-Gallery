@@ -144,7 +144,7 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
     private void deleteAlbum() {
         AlertDialog.Builder deleteDialog = new AlertDialog.Builder(this);
         deleteDialog.setTitle("Deleting album");
-        deleteDialog.setMessage("Are you sure to delete this album");
+        deleteDialog.setMessage("Are you sure to delete this album?");
         final Activity activty = this;
         deleteDialog.setPositiveButton("delete", new DialogInterface.OnClickListener() {
             @Override

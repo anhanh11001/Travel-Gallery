@@ -2,7 +2,7 @@
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="200dp" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_height="150dp" xmlns:app="http://schemas.android.com/apk/res-auto"
 >
     <TextView
             android:padding="16dp"
@@ -23,7 +23,7 @@
             android:background="@drawable/helper_drawable_shadow"
             app:riv_corner_radius="8dp"
             android:foreground="@drawable/helpder_drawable_opacity_cover"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_launcher_foreground"
             android:id="@+id/stories_cover_image_view"

@@ -46,6 +46,7 @@
         <activity android:name=".Activities.EditInfoActivity"
                   android:parentActivityName=".Activities.DisplayImageInfoActivity"/>
         <activity android:name=".Activities.ImagePickerActivity"/>
+        <activity android:name=".Activities.ShowCitiesCountriesActivity"/>
     </application>
 
 </manifest>

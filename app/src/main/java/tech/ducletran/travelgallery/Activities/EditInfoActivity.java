@@ -221,6 +221,9 @@ public class EditInfoActivity extends BaseActivity implements GoogleApiClient.On
                 if (!newDescription.equals(currentDescription)) {
                     currentImage.setNewDescription(newDescription);
                     DisplayImageInfoActivity.setInfoChanged();
+                    if (currentImage.getIsLocationCounted()) {
+                        currentImage.setIsLocationCounted();
+                    }
                 }
 
                 if (locationChanged) {
