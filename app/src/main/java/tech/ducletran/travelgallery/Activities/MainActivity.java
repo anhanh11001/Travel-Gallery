@@ -2,20 +2,19 @@ package tech.ducletran.travelgallery.Activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.ClipData;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.*;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.*;
 import android.widget.EditText;
@@ -30,6 +29,8 @@ import tech.ducletran.travelgallery.Fragment.PhotosFragment;
 import tech.ducletran.travelgallery.Fragment.StoriesFracment;
 import tech.ducletran.travelgallery.ImageData.*;
 import tech.ducletran.travelgallery.R;
+
+import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity  {
     static final int REQUEST_PERMISSION_KEY = 1;
@@ -191,22 +192,9 @@ public class MainActivity extends BaseActivity  {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_CANCELED  && requestCode == REQUEST_CODE_FOR_NEW_IMAGE) {
             ClipData clipData = data.getClipData();
-            if (clipData != null) {
-                for (int i = 0;i < clipData.getItemCount();i++) {
-                    Cursor returnCursor = getContentResolver().query(clipData.getItemAt(i).getUri(),
-                            ImageManager.projection,null,null,null);
-                    returnCursor.moveToFirst();
-                    String path = returnCursor.getString(returnCursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA));
-                    String timestamp = returnCursor.getString(returnCursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_TAKEN));
-                    String thumbnail = returnCursor.getString(returnCursor.getColumnIndexOrThrow(MediaStore.Images.Thumbnails.DATA));
-                    String latitude = returnCursor.getString(returnCursor.getColumnIndexOrThrow(MediaStore.Images.Media.LATITUDE));
-                    String longtitude = returnCursor.getString(returnCursor.getColumnIndexOrThrow(MediaStore.Images.Media.LONGITUDE));
-                    String size = returnCursor.getString(returnCursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE));
-                    ImageManager.addImage(new ImageData(this,path,timestamp,thumbnail,latitude,longtitude,size));
-                    returnCursor.close();
-                }
-                PhotosFragment.setPhotoFragmentChanged();
-            }
+            Toast.makeText(this,"Loading new photos",Toast.LENGTH_SHORT).show();
+            new NewPhotoLoader(this).execute(clipData);
+
         }
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_FOR_STORY_COVER) {
             // Do some thing here
@@ -285,5 +273,49 @@ public class MainActivity extends BaseActivity  {
 
             }
         });
+    }
+
+
+    private static class NewPhotoLoader extends AsyncTask<ClipData,Void, ArrayList<ImageData>> {
+        private Context context;
+
+        private NewPhotoLoader(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected ArrayList<ImageData> doInBackground(ClipData... data) {
+            ClipData clipData = data[0];
+            ArrayList<ImageData> newData = new ArrayList<>();
+            if (clipData != null) {
+
+                for (int i = 0; i < clipData.getItemCount(); i++) {
+                    Cursor returnCursor = context.getContentResolver().query(clipData.getItemAt(i).getUri(),
+                            ImageManager.projection, null, null, null);
+                    returnCursor.moveToNext();
+                    String path = returnCursor.getString(returnCursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA));
+                    String timestamp = returnCursor.getString(returnCursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_TAKEN));
+                    String thumbnail = returnCursor.getString(returnCursor.getColumnIndexOrThrow(MediaStore.Images.Thumbnails.DATA));
+                    String latitude = returnCursor.getString(returnCursor.getColumnIndexOrThrow(MediaStore.Images.Media.LATITUDE));
+                    String longtitude = returnCursor.getString(returnCursor.getColumnIndexOrThrow(MediaStore.Images.Media.LONGITUDE));
+                    String size = returnCursor.getString(returnCursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE));
+                    newData.add(new ImageData(context,path,timestamp,thumbnail,latitude,longtitude,size));
+
+                    returnCursor.close();
+                }
+
+            }
+            return newData;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<ImageData> newData) {
+            super.onPostExecute(newData);
+            for (ImageData data : newData) {
+                ImageManager.addImage(data);
+            }
+            PhotosFragment.setPhotoFragmentChanged(context);
+
+        }
     }
 }

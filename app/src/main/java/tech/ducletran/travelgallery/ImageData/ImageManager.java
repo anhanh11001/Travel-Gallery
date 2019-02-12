@@ -20,7 +20,7 @@ public class ImageManager {
     };
 
     private static Map<Integer,ImageData> imageDataHashMap = new HashMap<Integer,ImageData>();
-    private static ArrayList<ImageData> imageDataList = new ArrayList<ImageData>(imageDataHashMap.values());
+    private static ArrayList<ImageData> imageDataList = new ArrayList<>();
 
     public static ArrayList<ImageData> getImageDataList() {
         return imageDataList;
@@ -31,12 +31,17 @@ public class ImageManager {
 
     public static void addImage(ImageData data) {
         imageDataHashMap.put(data.getImageId(),data);
-        imageDataList = new ArrayList<>(imageDataHashMap.values());
+        imageDataList.add(data);
+    }
+
+    public static void resetImageDataList() {
+        imageDataList.clear();
+        imageDataList.addAll(imageDataHashMap.values());
     }
 
     public static void removeImage(ImageData data,Context context) {
         imageDataHashMap.remove(data.getImageId());
-        imageDataList = new ArrayList<>(imageDataHashMap.values());
+        resetImageDataList();
         AlbumManager.removeImage(data);
 
         String selection = AllImageFeederContract.FeedEntry._ID + " LIKE ?";
@@ -48,6 +53,7 @@ public class ImageManager {
     }
 
     public static void loadImage(Context context) {
+
         AlbumManager.registerAlbum(new Album(context,Album.DEFAULT_FAVORITE_ID,"Favorite",null,Album.ALBUM_TYPE_SPECIAL));
         AlbumManager.registerAlbum(new Album(context,Album.DEFAULT_FOOD_ID,"Food",null,Album.ALBUM_TYPE_SPECIAL));
         AlbumManager.registerAlbum(new Album(context,Album.DEFAULT_PEOPLE_ID,"People",null,Album.ALBUM_TYPE_SPECIAL));

@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +26,14 @@ import java.util.ArrayList;
 
 public class PhotosFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener,
         LoaderManager.LoaderCallbacks<ArrayList<ImageData>> {
-    private static boolean isAdapterChanged = false;
+    private static boolean onStart = true;
+
     private static GridView gridView;
     private LinearLayout loadingLayout;
     private View view;
     private LinearLayout emptyView;
     private static PhotosAdapter adapter;
+
 
     public PhotosFragment() {
         super();
@@ -70,7 +73,6 @@ public class PhotosFragment extends Fragment implements SharedPreferences.OnShar
 
         // Setting the LoaderManager
         getLoaderManager().initLoader(1,null,this).forceLoad();
-
         return view;
     }
 
@@ -87,7 +89,7 @@ public class PhotosFragment extends Fragment implements SharedPreferences.OnShar
             } else {
                 ImageManager.shuffle();
             }
-            getActivity().recreate();
+            PhotosFragment.setPhotoFragmentChanged(getActivity());
         }
     }
 
@@ -107,18 +109,19 @@ public class PhotosFragment extends Fragment implements SharedPreferences.OnShar
         PreferenceManager.getDefaultSharedPreferences(getActivity()).unregisterOnSharedPreferenceChangeListener(this);
     }
 
-    public static void setPhotoFragmentChanged() {
-        isAdapterChanged = true;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (isAdapterChanged) {
-            isAdapterChanged = false;
-//            adapter.notifyDataSetChanged();
-            getActivity().recreate();
+    public static void setPhotoFragmentChanged(Context context) {
+        ImageManager.resetImageDataList();
+        if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(context.getString(R.string.action_settings_sort_key),true)) {
+            ImageManager.sortByDate();
+        } else {
+            ImageManager.shuffle();
         }
+        adapter.clear();
+        for (ImageData image: ImageManager.getImageDataList()) {
+            adapter.add(image);
+        }
+        adapter.notifyDataSetChanged();
+        gridView.invalidate();
     }
 
     // Loader Manager
@@ -135,7 +138,6 @@ public class PhotosFragment extends Fragment implements SharedPreferences.OnShar
         if (adapter != null) {
             adapter.clear();
         }
-
         adapter.addAll(imageData);
     }
 
@@ -153,18 +155,24 @@ public class PhotosFragment extends Fragment implements SharedPreferences.OnShar
         @Nullable
         @Override
         public ArrayList<ImageData> loadInBackground() {
-            if (ImageManager.getImageDataList().size() != 0) {
+            if (!onStart) {
+                ImageManager.resetImageDataList();
                 setUpDateSorting(getContext());
                 DisplayImageActivity.setImageDataList(ImageManager.getImageDataList());
                 return ImageManager.getImageDataList();
             }
+            onStart = false;
             ImageManager.loadImage(getContext());
             setUpDateSorting(getContext());
             DisplayImageActivity.setImageDataList(ImageManager.getImageDataList());
+
             return ImageManager.getImageDataList();
         }
 
-
+        @Override
+        protected void onStartLoading() {
+            forceLoad();
+        }
     }
 
     private static void setUpDateSorting(Context context) {

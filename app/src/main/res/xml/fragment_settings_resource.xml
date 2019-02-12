@@ -24,5 +24,6 @@
             android:switchTextOn="@string/action_settings_sort_on"
             android:switchTextOff="@string/action_settings_sort_off"
             android:icon="@drawable/ic_sort_by_date_icon"
+            android:defaultValue="true"
     />
 </PreferenceScreen>

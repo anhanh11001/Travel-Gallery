@@ -3,6 +3,7 @@ package tech.ducletran.travelgallery.ImageData;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import tech.ducletran.travelgallery.Database.*;
 
 import java.util.ArrayList;

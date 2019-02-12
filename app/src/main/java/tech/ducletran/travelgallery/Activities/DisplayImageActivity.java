@@ -4,10 +4,12 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.view.menu.MenuBuilder;
+import android.util.Log;
 import android.view.*;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -109,11 +111,11 @@ public class DisplayImageActivity extends BaseActivity {
             case R.id.action_bar_button_delete: // this might need some changes
                 viewPager.setCurrentItem((currentPosition == 0) ?
                         1 : currentPosition - 1);
-                PhotosFragment.setPhotoFragmentChanged();
-                DisplayAlbumImagesActivity.setAdapterChanged();
-                ImageManager.removeImage(current,this);
                 imageDataList.remove(currentPosition);
                 adapter.notifyDataSetChanged();
+                ImageManager.removeImage(current,this);
+                PhotosFragment.setPhotoFragmentChanged(this);
+                DisplayAlbumImagesActivity.setAdapterChanged();
                 dataChanged = true;
 
                 if (currentPosition == 0) {
@@ -221,10 +223,6 @@ public class DisplayImageActivity extends BaseActivity {
             menu.findItem(R.id.action_bar_button_people).setIcon(getDrawable(
                     (current.getIsPeople()) ? R.drawable.ic_people_filled_icon:R.drawable.ic_people_icon
             ));
-
-            if (current.getLatitude() == null) {
-                getSupportActionBar().setTitle(getSupportActionBar().getTitle() + "...");
-            }
 
         }
     }

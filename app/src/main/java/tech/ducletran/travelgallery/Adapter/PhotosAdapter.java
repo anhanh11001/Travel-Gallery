@@ -35,6 +35,7 @@ public class PhotosAdapter extends ArrayAdapter<ImageData> {
 
         Glide.with(context).load(getItem(position).getThumbnail()).into(holder.photoImageView);
 
+
         return convertView;
     }
 

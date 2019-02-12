@@ -124,7 +124,7 @@ public class EditInfoActivity extends BaseActivity implements GoogleApiClient.On
                                 dateEditText.setText(new SimpleDateFormat("dd/MM/yyyy").format(newDate));
                                 currentImage.setNewDate(newDate);
                                 DisplayImageInfoActivity.setInfoChanged();
-                                PhotosFragment.setPhotoFragmentChanged();
+                                PhotosFragment.setPhotoFragmentChanged(EditInfoActivity.this);
                             }
                         },
                         year, month, day
