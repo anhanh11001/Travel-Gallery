@@ -32,7 +32,6 @@ public class AddImageToAlbumActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_photos_view);
 
-        findViewById(R.id.photos_loading_layout).setVisibility(View.GONE);
         findViewById(R.id.photos_empty_view).setVisibility(View.GONE);
 
         GridView allPhotos = findViewById(R.id.photos_grid_view);

@@ -37,8 +37,6 @@ public class ImagePickerActivity extends BaseActivity {
             imageDataList = AlbumManager.getAlbum(currentAlbumId).getAlbumImageList();
         }
 
-
-        findViewById(R.id.photos_loading_layout).setVisibility(View.GONE);
         findViewById(R.id.photos_empty_view).setVisibility(View.GONE);
 
         GridView imageGridView = findViewById(R.id.photos_grid_view);

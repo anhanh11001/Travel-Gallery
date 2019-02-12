@@ -37,8 +37,6 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
                 currentAlbum.getAlbumImageList());;
         DisplayImageActivity.setImageDataList(currentAlbum.getAlbumImageList());
 
-        findViewById(R.id.photos_loading_layout).setVisibility(View.GONE);
-
         GridView gridView = findViewById(R.id.photos_grid_view);
         gridView.setEmptyView(findViewById(R.id.photos_empty_view));
         gridView.setNumColumns(4);

@@ -34,10 +34,10 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="height" value="200" />
-                            <entry key="outputName" value="ic_edit_button_round" />
+                            <entry key="height" value="316" />
+                            <entry key="outputName" value="ic_launcher_image_01" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="D:\Coding Project\9. Personal Travel Photos Gallery\Resource\svg_files\edit_button_round.svg" />
+                            <entry key="sourceFile" value="D:\Coding Project\9. Personal Travel Photos Gallery\Resource\svg_files\launcher_image-01.svg" />
                             <entry key="width" value="200" />
                           </map>
                         </option>

@@ -28,7 +28,6 @@ public class DisplayMultipleImageMapActivity extends BaseActivity {
         setContentView(R.layout.fragment_photos_view);
 
         GridView gridView = findViewById(R.id.photos_grid_view);
-        findViewById(R.id.photos_loading_layout).setVisibility(View.GONE);
         findViewById(R.id.photos_empty_view).setVisibility(View.GONE);
 
         PhotosAdapter adapter = new PhotosAdapter(this,multipleImageList);

@@ -8,10 +8,6 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.AsyncTaskLoader;
-import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +20,9 @@ import tech.ducletran.travelgallery.R;
 
 import java.util.ArrayList;
 
-public class PhotosFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener,
-        LoaderManager.LoaderCallbacks<ArrayList<ImageData>> {
-    private static boolean onStart = true;
-
+public class PhotosFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener//, LoaderManager.LoaderCallbacks<ArrayList<ImageData>> {
+{
     private static GridView gridView;
-    private LinearLayout loadingLayout;
     private View view;
     private LinearLayout emptyView;
     private static PhotosAdapter adapter;
@@ -45,13 +38,11 @@ public class PhotosFragment extends Fragment implements SharedPreferences.OnShar
         view = inflater.inflate(R.layout.fragment_photos_view,container,false);
         adapter = new PhotosAdapter(getActivity(),new ArrayList<ImageData>());
         gridView = view.findViewById(R.id.photos_grid_view);
-        loadingLayout = view.findViewById(R.id.photos_loading_layout);
         emptyView = view.findViewById(R.id.photos_empty_view);
         emptyView.setVisibility(View.INVISIBLE);
         
         gridView.setAdapter(adapter);
         setUpNumCols();
-        DisplayImageActivity.setImageDataList(ImageManager.getImageDataList());
 
         PreferenceManager.getDefaultSharedPreferences(getActivity()).registerOnSharedPreferenceChangeListener(this);
 
@@ -60,6 +51,7 @@ public class PhotosFragment extends Fragment implements SharedPreferences.OnShar
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent (getActivity(),DisplayImageActivity.class);
                 intent.putExtra("position",position);
+                DisplayImageActivity.setImageDataList(ImageManager.getImageDataList());
                 startActivity(intent);
             }
         });
@@ -71,8 +63,17 @@ public class PhotosFragment extends Fragment implements SharedPreferences.OnShar
             }
         });
 
-        // Setting the LoaderManager
-        getLoaderManager().initLoader(1,null,this).forceLoad();
+        // Set up adapter
+        adapter.clear();
+        gridView.setEmptyView(emptyView);
+        if (adapter != null) {
+            adapter.clear();
+        }
+
+        ImageManager.resetImageDataList();
+        setUpDateSorting(getContext());
+        DisplayImageActivity.setImageDataList(ImageManager.getImageDataList());
+        adapter.addAll(ImageManager.getImageDataList());
         return view;
     }
 
@@ -122,57 +123,6 @@ public class PhotosFragment extends Fragment implements SharedPreferences.OnShar
         }
         adapter.notifyDataSetChanged();
         gridView.invalidate();
-    }
-
-    // Loader Manager
-    @NonNull
-    @Override
-    public Loader<ArrayList<ImageData>> onCreateLoader(int i, @Nullable Bundle bundle) {
-        return new ImageLoader(getActivity());
-    }
-
-    @Override
-    public void onLoadFinished(@NonNull Loader<ArrayList<ImageData>> loader, ArrayList<ImageData> imageData) {
-        gridView.setEmptyView(emptyView);
-        loadingLayout.setVisibility(View.GONE);
-        if (adapter != null) {
-            adapter.clear();
-        }
-        adapter.addAll(imageData);
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<ArrayList<ImageData>> loader) {
-        adapter.clear();
-    }
-
-    private static class ImageLoader extends AsyncTaskLoader<ArrayList<ImageData>> {
-
-        private ImageLoader(@NonNull Context context) {
-            super(context);
-        }
-
-        @Nullable
-        @Override
-        public ArrayList<ImageData> loadInBackground() {
-            if (!onStart) {
-                ImageManager.resetImageDataList();
-                setUpDateSorting(getContext());
-                DisplayImageActivity.setImageDataList(ImageManager.getImageDataList());
-                return ImageManager.getImageDataList();
-            }
-            onStart = false;
-            ImageManager.loadImage(getContext());
-            setUpDateSorting(getContext());
-            DisplayImageActivity.setImageDataList(ImageManager.getImageDataList());
-
-            return ImageManager.getImageDataList();
-        }
-
-        @Override
-        protected void onStartLoading() {
-            forceLoad();
-        }
     }
 
     private static void setUpDateSorting(Context context) {

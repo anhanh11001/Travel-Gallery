@@ -15,26 +15,6 @@
     />
 
     <LinearLayout
-            android:id="@+id/photos_loading_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-    >
-        <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Image is loading"/>
-    </LinearLayout>
-
-    <LinearLayout
             android:id="@+id/photos_empty_view"
             android:orientation="vertical"
             android:layout_width="0dp"

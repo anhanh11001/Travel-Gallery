@@ -46,7 +46,7 @@ public class MapFragment extends Fragment{
     private static ClusterManager<ImageMarker> clusterManager;
     private static Set<String> citiesList;
     private static Set<String> countriesList;
-    private static List<ImageData> imageList = new ArrayList<>();
+    private static ArrayList<ImageData> imageList = new ArrayList<>();
 
     private static boolean isUpdating = false;
 
@@ -234,11 +234,12 @@ public class MapFragment extends Fragment{
     }
 
 
-    private static void updateCitiesCounties(Set<String> newCitiesSet, Set<String> newCountriesSet) {
+    private static void updateCitiesCounties(Set<String> newCitiesSet, Set<String> newCountriesSet,
+                                             ArrayList<ImageData> imageDataList) {
         citiesList = newCitiesSet;
         countriesList = newCountriesSet;
         isUpdating = false;
-        imageList.clear();
+        imageList = imageDataList;
         updateCountryPref(countriesList);
         updateCityPref(citiesList);
 
@@ -249,12 +250,12 @@ public class MapFragment extends Fragment{
     }
 
     private static class CountCityCountries extends Thread {
-        private List<ImageData> imageDataList;
+        private ArrayList<ImageData> imageDataList;
         private Set<String> currentCitySet;
         private Set<String> currentCountrySet;
         private Context context;
 
-        private CountCityCountries(Context context,List<ImageData> imageDataList, Set<String> currentCitySet, Set<String> currentCountrySet) {
+        private CountCityCountries(Context context,ArrayList<ImageData> imageDataList, Set<String> currentCitySet, Set<String> currentCountrySet) {
             this.imageDataList = imageDataList;
             this.currentCitySet = currentCitySet;
             this.currentCountrySet = currentCountrySet;
@@ -263,7 +264,8 @@ public class MapFragment extends Fragment{
 
         @Override
         public void run() {
-            for(ImageData image: imageDataList) {
+            for(int i = 0;i<imageDataList.size();i++) {
+                ImageData image = imageDataList.get(i);
                 Geocoder geocoder = new Geocoder(context, Locale.getDefault());
                 List<Address> addresses = null;
                 Double latitude = Double.valueOf(image.getLatitude());
@@ -281,14 +283,16 @@ public class MapFragment extends Fragment{
                             }
                         }
                     }
-
+                    image.setIsLocationCounted();
+                    imageDataList.remove(i);
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Toast.makeText(context,"Internet connection interrupted",Toast.LENGTH_SHORT).show();
+                    break;
                 }
-                image.setIsLocationCounted();
             }
 
-            updateCitiesCounties(currentCitySet,currentCountrySet);
+            updateCitiesCounties(currentCitySet,currentCountrySet,imageDataList);
         }
     }
 }
