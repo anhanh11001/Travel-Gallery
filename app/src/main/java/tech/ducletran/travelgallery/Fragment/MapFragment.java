@@ -152,6 +152,12 @@ public class MapFragment extends Fragment{
         updateCityPref(citiesList);
     }
 
+    public static void addCity(String cityName) {
+        citiesList.add(cityName);
+        updateCityPref(citiesList);
+        citiesCountTextView.setText("Cities: " + citiesList.size());
+    }
+
     public static void deleteCity(String cityName) {
         citiesList.remove(cityName);
         updateCityPref(citiesList);
@@ -162,6 +168,12 @@ public class MapFragment extends Fragment{
         countriesList.remove(oldName);
         countriesList.add(newName);
         updateCountryPref(countriesList);
+    }
+
+    public static void addCountry(String countryName) {
+        countriesList.add(countryName);
+        updateCountryPref(countriesList);
+        countriesCountTextView.setText("Countries: " + countriesList.size());
     }
 
     public static void deleteCountry(String countryName) {
