@@ -19,7 +19,7 @@ public class StoriesAdapter extends BaseAdapter {
     private Context context;
     private List<Story> storyList;
 
-    public StoriesAdapter(Context contex, List<Story> storyList) {
+    public StoriesAdapter(Context context, List<Story> storyList) {
         this.storyList = storyList;
         this.context = context;
     }

@@ -2,6 +2,7 @@ package tech.ducletran.travelgallery.Model;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import tech.ducletran.travelgallery.Database.AllStoriesFeederContract;
 import tech.ducletran.travelgallery.Database.AllStoriesReaderDbHelper;
 import tech.ducletran.travelgallery.Fragment.StoriesFracment;
@@ -19,10 +20,10 @@ public class StoriesManager {
     public static void registerStory(Story story, int id) {
         storyList.add(story);
         storyHashMap.put(id,story);
-        StoriesFracment.setStoryFracmentChanged();
     }
 
     public static List<Story> getStoryList() {return storyList;}
+    public static Story getStoryById(int id) {return storyHashMap.get(id);}
 
     public static int generateId(Context context, Story story) {
         ContentValues values = new ContentValues();
@@ -31,5 +32,17 @@ public class StoriesManager {
         values.put(AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_COVER, story.getCover());
         return (int) new AllStoriesReaderDbHelper(context).getWritableDatabase()
                 .insert(AllStoriesFeederContract.AllStoryFeedEntry.TABLE_NAME,null,values);
+    }
+
+    public static void removeStory(Context context, Story story) {
+        storyList.remove(story);
+        storyHashMap.remove(story.getStoryId());
+
+        String selection = AllStoriesFeederContract.AllStoryFeedEntry._ID + " LIKE ?";
+        String[] selectionArgs = {Integer.toString(story.getStoryId())};
+        new AllStoriesReaderDbHelper(context)
+                .getWritableDatabase()
+                .delete(AllStoriesFeederContract.AllStoryFeedEntry.TABLE_NAME,selection,selectionArgs);
+
     }
 }

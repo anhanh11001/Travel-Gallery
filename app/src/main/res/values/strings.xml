@@ -56,4 +56,5 @@
     <string name="action_edit_page_story">Edit This Page</string>
     <string name="action_organize_story">Organize Story</string>
     <string name="action_add_new_page_to_story">Add New Page</string>
+    <string name="action_edit_story">Edit Story</string>
 </resources>

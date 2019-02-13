@@ -198,7 +198,7 @@ public class MainActivity extends BaseActivity  {
             // Do some thing here
             int imageId = data.getIntExtra("result_image_id",-1);
             if (imageId != -1) {
-                imageCover = ImageManager.getImageById(imageId).getThumbnail();
+                imageCover = ImageManager.getImageById(imageId).getPath();
                 Glide.with(MainActivity.this).load(imageCover).into(coverImageButton);
             }
         }

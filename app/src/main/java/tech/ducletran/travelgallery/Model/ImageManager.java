@@ -164,7 +164,7 @@ public class ImageManager {
             String title = cursor.getString(cursor.getColumnIndexOrThrow(AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_NAME));
             String cover = cursor.getString(cursor.getColumnIndexOrThrow(AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_COVER));
             String description = cursor.getString(cursor.getColumnIndexOrThrow(AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_DESCRIPTION));
-            new Story(id,title,description,cover);
+            new Story(context,id,title,description,cover);
         }
     }
 
