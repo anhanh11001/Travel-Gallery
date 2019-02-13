@@ -15,7 +15,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.*;
 import android.widget.*;
@@ -26,7 +25,7 @@ import tech.ducletran.travelgallery.Fragment.AlbumsFragment;
 import tech.ducletran.travelgallery.Fragment.MapFragment;
 import tech.ducletran.travelgallery.Fragment.PhotosFragment;
 import tech.ducletran.travelgallery.Fragment.StoriesFracment;
-import tech.ducletran.travelgallery.ImageData.*;
+import tech.ducletran.travelgallery.Model.*;
 import tech.ducletran.travelgallery.R;
 
 import java.util.ArrayList;

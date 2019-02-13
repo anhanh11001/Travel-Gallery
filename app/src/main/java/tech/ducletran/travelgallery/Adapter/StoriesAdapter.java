@@ -8,27 +8,30 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
-import tech.ducletran.travelgallery.ImageData.StoriesManager;
-import tech.ducletran.travelgallery.ImageData.Story;
+import tech.ducletran.travelgallery.Model.Story;
 import tech.ducletran.travelgallery.R;
+
+import java.util.List;
 
 
 public class StoriesAdapter extends BaseAdapter {
 
     private Context context;
+    private List<Story> storyList;
 
-    public StoriesAdapter(Context context) {
+    public StoriesAdapter(Context contex, List<Story> storyList) {
+        this.storyList = storyList;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return StoriesManager.getStoryList().size();
+        return storyList.size();
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public Story getItem(int position) {
+        return storyList.get(position);
     }
 
     @Override
@@ -43,7 +46,7 @@ public class StoriesAdapter extends BaseAdapter {
         TextView textView = convertView.findViewById(R.id.stories_title_text_view);
         ImageView imageView = convertView.findViewById(R.id.stories_cover_image_view);
 
-        Story story = StoriesManager.getStoryList().get(position);
+        Story story = storyList.get(position);
         textView.setText(story.getTitle());
         if (story.getCover() != null) {
             Glide.with(context).load(story.getCover()).into(imageView);

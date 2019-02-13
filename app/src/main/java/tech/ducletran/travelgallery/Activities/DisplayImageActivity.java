@@ -1,24 +1,19 @@
 package tech.ducletran.travelgallery.Activities;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.Intent;
-import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.view.menu.MenuBuilder;
-import android.util.Log;
 import android.view.*;
 import android.widget.Toast;
-import android.widget.Toolbar;
 import tech.ducletran.travelgallery.Adapter.DisplayPhotosAdapter;
 import tech.ducletran.travelgallery.Fragment.PhotosFragment;
-import tech.ducletran.travelgallery.ImageData.Album;
-import tech.ducletran.travelgallery.ImageData.AlbumManager;
-import tech.ducletran.travelgallery.ImageData.ImageData;
-import tech.ducletran.travelgallery.ImageData.ImageManager;
+import tech.ducletran.travelgallery.Model.Album;
+import tech.ducletran.travelgallery.Model.AlbumManager;
+import tech.ducletran.travelgallery.Model.ImageData;
+import tech.ducletran.travelgallery.Model.ImageManager;
 import tech.ducletran.travelgallery.R;
 
 import java.util.List;

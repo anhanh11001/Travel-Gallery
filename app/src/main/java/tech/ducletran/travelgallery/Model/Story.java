@@ -1,4 +1,4 @@
-package tech.ducletran.travelgallery.ImageData;
+package tech.ducletran.travelgallery.Model;
 
 import android.content.Context;
 
@@ -30,4 +30,5 @@ public class Story {
     public String getTitle() {return title;}
     public String getCover() {return cover;}
     public String getDescription() {return description;}
+    public int getStoryId() {return id;}
 }

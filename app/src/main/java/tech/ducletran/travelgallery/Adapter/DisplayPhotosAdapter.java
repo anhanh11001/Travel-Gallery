@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import tech.ducletran.travelgallery.Activities.DisplayImageActivity;
 import tech.ducletran.travelgallery.CustomizedClass.CustomImageView;
-import tech.ducletran.travelgallery.ImageData.ImageData;
+import tech.ducletran.travelgallery.Model.ImageData;
 import tech.ducletran.travelgallery.R;
 
 import java.util.List;

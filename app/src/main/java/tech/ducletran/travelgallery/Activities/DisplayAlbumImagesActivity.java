@@ -2,19 +2,20 @@ package tech.ducletran.travelgallery.Activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import tech.ducletran.travelgallery.Adapter.PhotosAdapter;
 import tech.ducletran.travelgallery.Fragment.AlbumsFragment;
-import tech.ducletran.travelgallery.ImageData.Album;
-import tech.ducletran.travelgallery.ImageData.AlbumManager;
-import tech.ducletran.travelgallery.ImageData.ImageManager;
+import tech.ducletran.travelgallery.Model.Album;
+import tech.ducletran.travelgallery.Model.AlbumManager;
+import tech.ducletran.travelgallery.Model.ImageManager;
 import tech.ducletran.travelgallery.R;
 
 public class DisplayAlbumImagesActivity extends BaseActivity {
@@ -191,8 +192,28 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
         if (requestCode == GET_ALBUM_COVER_REQUEST_CODE && resultCode == RESULT_OK) {
             int imageCoverId = data.getIntExtra("result_image_id",-1);
             if (imageCoverId != -1) {
-                currentAlbum.setAlbumCover(ImageManager.getImageById(imageCoverId).getThumbnail());
+                String cover = ImageManager.getImageById(imageCoverId).getThumbnail();
+                currentAlbum.setAlbumCover(cover);
                 AlbumsFragment.setAlbumFragmentChanged(currentAlbum.getAlbumType());
+                if (currentAlbum.getAlbumId() == Album.DEFAULT_FAVORITE_ID) {
+                    SharedPreferences.Editor editor = getSharedPreferences(
+                            AlbumsFragment.FAVORITE_PREFERENCE_KEY, Context.MODE_PRIVATE).edit();
+                    editor.putString(AlbumsFragment.FAVORITE_COVER_STRING_KEY,cover);
+                    editor.clear();
+                    editor.commit();
+                } else if (currentAlbum.getAlbumId() == Album.DEFAULT_FOOD_ID) {
+                    SharedPreferences.Editor editor = getSharedPreferences(
+                            AlbumsFragment.FOOD_PREFERENCE_KEY, Context.MODE_PRIVATE).edit();
+                    editor.putString(AlbumsFragment.FOOD_COVER_STRING_KEY,cover);
+                    editor.clear();
+                    editor.commit();
+                } else if (currentAlbum.getAlbumId() == Album.DEFAULT_PEOPLE_ID) {
+                    SharedPreferences.Editor editor = getSharedPreferences(
+                            AlbumsFragment.PEOPLE_PREFERENCE_KEY, Context.MODE_PRIVATE).edit();
+                    editor.putString(AlbumsFragment.PEOPLE_COVER_STRING_KEY,cover);
+                    editor.clear();
+                    editor.commit();
+                }
             }
         }
     }

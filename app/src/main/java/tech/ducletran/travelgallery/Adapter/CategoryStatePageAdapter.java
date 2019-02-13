@@ -14,10 +14,8 @@ import tech.ducletran.travelgallery.R;
 
 public class CategoryStatePageAdapter extends FragmentPagerAdapter{
     private Context context;
-    private FragmentManager fm;
     public CategoryStatePageAdapter(FragmentManager fm, Context context) {
         super(fm);
-        this.fm = fm;
         this.context = context;
     }
     @Override

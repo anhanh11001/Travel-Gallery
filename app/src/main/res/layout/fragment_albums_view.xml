@@ -2,17 +2,15 @@
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical">
 
-
-
-        <android.support.v17.leanback.widget.HorizontalGridView
+        <tech.ducletran.travelgallery.CustomizedClass.HorizontalListView
                 android:id="@+id/base_album_grid_view"
                 style="@style/AlbumHorizontalTheme"
                 android:layout_weight="4"
+                app:dividerWidth="8dp"
         />
-
 
         <TextView
                 android:layout_weight="1"
@@ -22,10 +20,11 @@
                 android:text="PHOTOS BY PLACES"
         />
 
-        <android.support.v17.leanback.widget.HorizontalGridView
+        <tech.ducletran.travelgallery.CustomizedClass.HorizontalListView
                 android:id="@+id/location_album_grid_view"
                 style="@style/AlbumHorizontalTheme"
                 android:layout_weight="4"
+                app:dividerWidth="4dp"
         />
 
         <TextView
@@ -36,11 +35,11 @@
                 android:text="OTHER ALBUMS"
         />
 
-        <android.support.v17.leanback.widget.HorizontalGridView
+        <tech.ducletran.travelgallery.CustomizedClass.HorizontalListView
                 android:id="@+id/others_album_grid_view"
                 style="@style/AlbumHorizontalTheme"
                 android:layout_weight="4"
-
+                app:dividerWidth="4dp"
         />
 
 </LinearLayout>

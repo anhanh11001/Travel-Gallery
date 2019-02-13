@@ -1,13 +1,11 @@
-package tech.ducletran.travelgallery.ImageData;
+package tech.ducletran.travelgallery.Model;
 
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 import tech.ducletran.travelgallery.Database.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 

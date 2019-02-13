@@ -1,4 +1,4 @@
-package tech.ducletran.travelgallery.ImageData;
+package tech.ducletran.travelgallery.Model;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;

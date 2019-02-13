@@ -25,8 +25,8 @@ import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.google.maps.android.ui.IconGenerator;
 import tech.ducletran.travelgallery.Activities.DisplayMultipleImageMapActivity;
 import tech.ducletran.travelgallery.Activities.DisplaySingleImageMapActivity;
-import tech.ducletran.travelgallery.ImageData.ImageData;
-import tech.ducletran.travelgallery.ImageData.ImageMarker;
+import tech.ducletran.travelgallery.Model.ImageData;
+import tech.ducletran.travelgallery.Model.ImageMarker;
 import tech.ducletran.travelgallery.R;
 
 import java.util.ArrayList;

@@ -40,6 +40,8 @@
                   android:parentActivityName=".Activities.DisplayImageActivity"/>
         <activity android:name=".Activities.DisplayAlbumImagesActivity"
                   android:parentActivityName=".Activities.MainActivity"/>
+        <activity android:name=".Activities.DisplayStoryActivity"
+                  android:parentActivityName=".Activities.MainActivity"/>
         <activity android:name=".Activities.AddImageToAlbumActivity"
                   android:parentActivityName=".Activities.DisplayAlbumImagesActivity"/>
         <activity android:name=".Activities.RemoveImageFromAlbumActivity"

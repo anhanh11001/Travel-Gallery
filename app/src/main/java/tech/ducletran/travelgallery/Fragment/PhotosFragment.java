@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 import android.widget.*;
 import tech.ducletran.travelgallery.Activities.DisplayImageActivity;
 import tech.ducletran.travelgallery.Adapter.PhotosAdapter;
-import tech.ducletran.travelgallery.ImageData.ImageData;
-import tech.ducletran.travelgallery.ImageData.ImageManager;
+import tech.ducletran.travelgallery.Model.ImageData;
+import tech.ducletran.travelgallery.Model.ImageManager;
 import tech.ducletran.travelgallery.R;
 
 import java.util.ArrayList;

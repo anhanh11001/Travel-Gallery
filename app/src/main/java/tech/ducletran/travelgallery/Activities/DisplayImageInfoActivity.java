@@ -3,18 +3,15 @@ package tech.ducletran.travelgallery.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.bumptech.glide.Glide;
-import tech.ducletran.travelgallery.ImageData.ImageData;
-import tech.ducletran.travelgallery.ImageData.ImageManager;
-import tech.ducletran.travelgallery.ImageData.ImageMarker;
+import tech.ducletran.travelgallery.Model.ImageData;
+import tech.ducletran.travelgallery.Model.ImageManager;
 import tech.ducletran.travelgallery.R;
 
 public class DisplayImageInfoActivity extends BaseActivity {

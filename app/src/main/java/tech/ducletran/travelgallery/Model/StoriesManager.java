@@ -1,4 +1,4 @@
-package tech.ducletran.travelgallery.ImageData;
+package tech.ducletran.travelgallery.Model;
 
 import android.content.ContentValues;
 import android.content.Context;

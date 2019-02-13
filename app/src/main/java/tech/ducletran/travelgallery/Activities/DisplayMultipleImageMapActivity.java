@@ -1,6 +1,5 @@
 package tech.ducletran.travelgallery.Activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import tech.ducletran.travelgallery.Adapter.PhotosAdapter;
-import tech.ducletran.travelgallery.ImageData.ImageData;
+import tech.ducletran.travelgallery.Model.ImageData;
 import tech.ducletran.travelgallery.R;
 
 import java.util.ArrayList;

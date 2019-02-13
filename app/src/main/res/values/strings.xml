@@ -52,4 +52,8 @@
     <string name="action_setting_delete_album">Delete Album</string>
     <string name="action_adding_new_city_country">New Item</string>
     <string name="action_setting_remove_image_from_album">Remove Image</string>
+    <string name="action_delete_story">Delete Story</string>
+    <string name="action_edit_page_story">Edit This Page</string>
+    <string name="action_organize_story">Organize Story</string>
+    <string name="action_add_new_page_to_story">Add New Page</string>
 </resources>

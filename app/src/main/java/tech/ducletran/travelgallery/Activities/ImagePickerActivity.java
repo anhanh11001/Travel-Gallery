@@ -13,9 +13,9 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
-import tech.ducletran.travelgallery.ImageData.AlbumManager;
-import tech.ducletran.travelgallery.ImageData.ImageData;
-import tech.ducletran.travelgallery.ImageData.ImageManager;
+import tech.ducletran.travelgallery.Model.AlbumManager;
+import tech.ducletran.travelgallery.Model.ImageData;
+import tech.ducletran.travelgallery.Model.ImageManager;
 import tech.ducletran.travelgallery.R;
 
 import java.util.List;

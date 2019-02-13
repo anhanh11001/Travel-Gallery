@@ -1,4 +1,4 @@
-package tech.ducletran.travelgallery.ImageData;
+package tech.ducletran.travelgallery.Model;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -68,6 +68,11 @@ public class Album {
     }
 
     // Setter
+    public void setSpecialAlbumCover(String albumCover) {
+        if (type == ALBUM_TYPE_SPECIAL) {
+            this.albumCover = albumCover;
+        }
+    }
     public void setAlbumCover(String albumCover) {
         this.albumCover = albumCover;
         ContentValues value = new ContentValues();

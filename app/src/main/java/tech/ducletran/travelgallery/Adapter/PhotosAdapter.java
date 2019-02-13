@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
-import tech.ducletran.travelgallery.ImageData.ImageData;
+import tech.ducletran.travelgallery.Model.ImageData;
 import tech.ducletran.travelgallery.R;
 
 import java.util.ArrayList;
@@ -25,8 +25,8 @@ public class PhotosAdapter extends ArrayAdapter<ImageData> {
         ViewHolder holder;
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.photo_item_view,parent,false);
             holder = new ViewHolder();
+            convertView = LayoutInflater.from(context).inflate(R.layout.photo_item_view,parent,false);
             holder.photoImageView = convertView.findViewById(R.id.photo_item_image_view);
             convertView.setTag(holder);
         } else {

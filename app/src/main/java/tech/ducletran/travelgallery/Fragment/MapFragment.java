@@ -28,9 +28,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.maps.android.clustering.ClusterManager;
 import tech.ducletran.travelgallery.Activities.ShowCitiesCountriesActivity;
 import tech.ducletran.travelgallery.CustomizedClass.CustomClusterRenderer;
-import tech.ducletran.travelgallery.ImageData.ImageData;
-import tech.ducletran.travelgallery.ImageData.ImageManager;
-import tech.ducletran.travelgallery.ImageData.ImageMarker;
+import tech.ducletran.travelgallery.Model.ImageData;
+import tech.ducletran.travelgallery.Model.ImageManager;
+import tech.ducletran.travelgallery.Model.ImageMarker;
 import tech.ducletran.travelgallery.R;
 
 import java.io.IOException;
