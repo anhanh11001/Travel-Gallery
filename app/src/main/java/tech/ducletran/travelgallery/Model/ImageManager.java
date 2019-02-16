@@ -101,8 +101,6 @@ public class ImageManager {
 
         }
         cursor.close();
-        loadAlbum(context);
-        loadStory(context);
     }
 
     public static void sortByDate() {
@@ -118,7 +116,7 @@ public class ImageManager {
         Collections.shuffle(imageDataList);
     }
 
-    private static void loadAlbum(Context context) {
+    public static void loadAlbum(Context context) {
         SQLiteDatabase albumDatabase = new AllAlbumReaderDbHelper(context).getReadableDatabase();
         String[] projetion = {
                 BaseColumns._ID,
@@ -149,7 +147,7 @@ public class ImageManager {
         }
     }
 
-    private static void loadStory(Context context) {
+    public static void loadStory(Context context) {
         SQLiteDatabase storyDatabase = new AllStoriesReaderDbHelper(context).getReadableDatabase();
         String[] projection = {
                 AllStoriesFeederContract.AllStoryFeedEntry._ID,
