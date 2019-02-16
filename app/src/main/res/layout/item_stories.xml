@@ -23,7 +23,7 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:background="@drawable/helper_drawable_shadow"
             app:riv_corner_radius="8dp"
-            android:foreground="@drawable/helpder_drawable_opacity_cover"
+            android:foreground="@drawable/helper_drawable_opacity_cover"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_launcher_foreground"

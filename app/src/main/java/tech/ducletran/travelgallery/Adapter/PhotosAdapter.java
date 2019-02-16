@@ -26,7 +26,7 @@ public class PhotosAdapter extends ArrayAdapter<ImageData> {
 
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.photo_item_view,parent,false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_photo,parent,false);
             holder.photoImageView = convertView.findViewById(R.id.photo_item_image_view);
             convertView.setTag(holder);
         } else {

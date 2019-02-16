@@ -90,7 +90,7 @@ public class PhotosFragment extends Fragment implements SharedPreferences.OnShar
             } else {
                 ImageManager.shuffle();
             }
-            PhotosFragment.setPhotoFragmentChanged(getActivity());
+            PhotosFragment.setPhotoFragmentChanged(getActivity(),0);
         }
     }
 
@@ -110,7 +110,7 @@ public class PhotosFragment extends Fragment implements SharedPreferences.OnShar
         PreferenceManager.getDefaultSharedPreferences(getActivity()).unregisterOnSharedPreferenceChangeListener(this);
     }
 
-    public static void setPhotoFragmentChanged(Context context) {
+    public static void setPhotoFragmentChanged(Context context, int nextPosition) {
         ImageManager.resetImageDataList();
         if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(context.getString(R.string.action_settings_sort_key),true)) {
             ImageManager.sortByDate();
@@ -123,11 +123,12 @@ public class PhotosFragment extends Fragment implements SharedPreferences.OnShar
         }
         adapter.notifyDataSetChanged();
         gridView.invalidate();
+        gridView.smoothScrollToPosition(nextPosition);
     }
 
     private static void setUpDateSorting(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        Boolean isSorted = sharedPreferences.getBoolean(context.getString(R.string.action_settings_sort_key),true);
+        boolean isSorted = sharedPreferences.getBoolean(context.getString(R.string.action_settings_sort_key),true);
         if (isSorted) {
             ImageManager.sortByDate();
         } else {

@@ -22,7 +22,7 @@
     >
         <RelativeLayout
                 android:id="@+id/search_bar_layout"
-                android:background="@drawable/helpder_drawable_search_bar"
+                android:background="@drawable/helper_drawable_search_bar"
                 android:layout_margin="8dp"
                 android:elevation="2dp"
                 android:layout_width="match_parent"

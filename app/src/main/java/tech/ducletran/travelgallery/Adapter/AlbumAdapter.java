@@ -44,7 +44,7 @@ public class AlbumAdapter extends BaseAdapter {
 
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.album_item_view,parent,false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_album,parent,false);
             holder.textView = convertView.findViewById(R.id.album_item_title_text_view);
             holder.imageView = convertView.findViewById(R.id.album_item_cover_image);
             convertView.setTag(holder);

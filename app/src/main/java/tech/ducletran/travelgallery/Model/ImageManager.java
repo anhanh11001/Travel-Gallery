@@ -152,10 +152,12 @@ public class ImageManager {
     private static void loadStory(Context context) {
         SQLiteDatabase storyDatabase = new AllStoriesReaderDbHelper(context).getReadableDatabase();
         String[] projection = {
-            AllStoriesFeederContract.AllStoryFeedEntry._ID,
-            AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_NAME,
-            AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_COVER,
-            AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_DESCRIPTION
+                AllStoriesFeederContract.AllStoryFeedEntry._ID,
+                AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_NAME,
+                AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_COVER,
+                AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_DESCRIPTION,
+                AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_NUMBER_OF_PAGES,
+                AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_DETAILS
         };
 
         Cursor cursor = storyDatabase.query(AllStoriesFeederContract.AllStoryFeedEntry.TABLE_NAME,projection,null,null,null,null,null);
@@ -164,7 +166,9 @@ public class ImageManager {
             String title = cursor.getString(cursor.getColumnIndexOrThrow(AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_NAME));
             String cover = cursor.getString(cursor.getColumnIndexOrThrow(AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_COVER));
             String description = cursor.getString(cursor.getColumnIndexOrThrow(AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_DESCRIPTION));
-            new Story(context,id,title,description,cover);
+            int numOfPages = cursor.getInt(cursor.getColumnIndexOrThrow(AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_NUMBER_OF_PAGES));
+            String details = cursor.getString(cursor.getColumnIndexOrThrow(AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_DETAILS));
+            new Story(context,id,title,description,cover,numOfPages, details);
         }
     }
 

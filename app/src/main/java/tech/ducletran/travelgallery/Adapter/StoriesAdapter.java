@@ -41,7 +41,7 @@ public class StoriesAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        convertView = LayoutInflater.from(context).inflate(R.layout.stories_item_view, parent, false);
+        convertView = LayoutInflater.from(context).inflate(R.layout.item_stories, parent, false);
 
         TextView textView = convertView.findViewById(R.id.stories_title_text_view);
         ImageView imageView = convertView.findViewById(R.id.stories_cover_image_view);

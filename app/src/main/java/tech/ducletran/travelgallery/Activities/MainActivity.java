@@ -315,7 +315,7 @@ public class MainActivity extends BaseActivity  {
                     MapFragment.addNewImageMarker(data.getImageMarker());
                 }
             }
-            PhotosFragment.setPhotoFragmentChanged(context);
+            PhotosFragment.setPhotoFragmentChanged(context,0);
             Toast.makeText(context,"Loaded " + newData.size() + " images",Toast.LENGTH_SHORT).show();
         }
     }

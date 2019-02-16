@@ -128,7 +128,7 @@ public class AddImageToAlbumActivity extends BaseActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.photo_item_view, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_photo, parent, false);
 
             ImageView imageView = convertView.findViewById(R.id.photo_item_image_view);
             Glide.with(context)
