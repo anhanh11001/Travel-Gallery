@@ -3,6 +3,7 @@ package tech.ducletran.travelgallery.Activities;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -41,6 +42,7 @@ public class EditInfoActivity extends BaseActivity implements GoogleApiClient.On
     private String currentTitle;
     private ImageData currentImage;
     private Date currentDate;
+    private Date newDate;
 
     private EditText dateEditText;
     private EditText descriptionEditText;
@@ -92,7 +94,7 @@ public class EditInfoActivity extends BaseActivity implements GoogleApiClient.On
             currentDate = new SimpleDateFormat("dd MMMM yyyy").parse(date);
             currentDateFormatted = new SimpleDateFormat("dd/MM/yyyy").format(currentDate);
             dateEditText.setText(currentDateFormatted);
-
+            newDate = currentDate;
         } catch (ParseException e) {
             Toast.makeText(this,
                     "An error has occured with date. Please report to developer",Toast.LENGTH_LONG).show();
@@ -114,11 +116,8 @@ public class EditInfoActivity extends BaseActivity implements GoogleApiClient.On
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                Date newDate = new GregorianCalendar(year,month,dayOfMonth).getTime();
+                                newDate = new GregorianCalendar(year,month,dayOfMonth).getTime();
                                 dateEditText.setText(new SimpleDateFormat("dd/MM/yyyy").format(newDate));
-                                currentImage.setNewDate(newDate);
-                                DisplayImageInfoActivity.setInfoChanged();
-                                PhotosFragment.setPhotoFragmentChanged(EditInfoActivity.this,0);
                             }
                         },
                         year, month, day
@@ -204,10 +203,12 @@ public class EditInfoActivity extends BaseActivity implements GoogleApiClient.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        final String newTitle;
+        final String newDescription;
         switch (item.getItemId()) {
             case R.id.menu_item_saving:
-                String newTitle = titleEditText.getText().toString();
-                String newDescription = descriptionEditText.getText().toString();
+                newTitle = titleEditText.getText().toString();
+                newDescription = descriptionEditText.getText().toString();
                 if (!newTitle.equals(currentTitle)) {
                     currentImage.setNewTitle(newTitle);
                     DisplayImageInfoActivity.setInfoChanged();
@@ -227,11 +228,68 @@ public class EditInfoActivity extends BaseActivity implements GoogleApiClient.On
                     DisplayImageInfoActivity.setInfoChanged();
                     MapFragment.addNewImageMarker(currentImage.getImageMarker());
                 }
+                if (newDate != currentDate) {
+                    currentImage.setNewDate(newDate);
+                    DisplayImageInfoActivity.setInfoChanged();
+                    PhotosFragment.setPhotoFragmentChanged(EditInfoActivity.this,0);
+                }
 
                 finish();
                 return true;
             case android.R.id.home:
-                finish();
+
+                newTitle = titleEditText.getText().toString();
+                newDescription = descriptionEditText.getText().toString();
+                if (locationChanged || !newDescription.equals(currentDescription) || !newTitle.equals(currentTitle)
+                        || newDate != currentDate) {
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+                    alertDialog.setMessage("Your change has not been save?");
+                    alertDialog.setNegativeButton("Discard", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                            EditInfoActivity.this.finish();
+                        }
+                    });
+
+                    alertDialog.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (!newTitle.equals(currentTitle)) {
+                                currentImage.setNewTitle(newTitle);
+                                DisplayImageInfoActivity.setInfoChanged();
+                            }
+                            if (!newDescription.equals(currentDescription)) {
+                                currentImage.setNewDescription(newDescription);
+                                DisplayImageInfoActivity.setInfoChanged();
+                                if (currentImage.getIsLocationCounted()) {
+                                    currentImage.setIsLocationCounted();
+                                }
+                            }
+
+                            if (locationChanged) {
+                                Double newLatitude = options.getPosition().latitude;
+                                Double newLongtitude = options.getPosition().longitude;
+                                currentImage.setNewLocation(Double.toString(newLatitude),Double.toString(newLongtitude));
+                                DisplayImageInfoActivity.setInfoChanged();
+                                MapFragment.addNewImageMarker(currentImage.getImageMarker());
+                            }
+
+                            if (newDate != currentDate) {
+                                currentImage.setNewDate(newDate);
+                                DisplayImageInfoActivity.setInfoChanged();
+                                PhotosFragment.setPhotoFragmentChanged(EditInfoActivity.this,0);
+                            }
+
+                            EditInfoActivity.this.finish();
+                        }
+                    });
+
+                    alertDialog.show();
+                } else {
+                    finish();
+                }
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

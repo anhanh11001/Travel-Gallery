@@ -40,6 +40,8 @@ public class AlbumsFragment extends Fragment {
     private static HorizontalListView locationAlbumListView;
     private static HorizontalListView othersAlbumListView;
 
+    private static boolean albumLoaded = false;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -83,7 +85,11 @@ public class AlbumsFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        new LoadAlbumAsyncTask(getActivity()).execute();
+
+        if (!albumLoaded) {
+            new LoadAlbumAsyncTask(getActivity()).execute();
+            albumLoaded = true;
+        }
         return view;
     }
 
@@ -134,7 +140,7 @@ public class AlbumsFragment extends Fragment {
             locationAlbumListView.invalidate();
             specialAlbumListView.invalidate();
             othersAlbumListView.invalidate();
-            Toast.makeText(context,"Album uploaded",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,"Albums and stories uploaded",Toast.LENGTH_LONG).show();
         }
     }
 }

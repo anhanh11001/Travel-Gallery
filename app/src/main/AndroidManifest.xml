@@ -23,41 +23,64 @@
                 android:name="com.google.android.geo.API_KEY"
                 android:value="@string/google_map_api_key"/>
 
-        <activity android:name=".Activities.LoadingScreenActivity">
+        <activity
+                android:name=".Activities.LoadingScreenActivity"
+                android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.MainActivity"
-                  android:windowSoftInputMode="adjustPan">
-        </activity>
 
-        <activity android:name=".Activities.DisplayImageActivity"/>
-        <activity android:name=".Activities.SettingsActivity"
-                    android:parentActivityName=".Activities.MainActivity"
-                    android:label="@string/action_settings"/>
+        <activity
+                android:name=".Activities.MainActivity"
+                android:windowSoftInputMode="adjustPan"
+                android:screenOrientation="portrait"/>
+        <activity
+                android:name=".Activities.DisplayImageActivity"/>
+        <activity
+                android:name=".Activities.SettingsActivity"
+                android:parentActivityName=".Activities.MainActivity"
+                android:label="@string/action_settings"
+                android:screenOrientation="portrait"/>
 
-        <activity android:name=".Activities.DisplayImageInfoActivity"
-                  android:parentActivityName=".Activities.DisplayImageActivity"/>
-        <activity android:name=".Activities.DisplayAlbumImagesActivity"
-                  android:parentActivityName=".Activities.MainActivity"/>
-        <activity android:name=".Activities.DisplayStoryActivity"
-                  android:parentActivityName=".Activities.MainActivity"/>
-        <activity android:name=".Activities.AddImageToAlbumActivity"
-                  android:parentActivityName=".Activities.DisplayAlbumImagesActivity"/>
-        <activity android:name=".Activities.RemoveImageFromAlbumActivity"
-                  android:parentActivityName=".Activities.DisplayAlbumImagesActivity"/>
-        <activity android:name=".Activities.DisplaySingleImageMapActivity"
-                  android:parentActivityName=".Activities.MainActivity"/>
-        <activity android:name=".Activities.DisplayMultipleImageMapActivity"
-                  android:parentActivityName=".Activities.MainActivity"/>
-        <activity android:name=".Activities.EditInfoActivity"
-                  android:parentActivityName=".Activities.DisplayImageInfoActivity"/>
+        <activity
+                android:name=".Activities.DisplayImageInfoActivity"
+                android:parentActivityName=".Activities.DisplayImageActivity"
+                android:screenOrientation="portrait"/>
+        <activity
+                android:name=".Activities.DisplayAlbumImagesActivity"
+                android:parentActivityName=".Activities.MainActivity"
+                android:screenOrientation="portrait"/>
+        <activity
+                android:name=".Activities.DisplayStoryActivity"
+                android:parentActivityName=".Activities.MainActivity"
+                android:screenOrientation="portrait"/>
+        <activity
+                android:name=".Activities.AddImageToAlbumActivity"
+                android:parentActivityName=".Activities.DisplayAlbumImagesActivity"
+                android:screenOrientation="portrait"/>
+        <activity
+                android:name=".Activities.RemoveImageFromAlbumActivity"
+                android:parentActivityName=".Activities.DisplayAlbumImagesActivity"
+                android:screenOrientation="portrait"/>
+        <activity
+                android:name=".Activities.DisplaySingleImageMapActivity"
+                android:parentActivityName=".Activities.MainActivity"/>
+        <activity
+                android:name=".Activities.DisplayMultipleImageMapActivity"
+                android:parentActivityName=".Activities.MainActivity"/>
+        <activity
+                android:name=".Activities.EditInfoActivity"
+                android:parentActivityName=".Activities.DisplayImageInfoActivity"
+                android:screenOrientation="portrait"/>
         <activity android:name=".Activities.ImagePickerActivity"/>
-        <activity android:name=".Activities.ShowCitiesCountriesActivity"/>
-        <activity android:name=".Activities.AddNewPageToStoryActivity"/>
+        <activity
+                android:name=".Activities.ShowCitiesCountriesActivity"
+                android:screenOrientation="portrait"/>
+        <activity
+                android:name=".Activities.AddNewPageToStoryActivity"
+                android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

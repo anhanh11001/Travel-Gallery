@@ -25,6 +25,8 @@ public class StoriesFracment extends Fragment {
     private static StoriesAdapter adapter;
     private static ListView listView;
 
+    private static boolean storiesLoaded = false;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,7 +49,11 @@ public class StoriesFracment extends Fragment {
                 startActivity(intent);
             }
         });
-        new LoadStoryAsyncTask(getActivity()).execute();
+
+        if (!storiesLoaded) {
+            storiesLoaded = true;
+            new LoadStoryAsyncTask(getActivity()).execute();
+        }
         return view;
     }
 
@@ -72,7 +78,6 @@ public class StoriesFracment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             setStoryFracmentChanged();
-            Toast.makeText(context,"Story uploaded",Toast.LENGTH_SHORT).show();
         }
     }
 

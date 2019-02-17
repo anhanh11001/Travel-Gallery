@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 import android.provider.MediaStore;
+import android.util.Log;
 import tech.ducletran.travelgallery.Database.*;
 
 import java.util.*;
@@ -134,6 +135,7 @@ public class ImageManager {
 
             Album album = new Album(context,albumId,name,cover,type);
             AlbumManager.registerAlbum(album);
+
             SQLiteDatabase singleAlbumDatabase = new SingleAlbumReaderDbHelper(context,albumId).getReadableDatabase();
             String[] singleAlbumProjection = {
                    SingleAlbumReaderDbHelper.ID,
@@ -143,7 +145,9 @@ public class ImageManager {
             while (singleAlbumCursor.moveToNext()) {
                 int imageId = singleAlbumCursor.getInt(singleAlbumCursor.getColumnIndexOrThrow(SingleAlbumReaderDbHelper.ID));
                 album.addToAlbum(ImageManager.getImageById(imageId));
+                Log.d("LOADING STORY AND ALBUM", "New image added: " + imageId + " to albumID: " + album.getAlbumId());
             }
+
         }
     }
 
@@ -167,6 +171,7 @@ public class ImageManager {
             int numOfPages = cursor.getInt(cursor.getColumnIndexOrThrow(AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_NUMBER_OF_PAGES));
             String details = cursor.getString(cursor.getColumnIndexOrThrow(AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_DETAILS));
             new Story(context,id,title,description,cover,numOfPages, details);
+            Log.d("LOADING STORY AND ALBUM", "New story added: " + id);
         }
     }
 
