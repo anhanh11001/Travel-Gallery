@@ -1,5 +1,5 @@
 # Travel-Gallery
-![Travel Gallery Logo](https://i.ibb.co/CWNdXgp/logo.png)
+<img src="https://i.ibb.co/CWNdXgp/logo.png" width="150">
 
 ### Description
 This is my personal travel gallery app, one of my favorite apps that I have built myself. This app helps me to store all of my travel story, images and create custom albums/themes. It took me nearly 3 weeks to finish and polish this app.
@@ -14,10 +14,12 @@ Some of the features of the app are:
 - Tagging photos on map based on location, counting number of cities and countries you have visited to create a list of travel places.
 
 ### Some images and demo links
-<img src="https://i.ibb.co/bLDywTf/48398533-591402037956935-7506614385339531264-n.png" width="290"> <img src="https://i.ibb.co/Z11M2P8/48397138-2447253351957089-7890054922199105536-n.png" width="290">
-<img src="https://i.ibb.co/rtzDtjZ/48396611-464492967412264-2750232924459630592-n.png" width="290">
-<img src="https://i.ibb.co/PZ3hLzq/48394724-2282992818651184-6793591887979610112-n.png" width="290"> <img src="https://i.ibb.co/wg7Q5Vd/48382352-756904021310395-8218010932635238400-n.png" width="290">
-<img src="https://i.ibb.co/sJcGfPd/48417409-276125003091990-6903525922427633664-n.png" width="290">
+<img src="https://i.ibb.co/Swy1KJm/52956228-2129308364049166-6958296994653667328-n.png" width="290"> <img src="https://i.ibb.co/dWHrkmG/52612831-394404978036415-4627830839147757568-n.png" width="290">
+<img src="https://i.ibb.co/KzRDXXN/52584270-585968711875955-4434798370162212864-n.png" width="290">
+<img src="https://i.ibb.co/xqybkCC/52553579-361907821317844-5158824328921350144-n.png" width="290"> <img src="https://i.ibb.co/s5SS1rY/52498843-623162738144145-7166515192392581120-n.png" width="290">
+<img src="https://i.ibb.co/0DRfXRy/52518045-575255082940738-4916558469433131008-n.png" width="290">
+
+Here is the demo link of the project: [link](https://www.youtube.com/watch?v=p0QECovZeH8)
 
 ### Support
 Further support or information can be provided through this email address: <i>letrananhduc0311@gmail.com<i>.
