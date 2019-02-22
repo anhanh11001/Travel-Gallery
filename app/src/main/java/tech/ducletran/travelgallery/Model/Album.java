@@ -30,7 +30,7 @@ public class Album {
 
     public Album(Context context, String name, int type) {
         this.imageHashMap = new HashMap<Integer,ImageData>();
-        allAlbumDatabase = new AllAlbumReaderDbHelper(context).getWritableDatabase();
+        allAlbumDatabase = AllAlbumReaderDbHelper.getInstance(context).getWritableDatabase();
 
         this.type = type;
         this.albumName = name;
@@ -43,12 +43,12 @@ public class Album {
         } else if (type == ALBUM_TYPE_OTHER) {
             AlbumManager.registerOthersAlbum(this);
         }
-        singleAlbumDatabase = new SingleAlbumReaderDbHelper(context, albumId).getWritableDatabase();
+        singleAlbumDatabase = SingleAlbumReaderDbHelper.getInstance(context, albumId).getWritableDatabase();
         Log.d("DATABASE", "New album added with id: " + albumId);
     }
 
     public Album(Context context, int albumId,String name, String albumCover, int type) {
-        allAlbumDatabase = new AllAlbumReaderDbHelper(context).getWritableDatabase();
+        allAlbumDatabase = AllAlbumReaderDbHelper.getInstance(context).getWritableDatabase();
 
         // Create constructor here
         this.imageHashMap = new HashMap<Integer,ImageData>();
@@ -64,7 +64,7 @@ public class Album {
         } else if (type == ALBUM_TYPE_OTHER) {
             AlbumManager.registerOthersAlbum(this);
         }
-        singleAlbumDatabase = new SingleAlbumReaderDbHelper(context, albumId).getWritableDatabase();
+        singleAlbumDatabase = SingleAlbumReaderDbHelper.getInstance(context, albumId).getWritableDatabase();
     }
 
     // Setter
@@ -84,11 +84,14 @@ public class Album {
         allAlbumDatabase.update(AllAlbumFeederContract.AllAlbumFeedEntry.TABLE_NAME,
                 value,selection,selectionArgs);
     }
-    public void addToAlbum(ImageData image) {
+    public void addToAlbum(ImageData image, int codeAdd) {
         imageHashMap.put(image.getImageId(),image);
-        ContentValues value = new ContentValues();
-        value.put(SingleAlbumReaderDbHelper.ID,image.getImageId());
-        singleAlbumDatabase.insert(SingleAlbumReaderDbHelper.getTableName(albumId),null,value);
+        if (codeAdd == 1) {
+            ContentValues value = new ContentValues();
+            value.put(SingleAlbumReaderDbHelper.ID,image.getImageId());
+            singleAlbumDatabase.insert(SingleAlbumReaderDbHelper.getTableName(albumId),null,value);
+        }
+
     }
     public void removeFromAlbum(ImageData image) {
         int imageId = image.getImageId();

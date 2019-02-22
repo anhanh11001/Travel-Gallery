@@ -41,6 +41,7 @@ public class AlbumsFragment extends Fragment {
     private static HorizontalListView othersAlbumListView;
 
     private static boolean albumLoaded = false;
+    private static boolean albumLoaded2 = false;
 
     @Nullable
     @Override
@@ -122,6 +123,7 @@ public class AlbumsFragment extends Fragment {
 
     private class LoadAlbumAsyncTask extends AsyncTask<Void,Void,Void> {
         private Context context;
+        private boolean done = false;
         private LoadAlbumAsyncTask(Context context) {
             this.context = context;
         }
@@ -141,6 +143,10 @@ public class AlbumsFragment extends Fragment {
             specialAlbumListView.invalidate();
             othersAlbumListView.invalidate();
             Toast.makeText(context,"Albums and stories uploaded",Toast.LENGTH_LONG).show();
+            if (!albumLoaded2) {
+                albumLoaded2 = true;
+                new LoadAlbumAsyncTask(context).execute();
+            }
         }
     }
 }

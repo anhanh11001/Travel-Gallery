@@ -68,9 +68,9 @@ public class ImageData {
         this.isPeople = isPeople;
         this.imageId = imageId;
 
-        if (isFood) {AlbumManager.getAlbum(Album.DEFAULT_FOOD_ID).addToAlbum(this); }
-        if (isFavorite) {AlbumManager.getAlbum(Album.DEFAULT_FAVORITE_ID).addToAlbum(this);}
-        if (isPeople) {AlbumManager.getAlbum(Album.DEFAULT_PEOPLE_ID).addToAlbum(this);}
+        if (isFood) {AlbumManager.getAlbum(Album.DEFAULT_FOOD_ID).addToAlbum(this,0); }
+        if (isFavorite) {AlbumManager.getAlbum(Album.DEFAULT_FAVORITE_ID).addToAlbum(this,0);}
+        if (isPeople) {AlbumManager.getAlbum(Album.DEFAULT_PEOPLE_ID).addToAlbum(this,0);}
     }
 
 

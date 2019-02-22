@@ -20,27 +20,29 @@ import tech.ducletran.travelgallery.R;
 
 import java.util.ArrayList;
 
-public class AddImageToAlbumActivity extends BaseActivity {
+public class RemoveImageFromAlbumActivity extends BaseActivity {
     private MenuItem doneItem;
     private Album currentAlbum;
-    private ArrayList<Integer> imageAddedPositions = new ArrayList<Integer>();
+    private ArrayList<Integer> imageRemovedPosition = new ArrayList<Integer>();
     private GradientDrawable drawable;
     private int currentAlbumId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.fragment_photos_view);
 
         findViewById(R.id.photos_empty_view).setVisibility(View.GONE);
+        currentAlbumId = getIntent().getIntExtra("current_album_id",0);
+        currentAlbum = AlbumManager.getAlbum(currentAlbumId);
 
         GridView allPhotos = findViewById(R.id.photos_grid_view);
         allPhotos.setNumColumns(3);
-        AllPhotosAdapter adapter = new AllPhotosAdapter(this);
+        final AlbumPhotosAdapter adapter = new AlbumPhotosAdapter(this,currentAlbum.getAlbumImageList());
         allPhotos.setAdapter(adapter);
 
-        currentAlbumId = getIntent().getIntExtra("current_album_id",0);
-        currentAlbum = AlbumManager.getAlbum(currentAlbumId);
+
 
         TypedValue typedValueColor = new TypedValue();
         getTheme().resolveAttribute(R.attr.colorAccent,typedValueColor,true);
@@ -52,21 +54,21 @@ public class AddImageToAlbumActivity extends BaseActivity {
         allPhotos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int index = imageAddedPositions.indexOf(position);
+                int imageId = ((ImageData) adapter.getItem(position)).getImageId();
+                int index = imageRemovedPosition.indexOf(imageId);
                 if (index == -1) {
-                    imageAddedPositions.add(position);
+                    imageRemovedPosition.add(imageId);
                     view.setForeground(drawable);
                     doneItem.setVisible(true);
                 } else {
                     view.setForeground(null);
-                    imageAddedPositions.remove(index);
-                    if (imageAddedPositions.size() == 0) {
+                    imageRemovedPosition.remove(index);
+                    if (imageRemovedPosition.size() == 0) {
                         doneItem.setVisible(false);
                     }
                 }
             }
         });
-
     }
 
     @Override
@@ -77,20 +79,19 @@ public class AddImageToAlbumActivity extends BaseActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_return_new_image_to_album:
-                for (Integer i:imageAddedPositions) {
-                    ImageData imageToAdd = ImageManager.getImageDataList().get(i);
-                    currentAlbum.addToAlbum(imageToAdd,1);
+                for (Integer id:imageRemovedPosition) {
+                    ImageData imageToRemove = ImageManager.getImageById(id);
+                    currentAlbum.removeFromAlbum(imageToRemove);
                     if (currentAlbumId == Album.DEFAULT_FAVORITE_ID) {
-                        imageToAdd.setFavorite();
+                        imageToRemove.setFavorite();
                     } else if (currentAlbumId == Album.DEFAULT_PEOPLE_ID) {
-                        imageToAdd.setPeople();
+                        imageToRemove.setPeople();
                     } else if (currentAlbumId == Album.DEFAULT_FOOD_ID) {
-                        imageToAdd.setFood();
+                        imageToRemove.setFood();
                     }
 
                 }
@@ -106,19 +107,21 @@ public class AddImageToAlbumActivity extends BaseActivity {
         }
     }
 
-    private class AllPhotosAdapter extends BaseAdapter {
+    private class AlbumPhotosAdapter extends BaseAdapter {
         private Context context;
-        private AllPhotosAdapter(Context context) {
+        private ArrayList<ImageData> imageList;
+        private AlbumPhotosAdapter(Context context, ArrayList<ImageData> imageList) {
+            this.imageList = imageList;
             this.context = context;
         }
         @Override
         public int getCount() {
-            return ImageManager.getImageDataList().size();
+            return imageList.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return null;
+            return imageList.get(position);
         }
 
         @Override
@@ -132,14 +135,15 @@ public class AddImageToAlbumActivity extends BaseActivity {
 
             ImageView imageView = convertView.findViewById(R.id.photo_item_image_view);
             Glide.with(context)
-                    .load(ImageManager.getImageDataList().get(position).getThumbnail())
+                    .load(imageList.get(position).getThumbnail())
                     .into(imageView);
 
-            if (imageAddedPositions.contains(position)) {
+            if (imageRemovedPosition.contains(position)) {
                 convertView.setForeground(drawable);
             }
 
             return convertView;
         }
     }
+
 }

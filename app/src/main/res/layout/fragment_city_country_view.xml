@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="8dp"
+>
+    <TextView
+            android:padding="4dp"
+            android:textSize="16sp"
+            android:textAllCaps="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold |italic"
+            android:text="OVERALL"
+    />
+
+    <TextView
+            android:id="@+id/city_country_text_view"
+            android:paddingBottom="8dp"
+            android:paddingLeft="8dp"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="italic"
+            android:text="You have visited xx countries"
+    />
+
+
+    <TextView
+            android:id="@+id/city_country_title_text_view"
+            android:padding="4dp"
+            android:textSize="16sp"
+            android:textAllCaps="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold |italic"
+            android:text="List of "
+    />
+    <ListView
+            android:id="@+id/city_country_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    </ListView>
+
+
+</LinearLayout>

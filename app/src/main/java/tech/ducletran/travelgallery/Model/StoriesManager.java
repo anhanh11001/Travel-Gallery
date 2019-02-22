@@ -30,7 +30,7 @@ public class StoriesManager {
         values.put(AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_NAME, story.getTitle());
         values.put(AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_DESCRIPTION, story.getDescription());
         values.put(AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_COVER, story.getCover());
-        return (int) new AllStoriesReaderDbHelper(context).getWritableDatabase()
+        return (int) AllStoriesReaderDbHelper.getInstance(context).getWritableDatabase()
                 .insert(AllStoriesFeederContract.AllStoryFeedEntry.TABLE_NAME,null,values);
     }
 
@@ -40,7 +40,7 @@ public class StoriesManager {
 
         String selection = AllStoriesFeederContract.AllStoryFeedEntry._ID + " LIKE ?";
         String[] selectionArgs = {Integer.toString(story.getStoryId())};
-        new AllStoriesReaderDbHelper(context)
+        AllStoriesReaderDbHelper.getInstance(context)
                 .getWritableDatabase()
                 .delete(AllStoriesFeederContract.AllStoryFeedEntry.TABLE_NAME,selection,selectionArgs);
 

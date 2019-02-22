@@ -118,7 +118,7 @@ public class ImageManager {
     }
 
     public static void loadAlbum(Context context) {
-        SQLiteDatabase albumDatabase = new AllAlbumReaderDbHelper(context).getReadableDatabase();
+        SQLiteDatabase albumDatabase = AllAlbumReaderDbHelper.getInstance(context).getReadableDatabase();
         String[] projetion = {
                 BaseColumns._ID,
                 AllAlbumFeederContract.AllAlbumFeedEntry.COLUMN_ALBUM_NAME,
@@ -127,6 +127,7 @@ public class ImageManager {
         };
 
         Cursor cursor = albumDatabase.query(AllAlbumFeederContract.AllAlbumFeedEntry.TABLE_NAME,projetion,null,null,null,null,null);
+        int i = 0;
         while (cursor.moveToNext()) {
             int albumId = (int) cursor.getLong(cursor.getColumnIndexOrThrow(AllAlbumFeederContract.AllAlbumFeedEntry._ID));
             String name = cursor.getString(cursor.getColumnIndexOrThrow(AllAlbumFeederContract.AllAlbumFeedEntry.COLUMN_ALBUM_NAME));
@@ -135,8 +136,7 @@ public class ImageManager {
 
             Album album = new Album(context,albumId,name,cover,type);
             AlbumManager.registerAlbum(album);
-
-            SQLiteDatabase singleAlbumDatabase = new SingleAlbumReaderDbHelper(context,albumId).getReadableDatabase();
+            SQLiteDatabase singleAlbumDatabase = SingleAlbumReaderDbHelper.getInstance(context,albumId).getReadableDatabase();
             String[] singleAlbumProjection = {
                    SingleAlbumReaderDbHelper.ID,
             };
@@ -144,15 +144,18 @@ public class ImageManager {
                     ,null,null,null,null,null);
             while (singleAlbumCursor.moveToNext()) {
                 int imageId = singleAlbumCursor.getInt(singleAlbumCursor.getColumnIndexOrThrow(SingleAlbumReaderDbHelper.ID));
-                album.addToAlbum(ImageManager.getImageById(imageId));
-                Log.d("LOADING STORY AND ALBUM", "New image added: " + imageId + " to albumID: " + album.getAlbumId());
+                album.addToAlbum(ImageManager.getImageById(imageId),0);
+                Log.d("LOADING STORY AND ALBUM", "New image added: " + imageId + " to albumID: " + album.getAlbumId()
+                    + " I: " + i);
+                i++;
             }
+            Log.d("LOADING STORY AND ALBUM","**********************************************************");
 
         }
     }
 
     public static void loadStory(Context context) {
-        SQLiteDatabase storyDatabase = new AllStoriesReaderDbHelper(context).getReadableDatabase();
+        SQLiteDatabase storyDatabase = AllStoriesReaderDbHelper.getInstance(context).getReadableDatabase();
         String[] projection = {
                 AllStoriesFeederContract.AllStoryFeedEntry._ID,
                 AllStoriesFeederContract.AllStoryFeedEntry.COLUMN_STORY_NAME,

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomImageView">
+        <attr format="boolean" name="zoomable"/>
+        <attr format="boolean" name="translatable"/>
+        <attr format="boolean" name="restrictBounds"/>
+        <attr format="boolean" name="animateOnReset"/>
+        <attr format="boolean" name="doubleTapToZoom"/>
+        <attr format="float" name="doubleTapToZoomScaleFactor"/>
+        <attr format="boolean" name="autoCenter"/>
+        <attr format="float" name="minScale"/>
+        <attr format="float" name="maxScale"/>
+        <attr format="float" name="autoResetMode">
+
+        <enum name="UNDER" value="0"/>
+        <enum name="OVER" value="1"/>
+        <enum name="ALWAYS" value="2"/>
+        <enum name="NEVER" value="3"/>
+    </attr></declare-styleable>
+
+    <declare-styleable name="HorizontalListView">
+        <attr name="dividerWidth" format="dimension" />
+        <attr name="android:divider" />
+        <attr name="android:requiresFadingEdge" />
+        <attr name="android:fadingEdgeLength" />
+    </declare-styleable>
+</resources>

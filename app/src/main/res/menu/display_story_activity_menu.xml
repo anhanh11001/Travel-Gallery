@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+            android:icon="@drawable/ic_edit_story_page"
+            app:showAsAction="always"
+            android:id="@+id/action_edit_story_page"
+            android:title="@string/action_edit_page_story"/>
+    <item
+            android:id="@+id/action_organize_story"
+            android:title="@string/action_organize_story"/>
+    <item
+            android:icon="@drawable/ic_add_story_page"
+            app:showAsAction="always"
+            android:id="@+id/action_add_page_to_story"
+            android:title="@string/action_add_new_page_to_story"/>
+    <item
+            android:id="@+id/action_edit_story"
+            android:title="@string/action_edit_story"/>
+    <item
+            android:id="@+id/action_delete_story"
+            android:title="@string/action_delete_story"/>
+</menu>

@@ -258,6 +258,7 @@ public class MainActivity extends BaseActivity  {
                     addAlbum.setVisible(true);
                 } else if (tab.getPosition() == 2) {
                     addStory.setVisible(true);
+                } else {
                 }
             }
 

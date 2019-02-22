@@ -29,7 +29,7 @@ public class Story {
         this.details = "";
         StoriesManager.registerStory(this,id);
 
-        database = new AllStoriesReaderDbHelper(context).getWritableDatabase();
+        database = AllStoriesReaderDbHelper.getInstance(context).getWritableDatabase();
     }
 
     public Story (Context context,int id, String title, String description, String cover, int numOfPages, String details) {
@@ -40,7 +40,7 @@ public class Story {
         this.numOfPages = numOfPages;
         this.details = details;
         StoriesManager.registerStory(this,id);
-        database = new AllStoriesReaderDbHelper(context).getWritableDatabase();
+        database = AllStoriesReaderDbHelper.getInstance(context).getWritableDatabase();
     }
 
     // Setters
