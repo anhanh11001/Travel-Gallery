@@ -22,7 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="2dp"
-            android:background="@drawable/helper_drawable_shadow"
             android:elevation="4dp"
     >
         <TextView
@@ -46,6 +45,8 @@
         <Button
                 android:id="@+id/map_update_button"
                 android:text="update"
+                android:textColor="?colorAccent"
+                android:background="@android:color/transparent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
     </LinearLayout>

@@ -15,6 +15,7 @@ import tech.ducletran.travelgallery.Adapter.CityCountryItemAdapter;
 import tech.ducletran.travelgallery.R;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class CityFragment extends Fragment {
 
@@ -36,6 +37,12 @@ public class CityFragment extends Fragment {
 
 
         citiesList = new ArrayList<>(MapFragment.getCitiesList());
+        citiesList.sort(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.compareTo(o2);
+            }
+        });
         textView.setText("You have travelled to " + citiesList.size() + " cities.");
         titleTextView.setText("List of cities");
 
