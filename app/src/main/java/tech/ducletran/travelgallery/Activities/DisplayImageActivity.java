@@ -128,7 +128,7 @@ public class DisplayImageActivity extends BaseActivity {
                 current.setFood();
                 if (current.getIsFood()) {
                     item.setIcon(getDrawable(R.drawable.ic_food_filled_icon));
-                    AlbumManager.getAlbum(Album.DEFAULT_FOOD_ID).addToAlbum(current,0);
+                    AlbumManager.getAlbum(Album.DEFAULT_FOOD_ID).addToAlbum(current,false);
                 } else {
                     item.setIcon(getDrawable(R.drawable.ic_food_icon));
                     AlbumManager.getAlbum(Album.DEFAULT_FOOD_ID).removeFromAlbum(current);
@@ -153,7 +153,7 @@ public class DisplayImageActivity extends BaseActivity {
                 current.setFavorite();
                 if (current.getIsFavorite()) {
                     item.setIcon(getDrawable(R.drawable.ic_favorite_filled_icon));
-                    AlbumManager.getAlbum(Album.DEFAULT_FAVORITE_ID).addToAlbum(current,0);
+                    AlbumManager.getAlbum(Album.DEFAULT_FAVORITE_ID).addToAlbum(current,false);
                 } else {
                     item.setIcon(getDrawable(R.drawable.ic_favorite_icon));
                     AlbumManager.getAlbum(Album.DEFAULT_FAVORITE_ID).removeFromAlbum(current);
@@ -178,7 +178,7 @@ public class DisplayImageActivity extends BaseActivity {
                 current.setPeople();
                 if (current.getIsPeople()) {
                     item.setIcon(getDrawable(R.drawable.ic_people_filled_icon));
-                    AlbumManager.getAlbum(Album.DEFAULT_PEOPLE_ID).addToAlbum(current,0);
+                    AlbumManager.getAlbum(Album.DEFAULT_PEOPLE_ID).addToAlbum(current,false);
                 } else {
                     item.setIcon(getDrawable(R.drawable.ic_people_icon));
                     AlbumManager.getAlbum(Album.DEFAULT_PEOPLE_ID).removeFromAlbum(current);

@@ -127,7 +127,7 @@ public class ImageManager {
         };
 
         Cursor cursor = albumDatabase.query(AllAlbumFeederContract.AllAlbumFeedEntry.TABLE_NAME,projetion,null,null,null,null,null);
-        int i = 0;
+        int i = 1;
         while (cursor.moveToNext()) {
             int albumId = (int) cursor.getLong(cursor.getColumnIndexOrThrow(AllAlbumFeederContract.AllAlbumFeedEntry._ID));
             String name = cursor.getString(cursor.getColumnIndexOrThrow(AllAlbumFeederContract.AllAlbumFeedEntry.COLUMN_ALBUM_NAME));
@@ -144,13 +144,10 @@ public class ImageManager {
                     ,null,null,null,null,null);
             while (singleAlbumCursor.moveToNext()) {
                 int imageId = singleAlbumCursor.getInt(singleAlbumCursor.getColumnIndexOrThrow(SingleAlbumReaderDbHelper.ID));
-                album.addToAlbum(ImageManager.getImageById(imageId),0);
-                Log.d("LOADING STORY AND ALBUM", "New image added: " + imageId + " to albumID: " + album.getAlbumId()
-                    + " I: " + i);
-                i++;
+                album.addToAlbum(ImageManager.getImageById(imageId),false);
             }
-            Log.d("LOADING STORY AND ALBUM","**********************************************************");
-
+            Log.d("LOADING ALBUM","I: " + i);
+            i++;
         }
     }
 

@@ -84,7 +84,7 @@ public class AddImageToAlbumActivity extends BaseActivity {
             case R.id.action_return_new_image_to_album:
                 for (Integer i:imageAddedPositions) {
                     ImageData imageToAdd = ImageManager.getImageDataList().get(i);
-                    currentAlbum.addToAlbum(imageToAdd,1);
+                    currentAlbum.addToAlbum(imageToAdd,true);
                     if (currentAlbumId == Album.DEFAULT_FAVORITE_ID) {
                         imageToAdd.setFavorite();
                     } else if (currentAlbumId == Album.DEFAULT_PEOPLE_ID) {

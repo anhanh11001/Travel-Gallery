@@ -84,9 +84,9 @@ public class Album {
         allAlbumDatabase.update(AllAlbumFeederContract.AllAlbumFeedEntry.TABLE_NAME,
                 value,selection,selectionArgs);
     }
-    public void addToAlbum(ImageData image, int codeAdd) {
+    public void addToAlbum(ImageData image, boolean addToDatabase) {
         imageHashMap.put(image.getImageId(),image);
-        if (codeAdd == 1) {
+        if (addToDatabase) {
             ContentValues value = new ContentValues();
             value.put(SingleAlbumReaderDbHelper.ID,image.getImageId());
             singleAlbumDatabase.insert(SingleAlbumReaderDbHelper.getTableName(albumId),null,value);
