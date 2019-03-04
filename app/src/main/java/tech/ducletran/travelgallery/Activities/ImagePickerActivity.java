@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,10 +21,11 @@ import tech.ducletran.travelgallery.R;
 
 import java.util.List;
 
-public class ImagePickerActivity extends BaseActivity {
+public class ImagePickerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(MainActivity.getAppTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_photos_view);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

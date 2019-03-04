@@ -9,11 +9,13 @@ import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.*;
@@ -29,8 +31,9 @@ import tech.ducletran.travelgallery.Model.*;
 import tech.ducletran.travelgallery.R;
 
 import java.util.ArrayList;
+import java.util.Set;
 
-public class MainActivity extends BaseActivity  {
+public class MainActivity extends AppCompatActivity {
     static final int REQUEST_PERMISSION_KEY = 1;
     private static final int REQUEST_CODE_FOR_NEW_IMAGE = 10;
     private static final int REQUEST_CODE_FOR_STORY_COVER = 11;
@@ -45,8 +48,11 @@ public class MainActivity extends BaseActivity  {
     private String imageCover = null;
     private ImageButton coverImageButton = null;
 
+    private static int appTheme = -1;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setUpTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -83,7 +89,9 @@ public class MainActivity extends BaseActivity  {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.menu_item_settings:
-            startActivity(new Intent(this,SettingsActivity.class));
+            Intent intentSettings = new Intent(this, SettingsActivity.class);
+            startActivity(intentSettings);
+            this.overridePendingTransition(R.anim.fade_in_slow, R.anim.fade_out_slow);
             return true;
         case R.id.menu_item_adding_albums:
             AlertDialog.Builder addAlbumAlertDialog = new AlertDialog.Builder(this);
@@ -204,6 +212,12 @@ public class MainActivity extends BaseActivity  {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setTheme(appTheme);
+    }
+
     private void setUpTabLayout() {
         //Set up layout icon
         TypedValue typedValuePrimary = new TypedValue();
@@ -320,4 +334,38 @@ public class MainActivity extends BaseActivity  {
             Toast.makeText(context,"Loaded " + newData.size() + " images",Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void setUpTheme() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String colorThemeCode = sharedPreferences.getString(getString(R.string.action_settings_color_theme_key),"1");
+        boolean isDarkMode = sharedPreferences.getBoolean(getString(R.string.action_settings_dark_mode_key),false);
+
+        setUpAppTheme(Integer.parseInt(colorThemeCode), false);
+        setTheme(appTheme);
+    }
+
+    public static void setUpAppTheme(int code, boolean isDarkMode) {
+        switch (code) {
+            case 1: // Blue
+                appTheme = (isDarkMode) ? R.style.DarkCrystalBlueAppTheme: R.style.CrystalBlueAppTheme;
+                break;
+            case 2: // Orange
+                appTheme = (isDarkMode) ? R.style.DarkSunshineOrangeAppTheme : R.style.SunshineOrangeAppTheme;
+                break;
+            case 3: // Green
+                appTheme = (isDarkMode) ? R.style.DarkCoralGreenAppTheme : R.style.CoralGreenAppTheme;
+                break;
+            case 4: // Gray
+                appTheme = (isDarkMode) ? R.style.DarkSilverGrayAppTheme : R.style.SilverGrayAppTheme;
+                break;
+            case 5: // Red
+                appTheme = (isDarkMode) ? R.style.DarkBloodyRedAppTheme : R.style.BloodyRedAppTheme;
+                break;
+            default:
+                appTheme = (isDarkMode) ? R.style.DarkCrystalBlueAppTheme : R.style.CrystalBlueAppTheme;
+                break;
+        }
+    }
+
+    public static int getAppTheme() {return appTheme;}
 }

@@ -3,6 +3,7 @@ package tech.ducletran.travelgallery.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,11 +15,12 @@ import tech.ducletran.travelgallery.Model.ImageData;
 import tech.ducletran.travelgallery.Model.ImageManager;
 import tech.ducletran.travelgallery.R;
 
-public class DisplayImageInfoActivity extends BaseActivity {
+public class DisplayImageInfoActivity extends AppCompatActivity {
     private static boolean isChanged = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(MainActivity.getAppTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_image_info);
 

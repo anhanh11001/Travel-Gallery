@@ -2,15 +2,17 @@ package tech.ducletran.travelgallery.Activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import com.bumptech.glide.Glide;
 import tech.ducletran.travelgallery.CustomizedClass.CustomImageView;
 import tech.ducletran.travelgallery.R;
 
-public class DisplaySingleImageMapActivity extends BaseActivity {
+public class DisplaySingleImageMapActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(MainActivity.getAppTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.display_image_view);
         CustomImageView imageView = findViewById(R.id.display_photo_image_view);

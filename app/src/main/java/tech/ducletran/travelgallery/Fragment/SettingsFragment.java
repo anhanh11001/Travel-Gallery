@@ -1,9 +1,13 @@
 package tech.ducletran.travelgallery.Fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v14.preference.SwitchPreference;
 import android.support.v7.preference.*;
+import tech.ducletran.travelgallery.Activities.MainActivity;
+import tech.ducletran.travelgallery.Activities.SettingsActivity;
 import tech.ducletran.travelgallery.R;
 
 
@@ -54,6 +58,20 @@ public class SettingsFragment extends PreferenceFragmentCompat  implements Share
             int numColumns = Integer.parseInt(sharedPreferences.getString(key,"4"));
             findPreference(key).setSummary(String.valueOf(numColumns));
         }
+
+        if (key.equals(getString(R.string.action_settings_color_theme_key)) ||
+                key.equals(getString(R.string.action_settings_dark_mode_key))) {
+            boolean isDarkMode = sharedPreferences.getBoolean(getString(R.string.action_settings_dark_mode_key),false);
+            String colorCode = sharedPreferences.getString(getString(R.string.action_settings_color_theme_key),"1");
+            MainActivity.setUpAppTheme(Integer.parseInt(colorCode), false);
+
+            Activity mCurrentActivity = getActivity();
+            mCurrentActivity.finish();
+            mCurrentActivity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+            Intent intent = new Intent(mCurrentActivity,SettingsActivity.class);
+            mCurrentActivity.startActivity(intent);
+        }
     }
 
     @Override
@@ -61,4 +79,6 @@ public class SettingsFragment extends PreferenceFragmentCompat  implements Share
         super.onDestroyView();
         PreferenceManager.getDefaultSharedPreferences(getActivity()).unregisterOnSharedPreferenceChangeListener(this);
     }
+
+
 }

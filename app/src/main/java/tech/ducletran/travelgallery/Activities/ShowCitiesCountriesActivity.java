@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.*;
 import android.widget.EditText;
@@ -15,11 +16,12 @@ import tech.ducletran.travelgallery.Fragment.CountryFragment;
 import tech.ducletran.travelgallery.Fragment.MapFragment;
 import tech.ducletran.travelgallery.R;
 
-public class ShowCitiesCountriesActivity extends BaseActivity {
+public class ShowCitiesCountriesActivity extends AppCompatActivity {
     private TabLayout tabLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(MainActivity.getAppTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_cities_countries);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,7 +24,7 @@ import tech.ducletran.travelgallery.Model.StoriesManager;
 import tech.ducletran.travelgallery.Model.Story;
 import tech.ducletran.travelgallery.R;
 
-public class DisplayStoryActivity extends BaseActivity {
+public class DisplayStoryActivity extends AppCompatActivity {
     private int REQUEST_CODE_UPDATE_STORY_COVER = 10;
     private int REQUEST_CODE_FOR_IMAGE = 11;
 
@@ -38,10 +39,9 @@ public class DisplayStoryActivity extends BaseActivity {
     private ImageButton imageButton;
     private String imageButtonImage;
 
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(MainActivity.getAppTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_story);
 

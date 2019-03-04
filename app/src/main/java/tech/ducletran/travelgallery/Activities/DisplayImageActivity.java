@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.MenuBuilder;
 import android.view.*;
 import android.widget.Toast;
@@ -18,7 +19,7 @@ import tech.ducletran.travelgallery.R;
 
 import java.util.List;
 
-public class DisplayImageActivity extends BaseActivity {
+public class DisplayImageActivity extends AppCompatActivity {
 
     private Menu menu;
     private ViewPager viewPager;
@@ -34,6 +35,7 @@ public class DisplayImageActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(MainActivity.getAppTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_image);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -3,6 +3,7 @@ package tech.ducletran.travelgallery.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,7 +14,7 @@ import tech.ducletran.travelgallery.R;
 
 import java.util.ArrayList;
 
-public class DisplayMultipleImageMapActivity extends BaseActivity {
+public class DisplayMultipleImageMapActivity extends AppCompatActivity {
 
     private static ArrayList<ImageData> multipleImageList;
 
@@ -23,6 +24,7 @@ public class DisplayMultipleImageMapActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(MainActivity.getAppTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_photos_view);
 

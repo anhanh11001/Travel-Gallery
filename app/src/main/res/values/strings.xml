@@ -12,12 +12,16 @@
     <string name="action_settings_color_theme_key">color_theme_setting</string>
     <string name="action_settings_sort_key">sort_setting</string>
     <string name="action_settings_columns_key">column_setting</string>
+    <string name="action_settings_dark_mode_key">dark_mode_setting</string>
 
     <!--Preference strings-->
     <string name="action_settings_color_theme_title">Theme Color</string>
     <string name="action_settings_sort_title">Sort by date or Shuffle</string>
     <string name="action_settings_sort_on">Sort by date</string>
     <string name="action_settings_sort_off">Shuffle randomly</string>
+    <string name="action_settings_dark_mode_on">On</string>
+    <string name="action_settings_dark_mode_off">Off</string>
+    <string name="action_settings_dark_mode_title">Dark Mode</string>
 
     <!--Name for theme-->
     <string name="blue_theme_name">Crystal Blue</string>

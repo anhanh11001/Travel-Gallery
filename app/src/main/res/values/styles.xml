@@ -32,6 +32,49 @@
         <item name="colorAccent">@color/redColorAccent</item>
     </style>
 
+    <!--Dark Mode Theme-->
+    <style name="DarkCrystalBlueAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/blackColorPrimary</item>
+        <item name="colorPrimaryDark">@color/blackColorPrimaryDark</item>
+        <item name="android:background">@color/backgroundColorDarkMode</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:tint">#ffffff</item>
+        <item name="colorAccent">@color/blueColorDarkMode</item>
+    </style>
+
+    <style name="DarkCoralGreenAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/blackColorPrimary</item>
+        <item name="colorPrimaryDark">@color/blackColorPrimaryDark</item>
+        <item name="android:background">@color/backgroundColorDarkMode</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:tint">#ffffff</item>
+        <item name="colorAccent">@color/greenColorDarkMode</item>
+    </style>
+
+    <style name="DarkSunshineOrangeAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/blackColorPrimary</item>
+        <item name="colorPrimaryDark">@color/blackColorPrimaryDark</item>
+        <item name="colorAccent">@color/orangeColorDarkMode</item>
+    </style>
+
+    <style name="DarkSilverGrayAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/blackColorPrimary</item>
+        <item name="colorPrimaryDark">@color/blackColorPrimaryDark</item>
+        <item name="android:background">@color/backgroundColorDarkMode</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:tint">#ffffff</item>
+        <item name="colorAccent">@color/grayColorDarkMode</item>
+    </style>
+
+    <style name="DarkBloodyRedAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/blackColorPrimary</item>
+        <item name="colorPrimaryDark">@color/blackColorPrimaryDark</item>
+        <item name="android:background">@color/backgroundColorDarkMode</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:tint">#ffffff</item>
+        <item name="colorAccent">@color/redColorDarkMode</item>
+    </style>
 
     <!--Horizontal Grid View for album style-->
     <style name="AlbumHorizontalTheme">

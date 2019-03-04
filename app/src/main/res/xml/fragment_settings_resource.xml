@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+            android:key="@string/action_settings_dark_mode_key"
+            android:title="@string/action_settings_dark_mode_title"
+            android:switchTextOn="@string/action_settings_dark_mode_on"
+            android:switchTextOff="@string/action_settings_dark_mode_off"
+            android:icon="@drawable/ic_dark_mode"
+            android:defaultValue="false"
+    />
+
     <ListPreference
             android:key="@string/action_settings_color_theme_key"
             android:title="@string/action_settings_color_theme_title"

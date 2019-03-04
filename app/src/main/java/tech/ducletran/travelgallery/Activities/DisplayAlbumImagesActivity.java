@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
@@ -18,7 +19,7 @@ import tech.ducletran.travelgallery.Model.AlbumManager;
 import tech.ducletran.travelgallery.Model.ImageManager;
 import tech.ducletran.travelgallery.R;
 
-public class DisplayAlbumImagesActivity extends BaseActivity {
+public class DisplayAlbumImagesActivity extends AppCompatActivity {
     private Album currentAlbum;
     private PhotosAdapter adapter;
     private static boolean adapterChanged = false;
@@ -28,6 +29,7 @@ public class DisplayAlbumImagesActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(MainActivity.getAppTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_photos_view);
 

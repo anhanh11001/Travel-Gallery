@@ -5,6 +5,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.*;
 import android.widget.AdapterView;
@@ -20,7 +21,7 @@ import tech.ducletran.travelgallery.R;
 
 import java.util.ArrayList;
 
-public class RemoveImageFromAlbumActivity extends BaseActivity {
+public class RemoveImageFromAlbumActivity extends AppCompatActivity {
     private MenuItem doneItem;
     private Album currentAlbum;
     private ArrayList<Integer> imageRemovedPosition = new ArrayList<Integer>();
@@ -29,6 +30,7 @@ public class RemoveImageFromAlbumActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(MainActivity.getAppTheme());
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.fragment_photos_view);

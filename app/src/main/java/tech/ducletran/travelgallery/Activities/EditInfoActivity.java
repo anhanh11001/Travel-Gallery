@@ -12,6 +12,7 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.*;
 
@@ -35,7 +36,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class EditInfoActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class EditInfoActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private static final float DEFAULT_ZOOM = 15f;
 
     private String currentDescription;
@@ -62,6 +63,7 @@ public class EditInfoActivity extends BaseActivity implements GoogleApiClient.On
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(MainActivity.getAppTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_info);
 
