@@ -12,6 +12,7 @@ Some of the features of the app are:
 - Editing photos information: title, description, time, location.
 - Creating custom travel stories.
 - Tagging photos on map based on location, counting number of cities and countries you have visited to create a list of travel places.
+- Dark Mode
 
 ### Some images and demo links
 <img src="https://i.ibb.co/Swy1KJm/52956228-2129308364049166-6958296994653667328-n.png" width="290"> <img src="https://i.ibb.co/dWHrkmG/52612831-394404978036415-4627830839147757568-n.png" width="290">
