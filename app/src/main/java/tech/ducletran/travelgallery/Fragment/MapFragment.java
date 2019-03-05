@@ -3,6 +3,7 @@ package tech.ducletran.travelgallery.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.ConnectivityManager;
@@ -10,6 +11,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,7 +27,9 @@ import android.widget.Toast;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.maps.android.clustering.ClusterManager;
+import tech.ducletran.travelgallery.Activities.MainActivity;
 import tech.ducletran.travelgallery.Activities.ShowCitiesCountriesActivity;
 import tech.ducletran.travelgallery.CustomizedClass.CustomClusterRenderer;
 import tech.ducletran.travelgallery.Model.ImageData;
@@ -42,6 +46,7 @@ public class MapFragment extends Fragment{
     private static final String COUNTRY_FILE_KEY = "fjoaisnfiodaf";
     private static final String CITY_PREFERENCE_KEY = "fjildajfl";
     private static final String COUNTRY_PREFERENCE_KEY = "fakldsfl";
+    private static final String TAG = "MapFragment";
 
     private static ClusterManager<ImageMarker> clusterManager;
     private static Set<String> citiesList;
@@ -62,9 +67,29 @@ public class MapFragment extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map_view,container,false);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.google_map_fragment);
+
+
+
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
+                if (PreferenceManager.getDefaultSharedPreferences(getActivity())
+                        .getBoolean(getString(R.string.action_settings_dark_map_key),false)) {
+                    try {
+                        // Customize the styling of the base map using a JSON object defined
+                        // in a raw resource file.
+                        boolean success = googleMap.setMapStyle(
+                                MapStyleOptions.loadRawResourceStyle(
+                                        getContext(), R.raw.map_style_dark));
+
+                        if (!success) {
+                            Log.e(TAG, "Style parsing failed.");
+                        }
+                    } catch (Resources.NotFoundException e) {
+                        Log.e(TAG, "Can't find style. Error: ", e);
+                    }
+                }
+
                 setClusterManager(googleMap,getContext());
             }
         });

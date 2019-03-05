@@ -3,6 +3,11 @@
   <component name="WizardSettings">
     <option name="children">
       <map>
+        <entry key="imageWizard">
+          <value>
+            <PersistentState />
+          </value>
+        </entry>
         <entry key="vectorWizard">
           <value>
             <PersistentState>
@@ -14,11 +19,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="height" value="20" />
-                            <entry key="outputName" value="ic_dark_mode" />
-                            <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="D:\Coding Project\9. Personal Travel Photos Gallery\Resource\svg_files\dark_mode.svg" />
-                            <entry key="width" value="40" />
+                            <entry key="outputName" value="ic_dark_map" />
+                            <entry key="sourceFile" value="D:\Coding Project\9. Personal Travel Photos Gallery\Resource\svg_files\dark_map-01.svg" />
                           </map>
                         </option>
                       </PersistentState>

@@ -61,4 +61,6 @@
     <string name="action_organize_story">Organize Story</string>
     <string name="action_add_new_page_to_story">Add New Page</string>
     <string name="action_edit_story">Edit Story</string>
+    <string name="action_settings_dark_map_key">dark_map_setting</string>
+    <string name="action_settings_dark_map_title">Dark Map</string>
 </resources>

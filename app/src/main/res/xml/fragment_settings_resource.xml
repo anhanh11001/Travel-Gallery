@@ -10,6 +10,14 @@
             android:defaultValue="false"
     />
 
+    <SwitchPreference
+        android:key="@string/action_settings_dark_map_key"
+        android:title="@string/action_settings_dark_map_title"
+        android:switchTextOn="On"
+        android:switchTextOff="Off"
+        android:icon="@drawable/ic_dark_map"
+        android:defaultValue="false"/>
+
     <ListPreference
             android:key="@string/action_settings_color_theme_key"
             android:title="@string/action_settings_color_theme_title"
