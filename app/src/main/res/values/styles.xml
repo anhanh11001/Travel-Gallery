@@ -33,47 +33,47 @@
     </style>
 
     <!--Dark Mode Theme-->
-    <style name="DarkCrystalBlueAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/blackColorPrimary</item>
-        <item name="colorPrimaryDark">@color/blackColorPrimaryDark</item>
-        <item name="android:background">@color/backgroundColorDarkMode</item>
-        <item name="android:textColor">#ffffff</item>
-        <item name="android:tint">#ffffff</item>
+    <style name="DarkCrystalBlueAppTheme" parent="DarkThemeCustomBase">
         <item name="colorAccent">@color/blueColorDarkMode</item>
     </style>
 
-    <style name="DarkCoralGreenAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/blackColorPrimary</item>
-        <item name="colorPrimaryDark">@color/blackColorPrimaryDark</item>
-        <item name="android:background">@color/backgroundColorDarkMode</item>
-        <item name="android:textColor">#ffffff</item>
-        <item name="android:tint">#ffffff</item>
+    <style name="DarkCoralGreenAppTheme" parent="DarkThemeCustomBase">
         <item name="colorAccent">@color/greenColorDarkMode</item>
     </style>
 
-    <style name="DarkSunshineOrangeAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/blackColorPrimary</item>
-        <item name="colorPrimaryDark">@color/blackColorPrimaryDark</item>
+    <style name="DarkSunshineOrangeAppTheme" parent="DarkThemeCustomBase">
         <item name="colorAccent">@color/orangeColorDarkMode</item>
     </style>
 
-    <style name="DarkSilverGrayAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/blackColorPrimary</item>
-        <item name="colorPrimaryDark">@color/blackColorPrimaryDark</item>
-        <item name="android:background">@color/backgroundColorDarkMode</item>
-        <item name="android:textColor">#ffffff</item>
-        <item name="android:tint">#ffffff</item>
+    <style name="DarkSilverGrayAppTheme" parent="DarkThemeCustomBase">
         <item name="colorAccent">@color/grayColorDarkMode</item>
     </style>
 
-    <style name="DarkBloodyRedAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/blackColorPrimary</item>
-        <item name="colorPrimaryDark">@color/blackColorPrimaryDark</item>
-        <item name="android:background">@color/backgroundColorDarkMode</item>
-        <item name="android:textColor">#ffffff</item>
-        <item name="android:tint">#ffffff</item>
+    <style name="DarkBloodyRedAppTheme" parent="DarkThemeCustomBase">
         <item name="colorAccent">@color/redColorDarkMode</item>
+    </style>
+
+    <style name="DarkThemeCustomBase" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorBlackPrimary</item>
+        <item name="colorPrimaryDark">@color/colorBlackPrimary</item>
+        <item name="android:windowBackground">@color/backgroundColorDarkMode</item>
+        <item name="actionBarPopupTheme">@style/PopupMenuDark</item>
+        <item name="alertDialogTheme">@style/AlertDialogDark</item>
+
+        <item name="android:textColor">@color/colorWhitePrimary</item>
+        <item name="android:textColorSecondary">@color/colorWhitePrimary</item>
+        <item name="android:textColorPrimary">@color/colorWhitePrimary</item>
+        <item name="android:textColorTertiary">@color/colorWhitePrimary</item>
+        <item name="android:textColorHint">@color/colorWhitePrimary</item>
+        <item name="textColorAlertDialogListItem">@color/colorWhitePrimary</item>
+    </style>
+
+    <style name="PopupMenuDark" parent="@android:style/Widget.PopupMenu">
+        <item name="android:popupBackground">@color/colorWhitePrimary</item>
+    </style>
+    <style name="AlertDialogDark" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:background">@color/backgroundColorDarkMode</item>
+        <item name="android:textColor">@color/colorWhitePrimary</item>
     </style>
 
     <!--Horizontal Grid View for album style-->

@@ -2,6 +2,7 @@ package tech.ducletran.travelgallery.Activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.*;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -31,7 +32,6 @@ import tech.ducletran.travelgallery.Model.*;
 import tech.ducletran.travelgallery.R;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
     static final int REQUEST_PERMISSION_KEY = 1;
@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton coverImageButton = null;
 
     private static int appTheme = -1;
+    private static boolean isDarkMode;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Dialog dialog;
         switch (item.getItemId()) {
         case R.id.menu_item_settings:
             Intent intentSettings = new Intent(this, SettingsActivity.class);
@@ -103,6 +105,12 @@ public class MainActivity extends AppCompatActivity {
 
             final EditText editText = albumView.findViewById(R.id.create_album_edit_text);
             final RadioGroup radioGroup = albumView.findViewById(R.id.create_album_radio_group);
+            if (isDarkMode) {
+                ((RadioButton) radioGroup.findViewById(R.id.create_location_album_radio_button))
+                        .setTextColor(getColor(R.color.colorWhitePrimary));
+                ((RadioButton) radioGroup.findViewById(R.id.create_others_album_radio_button))
+                        .setTextColor(getColor(R.color.colorWhitePrimary));
+            }
 
             addAlbumAlertDialog.setPositiveButton("Create", new DialogInterface.OnClickListener() {
                 @Override
@@ -131,7 +139,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            addAlbumAlertDialog.show();
+            dialog = addAlbumAlertDialog.create();
+            if (isDarkMode) {
+                dialog.getWindow().setBackgroundDrawableResource(R.color.backgroundColorDarkMode);
+            }
+            dialog.show();
             return true;
         case R.id.menu_item_adding_story:
             AlertDialog.Builder addStoryAlertDialog = new AlertDialog.Builder(this);
@@ -163,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this,"The story title length is not good",Toast.LENGTH_SHORT).show();
                         dialog.cancel();
                     } else {
-                        Story newStory = new Story(MainActivity.this,storyTitle,storyDescriptionEditText.getText().toString(),imageCover);
+                        new Story(MainActivity.this,storyTitle,storyDescriptionEditText.getText().toString(),imageCover);
                         StoriesFracment.setStoryFracmentChanged();
                         dialog.cancel();
                     }
@@ -176,8 +188,11 @@ public class MainActivity extends AppCompatActivity {
                     dialog.cancel();
                 }
             });
-
-            addStoryAlertDialog.show();
+             dialog = addStoryAlertDialog.create();
+            if (isDarkMode) {
+                dialog.getWindow().setBackgroundDrawableResource(R.color.backgroundColorDarkMode);
+            }
+            dialog.show();
             return true;
         case R.id.menu_item_adding_images:
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -222,21 +237,36 @@ public class MainActivity extends AppCompatActivity {
         //Set up layout icon
         TypedValue typedValuePrimary = new TypedValue();
         TypedValue typedValuePrimaryDark = new TypedValue();
+        TypedValue typedValueAccent = new TypedValue();
         Resources.Theme theme = this.getTheme();
         theme.resolveAttribute(R.attr.colorPrimary, typedValuePrimary, true);
         @ColorInt int colorPrimary = typedValuePrimary.data;
         theme.resolveAttribute(R.attr.colorPrimaryDark,typedValuePrimaryDark,true);
         @ColorInt final int colorPrimaryDark = typedValuePrimaryDark.data;
+        theme.resolveAttribute(R.attr.colorAccent,typedValueAccent,true);
+        @ColorInt final int colorAccent = typedValueAccent.data;
+
 
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_photos_tab_icon);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_album_tab_icon);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_stories_tab_icon);
         tabLayout.getTabAt(3).setIcon(R.drawable.ic_map_tab_icon);
-        tabLayout.setTabTextColors(getColor(R.color.colorBlackPrimary),colorPrimary);
+        if (isDarkMode) {
+            tabLayout.setBackgroundColor(getColor(R.color.colorBlackPrimary));
+            tabLayout.setTabTextColors(getColor(R.color.colorWhitePrimary), colorAccent);
+            tabLayout.getTabAt(0).getIcon().setColorFilter(getColor(R.color.colorWhitePrimary),PorterDuff.Mode.SRC_IN);
+            tabLayout.getTabAt(1).getIcon().setColorFilter(getColor(R.color.colorWhitePrimary),PorterDuff.Mode.SRC_IN);
+            tabLayout.getTabAt(2).getIcon().setColorFilter(getColor(R.color.colorWhitePrimary),PorterDuff.Mode.SRC_IN);
+            tabLayout.getTabAt(3).getIcon().setColorFilter(getColor(R.color.colorWhitePrimary),PorterDuff.Mode.SRC_IN);
+        } else {
+            tabLayout.setTabTextColors(getColor(R.color.colorBlackPrimary),colorPrimary);
+        }
+
 
         //initial setup
         int currentTab = tabLayout.getSelectedTabPosition();
-        tabLayout.getTabAt(currentTab).getIcon().setColorFilter(colorPrimary, PorterDuff.Mode.SRC_IN);
+        tabLayout.getTabAt(currentTab).getIcon().setColorFilter((isDarkMode) ?
+                colorAccent : colorPrimary, PorterDuff.Mode.SRC_IN);
         addAlbum.setVisible(false);
         addImage.setVisible(false);
         addStory.setVisible(false);
@@ -260,7 +290,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                tab.getIcon().setColorFilter(colorPrimaryDark, PorterDuff.Mode.SRC_IN);
+                tab.getIcon().setColorFilter((isDarkMode) ? colorAccent : colorPrimaryDark, PorterDuff.Mode.SRC_IN);
 
                 addAlbum.setVisible(false);
                 addImage.setVisible(false);
@@ -272,13 +302,16 @@ public class MainActivity extends AppCompatActivity {
                     addAlbum.setVisible(true);
                 } else if (tab.getPosition() == 2) {
                     addStory.setVisible(true);
-                } else {
                 }
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                tab.getIcon().setColorFilter(getColor(R.color.colorBlackPrimary), PorterDuff.Mode.SRC_IN);
+                if(isDarkMode) {
+                    tab.getIcon().setColorFilter(getColor(R.color.colorWhitePrimary), PorterDuff.Mode.SRC_IN);
+                } else {
+                    tab.getIcon().setColorFilter(getColor(R.color.colorBlackPrimary), PorterDuff.Mode.SRC_IN);
+                }
             }
 
             @Override
@@ -338,9 +371,9 @@ public class MainActivity extends AppCompatActivity {
     private void setUpTheme() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String colorThemeCode = sharedPreferences.getString(getString(R.string.action_settings_color_theme_key),"1");
-        boolean isDarkMode = sharedPreferences.getBoolean(getString(R.string.action_settings_dark_mode_key),false);
+        isDarkMode = sharedPreferences.getBoolean(getString(R.string.action_settings_dark_mode_key),false);
 
-        setUpAppTheme(Integer.parseInt(colorThemeCode), false);
+        setUpAppTheme(Integer.parseInt(colorThemeCode), isDarkMode);
         setTheme(appTheme);
     }
 
@@ -368,4 +401,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static int getAppTheme() {return appTheme;}
+    public static boolean isDarkMode() {return isDarkMode;}
 }

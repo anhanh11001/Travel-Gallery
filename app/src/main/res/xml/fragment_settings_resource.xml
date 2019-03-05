@@ -4,8 +4,8 @@
     <SwitchPreference
             android:key="@string/action_settings_dark_mode_key"
             android:title="@string/action_settings_dark_mode_title"
-            android:switchTextOn="@string/action_settings_dark_mode_on"
-            android:switchTextOff="@string/action_settings_dark_mode_off"
+            android:switchTextOn="On"
+            android:switchTextOff="Off"
             android:icon="@drawable/ic_dark_mode"
             android:defaultValue="false"
     />

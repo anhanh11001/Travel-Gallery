@@ -21,7 +21,6 @@
             android:layout_height="0dp"
             app:tabMode="fixed"
             android:elevation="4dp"
-            android:background="@drawable/helper_drawable_shadow"
             app:tabIndicatorHeight="0dp"
     />
 

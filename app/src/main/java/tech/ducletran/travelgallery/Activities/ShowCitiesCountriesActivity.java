@@ -34,6 +34,10 @@ public class ShowCitiesCountriesActivity extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.activity_city_country_tab_layout);
         tabLayout.setupWithViewPager(viewPager);
+
+        if (MainActivity.isDarkMode()) {
+            tabLayout.setBackgroundColor(getColor(R.color.colorBlackPrimary));
+        }
     }
 
     @Override

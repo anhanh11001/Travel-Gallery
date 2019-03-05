@@ -1,6 +1,7 @@
 package tech.ducletran.travelgallery.Activities;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -163,8 +164,11 @@ public class DisplayStoryActivity extends AppCompatActivity {
                 dialog.cancel();
             }
         });
-
-        deleteDialog.show();
+        Dialog dialog = deleteDialog.create();
+        if (MainActivity.isDarkMode()) {
+            dialog.getWindow().setBackgroundDrawableResource(R.color.backgroundColorDarkMode);
+        }
+        dialog.show();
     }
     private void organizeStory() {}
     private void addNewPageToStory() {
@@ -242,7 +246,11 @@ public class DisplayStoryActivity extends AppCompatActivity {
             }
         });
 
-        editStoryDialog.show();
+        Dialog dialog = editStoryDialog.create();
+        if (MainActivity.isDarkMode()) {
+            dialog.getWindow().setBackgroundDrawableResource(R.color.backgroundColorDarkMode);
+        }
+        dialog.show();
     }
     private void editCurrentPage() throws JSONException {
         final int position = viewPager.getCurrentItem() - 1;
@@ -347,7 +355,11 @@ public class DisplayStoryActivity extends AppCompatActivity {
             }
         });
 
-        alertDialog.show();
+        Dialog dialog = alertDialog.create();
+        if (MainActivity.isDarkMode()) {
+            dialog.getWindow().setBackgroundDrawableResource(R.color.backgroundColorDarkMode);
+        }
+        dialog.show();
     }
 
     public static void setDisplayStoryChanged() {

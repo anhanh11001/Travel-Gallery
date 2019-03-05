@@ -1,6 +1,7 @@
 package tech.ducletran.travelgallery.Activities;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,11 +42,11 @@ public class AddNewPageToStoryActivity extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(AddNewPageToStoryActivity.this);
-                dialog.setTitle("Enter the details of story page");
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AddNewPageToStoryActivity.this);
+                dialogBuilder.setTitle("Enter the details of story page");
 
                 view = getLayoutInflater().inflate(R.layout.dialog_add_new_page_to_story,parent,false);
-                dialog.setView(view);
+                dialogBuilder.setView(view);
 
                 imageButton = view.findViewById(R.id.add_new_page_to_story_image_button);
                 final EditText normalEditText = view.findViewById(R.id.add_new_page_to_story_normal_text_edit_text);
@@ -78,7 +79,7 @@ public class AddNewPageToStoryActivity extends AppCompatActivity {
                     }
                 });
 
-                dialog.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                dialogBuilder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -146,13 +147,16 @@ public class AddNewPageToStoryActivity extends AppCompatActivity {
                         }
                     }
                 });
-                dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
                 });
-
+                Dialog dialog = dialogBuilder.create();
+                if (MainActivity.isDarkMode()) {
+                    dialog.getWindow().setBackgroundDrawableResource(R.color.backgroundColorDarkMode);
+                }
                 dialog.show();
             }
         });

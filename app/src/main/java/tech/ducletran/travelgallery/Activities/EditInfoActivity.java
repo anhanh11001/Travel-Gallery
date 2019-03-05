@@ -114,7 +114,7 @@ public class EditInfoActivity extends AppCompatActivity implements GoogleApiClie
 
                 DatePickerDialog dialog = new DatePickerDialog(
                         EditInfoActivity.this,
-                        AlertDialog.THEME_HOLO_LIGHT,
+                        (MainActivity.isDarkMode())? AlertDialog.THEME_HOLO_DARK:AlertDialog.THEME_HOLO_LIGHT,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {

@@ -26,9 +26,7 @@
     <color name="greenColorAccent">#c66f9e</color>
 
     <!--Dark Mode-->
-    <color name="blackColorPrimary">#212121</color>
-    <color name="blackColorPrimaryDark">#000000</color>
-    <color name="backgroundColorDarkMode">#303030</color>
+    <color name="backgroundColorDarkMode">#212121</color>
     <color name="blueColorDarkMode">#02a7ee</color>
     <color name="orangeColorDarkMode">#f8b83b</color>
     <color name="redColorDarkMode">#ec5155</color>
@@ -36,4 +34,5 @@
     <color name="grayColorDarkMode">#b4bdca</color>
 
     <color name="colorBlackPrimary">#000</color>
+    <color name="colorWhitePrimary">#fff</color>
 </resources>

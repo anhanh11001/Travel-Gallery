@@ -2,6 +2,7 @@ package tech.ducletran.travelgallery.Activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -143,7 +144,11 @@ public class DisplayAlbumImagesActivity extends AppCompatActivity {
             }
         });
 
-        alertDialog.show();
+        Dialog dialog = alertDialog.create();
+        if (MainActivity.isDarkMode()) {
+            dialog.getWindow().setBackgroundDrawableResource(R.color.backgroundColorDarkMode);
+        }
+        dialog.show();
     }
 
     private void addNewImage() {
@@ -162,6 +167,7 @@ public class DisplayAlbumImagesActivity extends AppCompatActivity {
         AlertDialog.Builder deleteDialog = new AlertDialog.Builder(this);
         deleteDialog.setTitle("Deleting album");
         deleteDialog.setMessage("Are you sure to delete this album?");
+
         final Activity activty = this;
         deleteDialog.setPositiveButton("delete", new DialogInterface.OnClickListener() {
             @Override
@@ -180,7 +186,11 @@ public class DisplayAlbumImagesActivity extends AppCompatActivity {
             }
         });
 
-        deleteDialog.show();
+        Dialog dialog = deleteDialog.create();
+        if (MainActivity.isDarkMode()) {
+            dialog.getWindow().setBackgroundDrawableResource(R.color.backgroundColorDarkMode);
+        }
+        dialog.show();
     }
 
     private void setAlbumCover() {
