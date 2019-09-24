@@ -1,5 +1,8 @@
-# Travel-Gallery
+# [DEPRECATED] Travel-Gallery
 <img src="https://i.ibb.co/CWNdXgp/logo.png" width="150">
+
+### Warning
+This project is <b>deprecated</b> now. This was one of my first Android project in which I explored a lot of things about Android. It was a beginner application, which contains tons of bugs, code smells, bad coding practices. I am working on a completely better version of this app. Please check out this [link](https://github.com/anhanh11001/-UPGRADE-Travel-Gallery) here.
 
 ### Description
 This is my personal travel gallery app, one of my favorite apps that I have built myself. This app helps me to store all of my travel story, images and create custom albums/themes. It took me nearly 3 weeks to finish and polish this app.
@@ -24,8 +27,3 @@ Here is the demo link of the project: [link](https://www.youtube.com/watch?v=p0Q
 
 ### Support
 Further support or information can be provided through this email address: <i>letrananhduc0311@gmail.com<i>.
-  
-### License
-This project's license is under reviewing process.
-
-
